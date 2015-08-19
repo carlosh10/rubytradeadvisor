@@ -65,11 +65,6 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.6.0)
-    factory_girl (4.5.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.5.0)
-      factory_girl (~> 4.5.0)
-      railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
     figaro (1.0.0)
@@ -173,7 +168,6 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise
-  factory_girl_rails (~> 4.0)
   faker
   figaro (= 1.0)
   jbuilder (~> 2.0)
