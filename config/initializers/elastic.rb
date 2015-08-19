@@ -1,0 +1,1 @@
+# Elasticsearch::Client.new host: 'http://104.197.50.109:9400'
