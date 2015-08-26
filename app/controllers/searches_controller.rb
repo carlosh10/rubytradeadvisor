@@ -6,6 +6,7 @@ class SearchesController < ApplicationController
     client = Elasticsearch::Client.new host: 'http://104.197.50.109:9400';
 
     search = Search.new(params[:search].permit!)
+    search.user = current_user
 
     if search.save
       raw_results = client.search(q: search.query)
