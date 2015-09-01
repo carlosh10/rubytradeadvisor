@@ -1,23 +1,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rubytradeadvisor</title>
-  
+  <title>Tradeadvisor</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-       <div class="pull-right user-info">
-       <% if current_user %>
-         Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-       <% else %>
-         <%= link_to "Sign In", new_user_session_path %> or
-         <%= link_to "Sign Up", new_user_registration_path %>
-       <% end %>
-     </div>
 </head>
 <body>
+ <header data-uk-sticky="{top:-600, animation: 'uk-animation-slide-top'}" class="topo_site dark_blue uk-width-1-1" style="margin: 0px;">
+        <nav>
+            <div class="uk-container uk-container-center">
+                <a class="uk-navbar-brand logo_box uk-hidden-small" href="/">
+               <%= image_tag "logo.svg", class: "uk-margin-remove" %>
+                </a>
 
-<%= yield %>
+                <div class="busca_topo uk-hidden uk-width-medium-6-10">
+                    <form class="uk-form" action="/Ncm/ResumoInicialNcm">
+                        <div class="uk-grid uk-grid-collapse">
+                            <div class="uk-width-5-6 uk-width-medium-9-10">
+                                <input class="input_busca uk-width-1-1" type="text" placeholder="Pesquisa">
+                            </div>
+                            <div class="uk-width-1-6 uk-width-medium-1-10">
+                                <button class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
+                <div class="uk-navbar-nav menu_top">
+                    <ul class="menu_links">
+                        <li>
+                            <a class="uk-button" href="#"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+    </header>
+
+  <%= yield %>
+
+  <footer class="dark_blue master_rdp">
+    <div class="uk-container uk-container-center">
+        <div class="pading_block">
+            <div class="uk-grid uk-grid-medium">
+                <div class="uk-width-small-1-1 uk-width-medium-1-6">
+                    <ul class="menu_rdp">
+                        <li><a href="#"><span>•</span> Sobre</a></li>
+                        <li><a href="#"><span>•</span> Exemplos</a></li>
+                        <li><a href="#"><span>•</span> FAQ</a></li>
+                        <li><a href="#"><span>•</span> Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="uk-width-small-1-1 uk-width-medium-1-6">
+                    <ul class="menu_rdp">
+                        <li><a href="#"><span>•</span> A empresa</a></li>
+                        <li><a href="#"><span>•</span> Blog</a></li>
+                        <li><a href="#"><span>•</span> Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="uk-width-medium-1-1 uk-width-medium-3-6">
+                    <h4>Links relacionados ao COMEX no seu e-mail:</h4>
+                    <p>Links relacionados à Comex, uma vez por semana, no seu email. Sem spam. Sem propaganda. Somente links.</p>
+                    <form class="uk-form">
+                        <div class="uk-grid uk-grid-small">
+                            <div class="uk-width-small-1-2 uk-width-medium-3-4">
+                                <input type="text" class="uk-width-1-1" placeholder="Seu e-mail">
+                            </div>
+                            <div class="uk-width-small-1-2 uk-width-medium-1-4">
+                                <button class="uk-button"><i class="uk-icon-check btn_icon"></i> Assinar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="uk-width-small-1-1 uk-width-medium-1-6">
+                    <div class="topo_link">
+                        <a href="#home" data-uk-smooth-scroll="{offset: 90}">
+                            <i class="uk-icon-arrow-circle-o-up uk-icon-large"></i> <br>
+                            Voltar ao Topo
+                        </a>
+                    </div>
+                    <div class="redes_sociais text_right">
+                        <a target="_new" href="http://www.facebook.com.br/">
+                            <i class="uk-icon-facebook-square uk-icon-large"></i>
+                        </a>
+                        <a target="_new" href="http://www.facebook.com.br/">
+                            <i class="uk-icon-google-plus-square uk-icon-large"></i>
+                        </a>
+                        <a target="_new" href="http://www.facebook.com.br/">
+                            <i class="uk-icon-twitter-square uk-icon-large"></i>
+                        </a>
+                        <a target="_new" href="http://www.facebook.com.br/">
+                            <i class="uk-icon-linkedin-square uk-icon-large"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="min_rodape uk-width-1-1">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-small">
+                <div class="copyright uk-width-1-2">
+                    © <%= Time.now.year %> Pinho International Logistics
+                </div>
+                <div class="text_right uk-width-1-2">
+                    <a target="_new" href="http://www.atrativaweb.com.br/">               
+                    <%= image_tag "logo_atrativa.svg", width: "100" %>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
