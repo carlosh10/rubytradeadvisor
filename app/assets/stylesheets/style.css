@@ -208,15 +208,15 @@ section {
 }
 
 .uk-form select, .uk-form textarea, .uk-form input:not([type]), .uk-form input[type="text"], .uk-form input[type="password"], .uk-form input[type="datetime"], .uk-form input[type="datetime-local"], .uk-form input[type="date"], .uk-form input[type="month"], .uk-form input[type="time"], .uk-form input[type="week"], .uk-form input[type="number"], .uk-form input[type="email"], .uk-form input[type="url"], .uk-form input[type="search"], .uk-form input[type="tel"], .uk-form input[type="color"] {
-    font-size: 18px;
-    font-family: 'latolight';
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border: 0;
-    height: auto;
-    line-height: normal;
+    font-size: 18px !important;
+    font-family: 'latolight' !important;
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    border-radius: 4px !important;
+    -webkit-border-radius: 4px !important;
+    border: 0 !important;
+    height: auto !important;
+    line-height: normal !important;
 }
 
 .uk-form .date_input {
@@ -224,10 +224,10 @@ section {
     font-family: 'latolight';
     padding: 5px;
     margin: 10px 5px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
+    border-radius: 4px  !important;
+    -webkit-border-radius: 4px  !important;
     border: 1px solid #ddd;
-    height: auto;
+    height: auto !important;
     line-height: normal;
 }
 
@@ -278,8 +278,8 @@ section {
     }
 
 .button_busca {
-    border-radius: 0 3px 3px 0;
-    -webkit-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0  !important;
+    -webkit-border-radius: 0 3px 3px 0  !important;
     background: #61bcf2;
     color: #fff;
     font-size: 22px;
@@ -295,8 +295,8 @@ section {
     }
 
 .button_busca2 {
-    border-radius: 0 3px 3px 0;
-    -webkit-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0  !important;
+    -webkit-border-radius: 0 3px 3px 0  !important;
     background: #fff;
     color: #d8d8d8;
     font-size: 22px;
@@ -419,7 +419,7 @@ section {
 
     .box_escritorio i {
         background: #fff;
-        border-radius: 8px;
+        border-radius: 8px  !important;
         padding: 30px 20px;
         font-size: 45px;
         color: #9e1c1f;
@@ -450,8 +450,8 @@ section {
 /*Noticias*/
 .blog_icon {
     background: #ff5a5a;
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
+    border-radius: 100%  !important;
+    -webkit-border-radius: 100%  !important;
     padding: 5px;
     color: #fff;
     text-transform: uppercase;
