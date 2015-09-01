@@ -65,7 +65,7 @@ Version: 1.0
 
 /*conteúdo*/
 h1, h2, h3, h4, h5 {
-    line-height: normal;
+    line-height: normal; 
 }
 
 h2 {
@@ -94,9 +94,9 @@ h3 {
 }
 
 body {
-    font-family: 'latoregular';
-    font-size: 15px;
-    color: #112433;
+    font-family: 'latoregular' !important;
+    font-size: 15px !important;
+    color: #112433 !important;
 }
 
 li {
@@ -165,37 +165,37 @@ section {
 
 /*personalização*/
 .uk-button {
-    background: transparent;
-    padding: 5px 15px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
+    background: transparent !important;
+    padding: 5px 15px !important;
+    border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
     color: #142c3e;
-    font-size: 14px;
-    font-family: 'latobold';
-    margin: 10px 0;
-    border: 1px solid #22445b;
-    cursor: pointer;
+    font-size: 14px !important;
+    font-family: 'latobold'; 
+    margin: 10px 0 !important;
+    border: 1px solid #22445b !important;
+    cursor: pointer !important;
 }
 
 .dark_blue .uk-button {
-    color: #fff;
+    color: #fff !important;
 }
 
 .uk-button:hover, .uk-button:active {
-    background: #61bcf2;
-    color: #fff;
-    border: 1px solid #61bcf2;
+    background: #61bcf2 !important;
+    color: #fff !important;
+    border: 1px solid #61bcf2 !important;
 }
 
     .uk-button:hover .btn_icon, .uk-button:active .btn_icon {
-        color: #61bcf2;
-        background: #112433;
+        color: #61bcf2 !important;
+        background: #112433 !important;
     }
 
 .btn_icon {
-    font-size: 13px;
-    background: #61bcf2;
-    border-radius: 100%;
+    font-size: 13px !important;
+    background: #61bcf2 !important;
+    border-radius: 100% !important;
     color: #fff;
     width: 13px;
     height: 13px;
@@ -204,7 +204,7 @@ section {
 }
 
 .dark_blue .btn_icon {
-    color: #142c3e;
+    color: #142c3e !important;
 }
 
 .uk-form select, .uk-form textarea, .uk-form input:not([type]), .uk-form input[type="text"], .uk-form input[type="password"], .uk-form input[type="datetime"], .uk-form input[type="datetime-local"], .uk-form input[type="date"], .uk-form input[type="month"], .uk-form input[type="time"], .uk-form input[type="week"], .uk-form input[type="number"], .uk-form input[type="email"], .uk-form input[type="url"], .uk-form input[type="search"], .uk-form input[type="tel"], .uk-form input[type="color"] {
@@ -242,15 +242,15 @@ section {
 }
 
 .busca_topo {
-    float: left;
+    float: left !important;
 }
 
 .menu_top {
-    float: right;
+    float: right !important;
 }
 
     .menu_top li {
-        float: left;
+        float: left !important;
     }
 
         .menu_top li a {
@@ -263,18 +263,18 @@ section {
 }
 
 .logo_box {
-    display: block;
-    height: auto;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    position: relative;
-    width: 230px;
-    padding-left: 0;
+    display: block !important;
+    height: auto !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    position: relative !important;
+    width: 230px !important;
+    padding-left: 0 !important;
 }
 
     .logo_box img {
-        position: absolute;
-        width: 150px;
+        position: absolute !important;
+        width: 150px !important;
     }
 
 .button_busca {

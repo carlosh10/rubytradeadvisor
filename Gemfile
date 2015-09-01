@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 #Us
-gem 'uikit-sass-rails'
+gem 'uikit-sass-rails', git: 'https://github.com/8398a7/uikit-sass-rails'
 gem "twitter-bootstrap-rails"
 
 
