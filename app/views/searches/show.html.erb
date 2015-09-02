@@ -1,1 +1,390 @@
-<h1><%= @result %></h1>
+<section id="nav_abas">
+    <div class="gray_back">
+        <div class="navegacao_abas" data-uk-sticky="{top:-80, animation: 'uk-animation-slide-top'}">
+            <div class="uk-container uk-container-center">
+                <ul data-uk-switcher="{connect:'#my-id', animation: 'uk-animation-fade, uk-animation-slide-left'}">
+                    <li><a href="#">Produtos Importados</a></li>
+                    <li><a href="#">Documentos</a></li>
+                    <li><a href="#">Explorar Detalhes</a></li>
+                </ul>
+                <div id="searchStringHeader" style="height: 30px;padding: 10px;font-size:14px;"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="uk-container uk-container-center">
+        <ul id="my-id" class="uk-switcher">
+            <li>
+            	<%  if @products.count == 0 %>
+                	<br /><br />
+                	<strong>Não existem resultados para os valores pesquisados!</strong>
+                	<br /><br />
+                <% else %>
+                	  <div>
+                        <div id="searchStringHeader" style="height: 30px;padding: 10px;font-size:14px;"></div>
+                        <!--bloco produto-->
+                        <div class="col-xs-12 block_default">
+                            <div style="width:50%;float:left; margin-top:0px; text-align:center;"><label class="nm_grafico">CIF Total por NCM </label></div>
+                            <div style="width:50%;float:right;margin-top:0px; text-align:center;"><label class="nm_grafico">Quantidade por NCM</label></div>
+                            <div class="col-sm-12">
+
+                                <div>
+                                    <!-- Widget ID (each widget will need unique ID)-->
+                                    <div class="jarviswidget" id="wid-id-6" data-widget-editbutton="false">
+
+                                        <div>
+                                            <!-- widget edit box -->
+                                            <div class="jarviswidget-editbox">
+                                                <!-- This area used as dropdown edit box -->
+
+                                            </div>
+                                            <!-- end widget edit box -->
+                                            <!-- widget content -->
+                                            <div class="widget-body no-padding">
+
+                                                <div id="donut-graphNcm" class="chart no-padding"></div>
+
+                                            </div>
+                                            <!-- end widget content -->
+
+                                        </div>
+                                        <!-- end widget div -->
+
+                                    </div>
+
+                                    <!-- Widget ID (each widget will need unique ID)-->
+                                    <div class="jarviswidget" id="wid-id-6" data-widget-editbutton="false">
+
+                                        <div>
+                                            <!-- widget edit box -->
+                                            <div class="jarviswidget-editbox">
+                                                <!-- This area used as dropdown edit box -->
+
+                                            </div>
+                                            <!-- end widget edit box -->
+                                            <!-- widget content -->
+                                            <div class="widget-body no-padding">
+
+                                                <div id="donut-graphNcmQuantidade" class="chart no-padding"></div>
+                                            </div>
+                                            <!-- end widget content -->
+
+                                        </div>
+                                        <!-- end widget div -->
+
+                                    </div>
+
+
+                                    <table id="result" class="table table-striped table_trade2">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <strong>Ncm</strong>
+
+                                                </th>
+                                                <th>
+                                                    <strong>Descrição</strong>
+                                                </th>
+                                                <th>
+                                                    <strong>CIF Total USD</strong>
+                                                </th>
+                                                <th>
+                                                    <strong>Aliquota Total</strong>
+
+                                                </th>
+                                                <th>
+                                                    <strong>Quantidade</strong>
+                                                </th>
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+                                              <% @products.each do |product| %>
+                                                <tr>
+                                                    <td class="ncm">
+                                                        <a href="#"><%= product["ncm"] %></a>
+                                                    </td>
+                                                    <td class="ncmDescricao">
+                                                        <a href="#"><%= product["ncmDescricao"] %></a>
+                                                    </td>
+                                                    <td class="CIF">
+                                                    	<%= number_to_currency(product["CIF"]) %>
+                                                    </td>
+                                                    <td class="vl_ift">
+                                                    	<%= product["vl_ift"] %>
+                                                    </td>
+                                                    <td class="quantidade_comercializada_produto">
+                                                    	<!-- quantidade_comercializada_produto -->
+                                                        <%= product["quantidade_comercializada_produto"] %>
+                                                    </td>
+                                                </tr>
+                                             <% end %>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                <% end %>
+            </li>
+
+            <li>
+                <div class="pading_block">
+                    <div class="uk-grid uk-grid-small">
+                            <div class="uk-width-small-1-1">
+                                <div class="card_style">
+                                    <!--//grafico 2 aba 2-->
+                                    <div id="documentos_2" class="graficos_responsivos"></div>
+                                    <div id="table_graf"></div>
+                                </div>
+                            </div>
+
+                            <div class="uk-width-small-1-1">
+                                <div class="card_style">
+                                    <!--//grafico 3 aba 2-->
+                                    <div id="documentos_3" class="graficos_responsivos"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+             </li>
+
+               <li>
+                    <div class="pading_block">
+                        <div class="uk-grid uk-grid-small">
+
+
+                            <div class="uk-width-small-1-1">
+                                <div id="abaNcms" class="card_style" style="height: 500px">
+                                    <!--//graficos 1 aba 4-->
+                                    <div style="float: left;font-size:24px;width: 150px;padding-right: 0px;color: #444444;font-family: " helvetica neue", helvetica, arial, sans-serif;font-weight normal;">
+                                        Total de NCMs
+                                    </div>
+                                    <div id="ncmDescID" style="float: right;margin: 5px;width: 60%;height: 50px;padding-top: 0px;font-size:20px;color: #0077dd;font-family: " helvetica neue", helvetica, arial, sans-serif;font-weight normal;"></div>
+                                    <div style="float: left;margin: 5px;width: 40%">
+                                        <ul class="uk-tab" data-uk-switcher="{connect:'#produtos_abas1', animation: 'uk-animation-fade,uk-animation-fade'}">
+                                            <li><a href="">Valor ($)</a></li>
+                                            <li><a href="">Quantidade</a></li>
+                                        </ul>
+                                    </div>
+                                    <ul id="produtos_abas1" class="uk-switcher">
+                                        <li>
+                                            <!--//grafico 1.1 aba 4-->
+                                            <div id="produtos_1_1" class="graficos_responsivos"></div>
+                                        </li>
+                                        <li>
+                                            <!--//grafico 1.2 aba 4-->
+                                            <div id="produtos_1_2" class="graficos_responsivos"></div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                            @*<div class="uk-width-small-1-1">
+                                <div class="transparent_card">
+
+                                    <!--//filtro NCM's-->
+                                    <div class="uk-grid uk-grid-small">
+                                        <h3 class="uk-width-small-1-1 uk-width-medium-5-10" style="padding-top:12px;">Selecione a(s) NCM(s) desejada(s):</h3>
+                                        <div class="uk-width-small-1-1 uk-width-medium-4-10">
+                                            <form class="uk-form">
+                                                <div class="uk-grid uk-grid-collapse">
+
+                                                    <div class="uk-width-5-6 uk-width-medium-9-10">
+                                                        <input class="input_busca uk-width-1-1" type="text" placeholder="Pesquisa">
+                                                    </div>
+
+                                                    <div class="uk-width-1-6 uk-width-medium-1-10">
+                                                        <button class="button_busca2 uk-width-1-1"><i class="uk-icon-search"></i></button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="uk-width-small-1-1 uk-width-medium-1-10">
+                                            <button class="uk-button uk-width-1-1" data-uk-toggle="{target:'#ncm_filter', animation:'uk-animation-slide-left, uk-animation-slide-bottom'}">
+                                                <i class="uk-icon-angle-down uk-icon-large"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="uk-hidden" id="ncm_filter">
+
+                                    <header class="uk-width-small-1-1 uk-hidden-small">
+                                        <div class="header_cards">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="title_card uk-width-small-1-10">
+
+                                                </div>
+                                                <div class="title_card uk-width-small-1-10">
+                                                    Código
+                                                </div>
+                                                <div class="title_card uk-width-small-4-10">
+                                                    Descrição
+                                                </div>
+                                                <div class="title_card uk-width-small-2-10">
+                                                    Resultados
+                                                </div>
+                                                <div class="title_card uk-width-small-2-10">
+                                                    Valor($)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </header>
+
+                                    @foreach (var ncm in @Model.Select(c => c.ncm).Distinct().ToList())
+                                        {@
+                                    <div class="uk-width-small-1-1">
+                                        <div class="card_style uk-grid uk-grid-small">
+
+                                            <div class="uk-width-small-1-10">
+
+                                                <a class="uk-visible-small mais_info" data-uk-toggle="{target:'#mais_info_filter', animation:'uk-animation-slide-left, uk-animation-slide-bottom'}">
+                                                    <i class="uk-icon-plus-square"></i>
+                                                </a>
+
+                                                <form class="uk-form">
+                                                    <fieldset data-uk-margin>
+                                                        <label><input type="checkbox"></label>
+                                                    </fieldset>
+                                                </form>
+
+                                            </div>
+
+                                            <div class="uk-width-small-1-10">
+                                                <span class="uk-visible-small title_card">
+                                                    Código
+                                                </span>
+                                                CÓDIGO NCM
+
+                                            </div>
+
+                                            <div class="uk-width-small-6-10 uk-hidden-small">
+                                                Descricao NCM
+                                            </div>
+
+
+                                            <div class="uk-width-small-1-10 uk-hidden-small">
+                                                Sum(c => c.valor_total_produto_dolar))
+                                            </div>
+
+                                            <div class="uk-width-small-1-10 uk-hidden-small">
+                                                xx
+                                            </div>
+
+
+                                            <div id="mais_info_filter" class="uk-grid uk-hidden uk-grid-small uk-width-small-8-10">
+                                                    <div class="uk-width-small-3-5">
+                                                        <span class="uk-visible-small title_card">
+                                                            Descrição
+                                                        </span>
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.
+                                                    </div>
+
+
+                                                    <div class="uk-width-small-1-5">
+                                                        <span class="uk-visible-small title_card">
+                                                            Resultados
+                                                        </span>
+                                                        10
+                                                    </div>
+
+                                                    <div class="uk-width-small-1-5">
+                                                        <span class="uk-visible-small title_card">
+                                                            Valor($)
+                                                        </span>
+                                                        xx
+                                                    </div>
+
+                                                </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>*@
+
+                            <div class="uk-width-small-1-1">
+                                <div class="card_style">
+                                    <!--//graficos 2 aba 4-->
+                                    <h3>Total de Produtos Importados x País de Aquisição</h3>
+                                    <ul class="uk-tab" data-uk-switcher="{connect:'#produtos_abas2', animation: 'uk-animation-fade,uk-animation-fade'}">
+                                        <li><a href="">Valor ($)</a></li>
+                                        <li><a href="">Quantidade</a></li>
+                                    </ul>
+
+                                    <ul id="produtos_abas2" class="uk-switcher">
+                                        <li>
+                                            <!--//grafico 2.1 aba 4-->
+                                            <div id="produtos_2_1" class="graficos_responsivos"></div>
+                                        </li>
+                                        <li>
+                                            <!--//grafico 2.2 aba 4-->
+                                            <div id="produtos_2_2" class="graficos_responsivos"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="uk-width-small-1-1">
+                                <div class="card_style">
+                                    <!--//graficos 3 aba 4-->
+                                    <h3>Total de Produtos Importados x País de Origem</h3>
+                                    <ul class="uk-tab" data-uk-switcher="{connect:'#produtos_abas3', animation: 'uk-animation-fade,uk-animation-fade'}">
+                                        <li><a href="">Valor ($)</a></li>
+                                        <li><a href="">Quantidade</a></li>
+                                    </ul>
+
+                                    <ul id="produtos_abas3" class="uk-switcher">
+                                        <li>
+                                            <!--//grafico 3.1 aba 4-->
+                                            <div id="produtos_3_1" class="graficos_responsivos"></div>
+                                        </li>
+                                        <li>
+                                            <!--//grafico 3.2 aba 4-->
+                                            <div id="produtos_3_2" class="graficos_responsivos"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="uk-width-small-1-1">
+                                <div class="card_style">
+
+                                    @*<div class="uk-width-1-1 text_right">
+                                            <form class="uk-form">
+                                                De: <input class="date_input" placeholder="selecione a data" type="" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+                                                a <input class="date_input" placeholder="selecione a data" type="" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+                                            </form>
+                                        </div>*@
+                                    <!--//grafico 4 aba 4-->
+                                    <div id="produtos_4" class="graficos_responsivos"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+        </ul>
+    </div>
+</section>
+
+<!--
+<table class="table">
+  <% @products.each do |i| %>
+  	<tr>
+    	<td> <%= i %></td>
+    <tr>
+  <% end %>
+</table>
+-->
