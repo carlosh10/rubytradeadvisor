@@ -1108,9 +1108,10 @@ section {
     color: #112433;
 }
 
-.panel-title a {
+.panel-title a:link, .panel-title a:hover, .panel-title a:active  {
     display: block;
-    color: #fff;
+    color: inherit; 
+    text-decoration: none;
 }
 
 .origem_aquisicao span {
@@ -1186,7 +1187,7 @@ section {
 .flag {
     width: 16px;
     height: 11px;
-    background: url(../img/flags/flags.png) no-repeat;
+    background: url(/assets/flags/flags.png) no-repeat;
     margin-top: -.18em;
     display: inline-block;
 }

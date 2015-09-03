@@ -28,10 +28,10 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-#Us
+# Used by template
 gem 'uikit-sass-rails', git: 'https://github.com/8398a7/uikit-sass-rails'
+# http://migre.me/roo8Q enjoy :)
 gem "twitter-bootstrap-rails"
-
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -51,5 +51,16 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :test do
+  # Given scenarious and features, this gem tests the application using user stories.
+  gem 'cucumber-rails', require: false
+  # Clean database on test enviroment
+  gem 'database_cleaner'
+  # Provide a factory of the models useds on system
+  gem 'factory_girl_rails'
+  # Check html asserts and test it
+  gem 'selenium-webdriver'
 end
 
