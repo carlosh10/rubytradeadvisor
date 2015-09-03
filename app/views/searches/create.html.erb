@@ -1,7 +1,7 @@
 <form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
-<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-<section class="search-page">
-    	<input type="hidden" name="search[query]" value="<%= @search.query %>">
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	<section class="search-page">
+		<input type="hidden" name="search[query]" value="<%= @search.query %>">
 		<div class="row">
 			<div class="col-md-3 col-lg-2">
 				<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
@@ -16,19 +16,21 @@
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<% @search.filters.each do |filter| %>
-										<div>
-												<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
-												<input type="hidden" name="filters[][ncm]" value="<%= filter.ncm %>">
-												<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
-												<input type="checkbox" name="filters[][selected]">
-												<%= filter.ncm  %>
-												<span class="badge"><%= filter.hits %></span>
-										</div>
-								<% end %>
-							</div>
+								<div>
+									<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+									<input type="hidden" name="filters[][ncm]" value="<%= filter.ncm %>">
+									<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+									<input type="checkbox" name="filters[][selected]">
+									<%= filter.ncm  %>
+									<span class="badge">
+										<%= filter.hits %></span>
+								</div>
+								<% end %></div>
 						</div>
 					</div>
 				</div>
+
+				<!--
 				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingTwo">
@@ -43,17 +45,23 @@
 						</div>
 					</div>
 				</div>
+				-->
 			</div>
 
 			<div class="col-md-9 col-lg-10">
 				<%  if @products.count == 0 %>
-				<div class="bs-docs" data-content="404"> <h1>Não existem resultados para os valores pesquisados!</h1>
+				<div class="bs-docs" data-content="404">
+					<h1>Não existem resultados para os valores pesquisados!</h1>
 				</div>
 				<% else %>
 				<div class="bs-result">
 					<div class="row">
 						<div class="col-md-5">
-							<p>Buscando por <span id="search-query"><%= @search.query %></span></p>
+							<p>
+								Buscando por
+								<span id="search-query">
+									<%= @search.query %></span>
+							</p>
 						</div>
 						<div class="col-md-5">
 							<p>Total US$ 222.344.222,12</p>
@@ -68,17 +76,16 @@
 					</div>
 				</div>
 				<% @products.each do |product| %>
-				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>">
+				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>
+					">
 					<div class="row">
 						<div class="col-md-8">
 							<div class="row">
 								<div class="col-md-5">
 									<div>
-										<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>
-										" data-toggle="tooltip" data-placement="bottom" />
+										<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
 										<small>O.</small>
-										<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>
-										" data-toggle="tooltip" data-placement="bottom" />
+										<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
 										<small>A.</small>
 									</div>
 								</div>
@@ -101,22 +108,19 @@
 						<div class="col-md-4 cif">
 							<div>
 								<span>FOB / CIF Unit.</span>
-								<span style=""><%= number_to_currency(product["valor_unidade_produto_dolar"]) %> / <%= product["vl_ift"] %></span>
+								<span style=""><%= number_to_currency(product["valor_unidade_produto_dolar"]) %> /	<%= product["vl_ift"] %></span>
 							</div>
 							<div>
 								<span>CIF Total</span>
-								<span><%= number_to_currency(product["CIF"]) %></span>
+								<span>
+									<%= number_to_currency(product["CIF"]) %></span>
 							</div>
+						</div>
+
 					</div>
-
 				</div>
-			</div>
-			<% end %>
-			<% end %></div>
+				<% end %>
+				<% end %></div>
 		</div>
-</section>
-	<input type="submit"  value="TEMP SUMBIT" />
-	</form>
-
-
-	<p><%= @filters %></p>
+	</section>
+</form>
