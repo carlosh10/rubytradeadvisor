@@ -2,11 +2,15 @@ class SearchesController < ApplicationController
 
   def show
 
-    search = Search.new(:query => params[:q], :user => current_user)
+  end
 
-    if search.save
+  def create
+    
+    @search = Search.new(:query => params[:query])
+
+    if @search.save
       
-      raw_results = search_client.search(q: search.query)
+      raw_results = search_client.search(q: @search.query)
 
       @products = []
 
@@ -20,10 +24,6 @@ class SearchesController < ApplicationController
 
     # expires_in 3.minutes, :public => true
 
-  end
-
-  def create
-    
   end
 
   private

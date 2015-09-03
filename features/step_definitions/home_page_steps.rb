@@ -10,8 +10,8 @@ Then(/^I should see the "(.*?)" image$/) do |name|
    assert page.has_selector?("img[src$='#{name}']")
 end
 
-Then(/^I should see the "(.*?)" form$/) do |action|
-   assert page.has_selector?("form[action*=search]")
+Then(/^I should see the "(.*?)" form with method "(.*?)"$/) do |action, method|
+   assert page.has_selector?("form[action*=#{action}][method=#{method}]")
 end
 
 Then(/^I don't see "(.*?)"$/) do |content|

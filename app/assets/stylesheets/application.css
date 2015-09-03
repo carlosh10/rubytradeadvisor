@@ -88,6 +88,10 @@
     margin-bottom: 0px;
 }
 
+.bs-docs p {
+    margin-bottom: 0px;
+}
+
 
 .bs-docs .cif > div:first-child {
     margin-bottom: 15px;

@@ -1,6 +1,6 @@
-// if query (q) param has a value, set it on search bar 
+// if find search-query id on page, set it value on search bar 
 $(document).ready(function(){
-	var query = $.urlParam('q');
+	var query = $("#search-query").text();
 	if(query != null) {
 		//set value on query field at top
 		$(".input_busca").val(query);
