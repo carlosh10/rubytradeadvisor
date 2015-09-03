@@ -11,11 +11,11 @@
                     Vá além da superfície, descubra tudo sobre comércio exterior:
                 </h2>
 
-                <form class="uk-form" action="/search" method="post">
+                <form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                     <div class="uk-grid uk-grid-collapse">
                         <div class="uk-width-5-6 uk-width-medium-9-10">
-                            <input class="input_busca uk-width-1-1" style="border-radius: 3px 0px 0px 3px !important;" type="text" placeholder="Pesquisa" name="query" />
+                            <input class="input_busca uk-width-1-1" style="border-radius: 3px 0px 0px 3px !important;" type="text" placeholder="Pesquisa" name="search[query]" />
                         </div>
                         <div class="uk-width-1-6 uk-width-medium-1-10">
                             <button id="search-button" class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
