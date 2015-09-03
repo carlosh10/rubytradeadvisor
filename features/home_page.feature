@@ -10,6 +10,6 @@ Feature: Home page
   Scenario: Searching on home page
     Given there's a application titled "Tradeadvisor"
     When I am on the homepage
-    And I am fill in "query" whitin "#topo" with "opala"
+    And I am fill in "search[query]" whitin "#topo" with "opala"
     And I press "#search-button" within "#topo"
     Then I should redirected to "/search"

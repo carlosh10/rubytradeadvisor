@@ -20,16 +20,14 @@ class SearchesController < ApplicationController
 
     if @search.save
 
-      raw_results = search_client.search(q: @search.query)
-
-      @products = []
-
-      raw_results["hits"]["hits"].each do |hit|
-        @products << hit["_source"]
-      end
+      #todo move to query builder
+      raw_results = search_client.search body: { query: { match: { descricao_detalhada_produto: @search.query } } , aggs: { cif: { sum: { field: :CIF } } }  }
+      
+      @products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
+      @search.cif_total = raw_results["aggregations"]["cif"]["value"]
 
     else
-      #handle the case where it fails....
+      # todo handle the case where it fails....
     end
 
   end
