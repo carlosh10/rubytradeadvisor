@@ -19,6 +19,10 @@ class SearchesController < ApplicationController
     end
   end
 
+  def create
+    
+  end
+
   private
 
     def search_client

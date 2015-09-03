@@ -26,3 +26,13 @@ $.urlParam = function(name){
        return results[1] || 0;
     }
 }
+
+function toggleChevron(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find("i.indicator")
+        .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
+
+$('div[role=tablist]').on('hidden.bs.collapse', toggleChevron);
+$('div[role=tablist]').on('shown.bs.collapse', toggleChevron);
