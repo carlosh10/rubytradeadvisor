@@ -17,6 +17,9 @@ class SearchesController < ApplicationController
     else 
       #handle the case where it fails....
     end
+
+    # expires_in 3.minutes, :public => true
+
   end
 
   def create
