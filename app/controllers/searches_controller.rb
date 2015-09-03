@@ -1,5 +1,6 @@
 class SearchesController < ApplicationController
 
+  #todo remove to deploy
   skip_before_filter :verify_authenticity_token, :only => :create
 
   def show
@@ -8,24 +9,19 @@ class SearchesController < ApplicationController
 
   def create
 
-    filter = Search::NcmFilter.new "12345678", 123
-    filter2 = Search::NcmFilter.new "87654321", 22
-
-    @search = Search.new(search_params)
-
-    @search.filters << filter
-    @search.filters << filter2
-
-    @filters = ncm_filters
-
     if @search.save
 
       #todo move to query builder
-      raw_results = search_client.search body: { query: { match: { descricao_detalhada_produto: @search.query } } , aggs: { cif: { sum: { field: :CIF } } }  }
+      raw_results = search_client.search body: { 
+        query: { match: { descricao_detalhada_produto: @search.query } } , 
+        aggs: { 
+          cif: { sum: { field: :CIF } } ,
+          filters: { terms: { field: :ncm}   }
+        }}
       
       @products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
       @search.cif_total = raw_results["aggregations"]["cif"]["value"]
-
+      @search.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::NcmFilter.new e["key"], e["doc_count"].to_i }
     else
       # todo handle the case where it fails....
     end
