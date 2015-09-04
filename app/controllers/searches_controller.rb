@@ -13,15 +13,13 @@ class SearchesController < ApplicationController
 
     if @search.save
 
+      @filters = filters
+      @query = query.build(@search.query, filters)
+
       #todo move to query builder
-      raw_results = search_client.search body: { 
-        query: { match: { descricao_detalhada_produto: @search.query } } , 
-        aggs: { 
-          cif: { sum: { field: :CIF } } ,
-          filters: { terms: { field: :ncm}   }
-        }}
-      
-      @result = Search::Result.new raw_results
+      raw_results = client.search query.build(@search.query, filters)
+        
+      @result = Search::Result.new raw_results, filters
 
     else
       # todo handle the case where it fails....
@@ -31,7 +29,7 @@ class SearchesController < ApplicationController
 
   private
 
-    def search_client
+    def client
       Elasticsearch::Client.new host: 'http://104.197.50.109:9400'
     end
 
@@ -43,10 +41,14 @@ class SearchesController < ApplicationController
       params[:filters]
     end
 
-    def ncm_filters
+    def filters
       if filters_params != nil
-        filters_params.map { |e| Search::NcmFilter.new e[:ncm], e[:hits] }
+        filters_params.map { |e| Search::Filter.new e[:ncm], e[:hits] , e[:selected] == "true" }
       end
+    end
+
+    def query
+      Search::QueryBuilder.new
     end
 
 end

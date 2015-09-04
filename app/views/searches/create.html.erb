@@ -20,7 +20,7 @@
 									<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 									<input type="hidden" name="filters[][ncm]" value="<%= filter.ncm %>">
 									<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
-									<input type="checkbox" name="filters[][selected]">
+									<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
 									<%= filter.ncm  %>
 									<span class="badge">
 										<%= filter.hits %></span>
@@ -125,4 +125,7 @@
 	</section>
 </form>
 
-	<p><%= @abc %></p>
+	<p><%= @query %></p>
+
+	<p><%= @filters %></p>
+
