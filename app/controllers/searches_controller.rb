@@ -13,9 +13,6 @@ class SearchesController < ApplicationController
 
     if @search.save
 
-      @filters = filters
-      @query = query.build(@search.query, filters)
-
       #todo move to query builder
       raw_results = client.search query.build(@search.query, filters)
         
