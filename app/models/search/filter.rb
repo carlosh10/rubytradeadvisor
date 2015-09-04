@@ -1,4 +1,4 @@
-class Search::NcmFilter
+class Search::Filter
 	
 	attr_accessor :ncm , :hits , :selected, :guid
 

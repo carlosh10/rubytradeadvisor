@@ -15,7 +15,7 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<% @search.filters.each do |filter| %>
+								<% @result.filters.each do |filter| %>
 								<div>
 									<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 									<input type="hidden" name="filters[][ncm]" value="<%= filter.ncm %>">
@@ -49,7 +49,7 @@
 			</div>
 
 			<div class="col-md-9 col-lg-10">
-				<%  if @products.count == 0 %>
+				<%  if @result.products.count == 0 %>
 				<div class="bs-docs" data-content="404">
 					<h1>Não existem resultados para os valores pesquisados!</h1>
 				</div>
@@ -64,7 +64,7 @@
 							</p>
 						</div>
 						<div class="col-md-5">
-							<p>Total US<%= number_to_currency(@search.cif_total) %></p>
+							<p>Total US<%= number_to_currency(@result.cif_total) %></p>
 						</div>
 						<div class="col-md-2">
 							<select name="order" class="form-control">
@@ -75,7 +75,7 @@
 						</div>
 					</div>
 				</div>
-				<% @products.each do |product| %>
+				<% @result.products.each do |product| %>
 				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>
 					">
 					<div class="row">

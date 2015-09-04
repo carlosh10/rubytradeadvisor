@@ -9,6 +9,8 @@ class SearchesController < ApplicationController
 
   def create
 
+    @search = Search.new(search_params)
+
     if @search.save
 
       #todo move to query builder
@@ -19,9 +21,8 @@ class SearchesController < ApplicationController
           filters: { terms: { field: :ncm}   }
         }}
       
-      @products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
-      @search.cif_total = raw_results["aggregations"]["cif"]["value"]
-      @search.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::NcmFilter.new e["key"], e["doc_count"].to_i }
+      @result = Search::Result.new raw_results
+
     else
       # todo handle the case where it fails....
     end
