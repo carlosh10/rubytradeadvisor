@@ -1,12 +1,23 @@
+module FilterType
+	Ncm = "NCM"
+	Country = "CONTRY"
+end
+
 class Search::Filter
 	
-	attr_accessor :ncm , :hits , :selected, :guid
+	include FilterType
 
-	def initialize ncm, hits, selected = false
-		self.ncm = ncm
+	attr_accessor :hits , :selected, :guid, :value, :type
+  
+	def initialize value, hits, selected = false, type = FilterType::Ncm
+
+		self.value = value
 		self.hits =  hits 
 		self.guid = SecureRandom.hex
 		self.selected = selected
+		self.type = type
 	end
 
 end
+
+

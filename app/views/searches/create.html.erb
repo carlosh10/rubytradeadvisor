@@ -15,22 +15,24 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<% @result.filters.each do |filter| %>
-								<div>
-									<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
-									<input type="hidden" name="filters[][ncm]" value="<%= filter.ncm %>">
-									<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
-									<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
-									<%= filter.ncm  %>
-									<span class="badge">
-										<%= filter.hits %></span>
-								</div>
-								<% end %></div>
+								<% @result.filters.select { |e| e.type == FilterType::Ncm }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+										<%= filter.value  %>
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<!--
+				
 				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingTwo">
@@ -41,11 +43,24 @@
 							</h4>
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-							<div class="panel-body">Teste</div>
+							<div class="panel-body">
+								<% @result.filters.select { |e| e.type == FilterType::Country }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
+							</div>
 						</div>
 					</div>
 				</div>
-				-->
+
 			</div>
 
 			<div class="col-md-9 col-lg-10">
@@ -98,7 +113,7 @@
 								<div class="col-md-12">
 									<div>
 										<p>
-											<%= product["ncmDescricao"] %></p>
+											<%= product["descricao_detalhada_produto"] %></p>
 									</div>
 								</div>
 							</div>
@@ -125,4 +140,4 @@
 	</section>
 </form>
 
-
+<%= @raw %>

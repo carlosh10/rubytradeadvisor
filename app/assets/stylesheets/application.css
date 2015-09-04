@@ -85,8 +85,11 @@
 }
 
 .bs-docs p {
+      overflow: hidden;
+    font-size: 12px;
     margin-bottom: 0px;
     min-height: 45px;
+    max-width: 20ch;
 }
 
 

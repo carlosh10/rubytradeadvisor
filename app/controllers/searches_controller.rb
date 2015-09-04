@@ -18,6 +18,7 @@ class SearchesController < ApplicationController
         
       @result = Search::Result.new raw_results, filters
 
+      @raw = query.build(@search.query, filters)
     else
       # todo handle the case where it fails....
     end
@@ -40,7 +41,7 @@ class SearchesController < ApplicationController
 
     def filters
       if filters_params != nil
-        filters_params.map { |e| Search::Filter.new e[:ncm], e[:hits] , e[:selected] == "true" }
+        filters_params.map { |e| Search::Filter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
       end
     end
 
