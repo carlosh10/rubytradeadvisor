@@ -9,8 +9,7 @@ class Search::QueryBuilder
 	        body: {  
 	          query: {
 	            bool: {
-	              must: [
-	              	],
+	              must: [],
 	              must_not: [],
 	              should: []
 	            }
@@ -24,27 +23,29 @@ class Search::QueryBuilder
 		}
 
 		
-		struct[:body][:query][:bool][:must] +=  [ { match: { descricao_detalhada_produto: query } } ] 
+
 
 		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Ncm }.any? { |e| e.selected  }
 
-			struct[:body][:query][:bool][:must] += 
+			struct[:body][:query][:bool][:should] += 
 				filters.select { |e| e.selected && e.type == FilterType::Ncm }.map { |filter| { term: { ncm: filter.value } }  }
+
+						#if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Country }.any? { |e| e.selected  }
+						#	struct[:body][:query][:bool][:should] += 
+						#		filters.select { |e| e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisAquisicao: filter.value } }  }
+
+							#struct[:body][:query][:bool][:must_not] += 
+							#	filters.select { |e| !e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisOrigem: filter.value } }  }
+
+						#end
 
 			#struct[:body][:query][:bool][:must_not] += 
 			#	filters.select { |e| !e.selected && e.type == FilterType::Ncm }.map { |filter| { term: { ncm: filter.value } }  }
 		else
-
+			struct[:body][:query][:bool][:must] +=  [ { match: { descricao_detalhada_produto: query } } ] 
 		end			
 
-		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Country }.any? { |e| e.selected  }
-			struct[:body][:query][:bool][:must] += 
-				filters.select { |e| e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisAquisicao: filter.value } }  }
 
-			struct[:body][:query][:bool][:must_not] += 
-				filters.select { |e| !e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisOrigem: filter.value } }  }
-
-		end
 
 
 		struct
