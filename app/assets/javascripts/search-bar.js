@@ -1,7 +1,7 @@
-// if query (q) param has a value, set it on search bar 
+// if find hidden field of serch query on page, set it value on search bar 
 $(document).ready(function(){
-	var query = $.urlParam('q');
-	if(query != null) {
+	var query = $("input[name*=query][type=hidden]").first().val();
+	if(query != null && query != "") {
 		//set value on query field at top
 		$(".input_busca").val(query);
 		//dísplay query form at navbar

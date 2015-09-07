@@ -1,0 +1,141 @@
+<form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	<section class="search-page">
+		<input type="hidden" name="search[query]" value="<%= @search.query %>">
+		<div class="row">
+			<div class="col-md-3 col-lg-2">
+				<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									NCM <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								<% @result.filters.select { |e| e.type == FilterType::Ncm }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+										<%= filter.value  %>
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingTwo">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+									País de origem <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+							<div class="panel-body">
+								<% @result.filters.select { |e| e.type == FilterType::Country }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-md-9 col-lg-10">
+				<%  if @result.products.count == 0 %>
+				<div class="bs-docs" data-content="404">
+					<h1>Não existem resultados para os valores pesquisados!</h1>
+				</div>
+				<% else %>
+				<div class="bs-result">
+					<div class="row">
+						<div class="col-md-5">
+							<p>
+								Buscando por
+								<span id="search-query">
+									<%= @search.query %></span>
+							</p>
+						</div>
+						<div class="col-md-5">
+							<p>Total US<%= number_to_currency(@result.cif_total) %></p>
+						</div>
+						<div class="col-md-2">
+							<select name="order" class="form-control">
+								<option>Sort by:</option>
+								<option>aa</option>
+								<option>aa</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<% @result.products.each do |product| %>
+				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>
+					">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="row">
+								<div class="col-md-5">
+									<div>
+										<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<small>O.</small>
+										<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<small>A.</small>
+									</div>
+								</div>
+								<div class="col-md-7">
+									<h2>
+										<%= product["ncm"] %></h2>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div>
+										<p>
+											<%= product["descricao_detalhada_produto"] %></p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-md-4 cif">
+							<div>
+								<span>FOB / CIF Unit.</span>
+								<span style=""><%= number_to_currency(product["valor_unidade_produto_dolar"]) %> /	<%= product["vl_ift"] %></span>
+							</div>
+							<div>
+								<span>CIF Total</span>
+								<span>
+									<%= number_to_currency(product["CIF"]) %></span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<% end %>
+				<% end %></div>
+		</div>
+	</section>
+</form>

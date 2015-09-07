@@ -1,35 +1,51 @@
 class SearchesController < ApplicationController
 
+  #todo remove to deploy
+  skip_before_filter :verify_authenticity_token, :only => :create
+
   def show
-
-    search = Search.new(:query => params[:q], :user => current_user)
-
-    if search.save
-      
-      raw_results = search_client.search(q: search.query)
-
-      @products = []
-
-      raw_results["hits"]["hits"].each do |hit|
-        @products << hit["_source"]#["descricao_detalhada_produto"]
-      end
-
-    else 
-      #handle the case where it fails....
-    end
-
-    # expires_in 3.minutes, :public => true
 
   end
 
   def create
-    
+
+    @search = Search.new(search_params)
+
+    if @search.save
+
+      #todo move to query builder
+      raw_results = client.search query.build(@search.query, filters)
+        
+      @result = Search::Result.new raw_results, filters
+    else
+      # todo handle the case where it fails....
+    end
+
   end
 
   private
 
-    def search_client
+    def client
       Elasticsearch::Client.new host: 'http://104.197.50.109:9400'
+    end
+
+    def search_params
+      params[:search].permit!
+    end
+
+    def filters_params
+      params[:filters]
+    end
+
+    def filters
+      if filters_params != nil
+        #.select{ |e| e[:type] == FilterType::Ncm }
+        filters_params.map { |e| Search::Filter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
+      end
+    end
+
+    def query
+      Search::QueryBuilder.new
     end
 
 end

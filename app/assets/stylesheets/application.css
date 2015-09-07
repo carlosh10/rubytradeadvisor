@@ -40,7 +40,7 @@
 }
 
 .bs-result p {
-    margin-top: 5px;
+    margin-top: 20px;
     font-size: 21px;
 }
 
@@ -79,13 +79,16 @@
     border-radius: 4px 0 4px 0;
 }
 
-.bs-docs:first-child {
-	background-color: red;
-}
-
 .bs-docs h2 {
     min-width: 107.392px;
     margin-bottom: 0px;
+}
+
+.bs-docs p {
+    overflow: hidden;
+    font-size: 12px;
+    margin-bottom: 0px;
+    min-height: 96px;
 }
 
 
