@@ -21,31 +21,55 @@ class Search::QueryBuilder
 	          } 
 	        }
 		}
-
+		
+		struct = {
+				body: {
+					query: {
+						filtered: {
+							filter: {
+								bool: {
+									should: [
+										{ term: { descricao_detalhada_produto: query }}
+									],
+									must: [
+#										{
+#											terms: {
+#												ncm: []
+#											}
+#										},
+#										{
+#											terms: {
+#												siglaPaisOrigem: []
+#											}
+#										}
+									]
+								}
+							}
+						}
+					},
+					aggs: { 
+						cif: { sum: { field: :CIF } } ,
+						filters: { terms: { field: :ncm}   },
+						countries: { terms: { field: :siglaPaisOrigem }   }
+					} 
+				}
+			}
 		
 
 
 		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Ncm }.any? { |e| e.selected  }
-
-			struct[:body][:query][:bool][:should] += 
-				filters.select { |e| e.selected && e.type == FilterType::Ncm }.map { |filter| { term: { ncm: filter.value } }  }
-
-						#if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Country }.any? { |e| e.selected  }
-						#	struct[:body][:query][:bool][:should] += 
-						#		filters.select { |e| e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisAquisicao: filter.value } }  }
-
-							#struct[:body][:query][:bool][:must_not] += 
-							#	filters.select { |e| !e.selected && e.type == FilterType::Country }.map { |filter| { term: { siglaPaisOrigem: filter.value } }  }
-
-						#end
-
-			#struct[:body][:query][:bool][:must_not] += 
-			#	filters.select { |e| !e.selected && e.type == FilterType::Ncm }.map { |filter| { term: { ncm: filter.value } }  }
-		else
-			struct[:body][:query][:bool][:must] +=  [ { match: { descricao_detalhada_produto: query } } ] 
+			struct[:body][:query][:filtered][:filter][:bool][:must][0] =  { terms: [] } 
+			struct[:body][:query][:filtered][:filter][:bool][:must][0][:terms] = { ncm: 
+				filters.select { |e| e.selected && e.type == FilterType::Ncm }.map { |filter| filter.value  }  }
+			puts struct.to_s.red
 		end			
 
-
+		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Country }.any? { |e| e.selected  }
+			struct[:body][:query][:filtered][:filter][:bool][:must][1] =  { terms: [] } 
+			struct[:body][:query][:filtered][:filter][:bool][:must][1][:terms] = { siglaPaisOrigem:
+				filters.select { |e| e.selected && e.type == FilterType::Country }.map { |filter| filter.value }
+			}
+		end
 
 
 		struct
