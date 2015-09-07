@@ -61,7 +61,6 @@ class Search::QueryBuilder
 			struct[:body][:query][:filtered][:filter][:bool][:must][0] =  { terms: [] } 
 			struct[:body][:query][:filtered][:filter][:bool][:must][0][:terms] = { ncm: 
 				filters.select { |e| e.selected && e.type == FilterType::Ncm }.map { |filter| filter.value  }  }
-			puts struct.to_s.red
 		end			
 
 		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Country }.any? { |e| e.selected  }
