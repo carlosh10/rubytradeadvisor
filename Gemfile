@@ -36,7 +36,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'uikit-sass-rails', git: 'https://github.com/8398a7/uikit-sass-rails'
 # http://migre.me/roo8Q enjoy :)
 gem "twitter-bootstrap-rails"
-
+# fonts and icons
+gem 'font-awesome-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
