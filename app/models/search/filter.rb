@@ -10,7 +10,6 @@ class Search::Filter
 	attr_accessor :hits , :selected, :guid, :value, :type
   
 	def initialize value, hits, selected = false, type = FilterType::Ncm
-
 		self.value = value
 		self.hits =  hits 
 		self.guid = SecureRandom.hex
