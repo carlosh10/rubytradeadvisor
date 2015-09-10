@@ -15,6 +15,8 @@
  *= require_self
  *= require_tree .
  *= require style.css
+ *= require jquery-ui
+ *= require jquery-ui/core
  */
 
 

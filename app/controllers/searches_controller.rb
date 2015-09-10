@@ -14,9 +14,11 @@ class SearchesController < ApplicationController
     if @search.save
 
       #todo move to query builder
-      raw_results = client.search query.build(@search.query, filters)
+      raw_results = client.search query.build(@search.query, filters, range_filters)
         
-      @result = Search::Result.new raw_results, filters
+      @result = Search::Result.new raw_results, filters, range_filters
+
+      @query = query.build(@search.query, filters, range_filters)
     else
       # todo handle the case where it fails....
     end
@@ -39,8 +41,18 @@ class SearchesController < ApplicationController
 
     def filters
       if filters_params != nil
-        #.select{ |e| e[:type] == FilterType::Ncm }
         filters_params.map { |e| Search::Filter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
+      end
+    end
+
+
+    def range_filters_params
+        params[:range_filters]
+    end
+
+    def range_filters
+      if range_filters_params != nil
+       range_filters_params.map { |key , value|  Search::RangeFilter.new value[:min], value[:max], value[:min_range], value[:max_range], key }
       end
     end
 
