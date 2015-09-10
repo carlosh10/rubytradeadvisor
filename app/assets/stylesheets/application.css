@@ -10,10 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require font-awesome
  *= require uikit
  *= require_self
  *= require_tree .
  *= require style.css
+ *= require jquery-ui
+ *= require jquery-ui/core
  */
 
 

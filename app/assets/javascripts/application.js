@@ -16,6 +16,9 @@
 //= require turbolinks
 //= require uikit
 //= require_tree .
+//= require jquery-ui
+//= require jquery-ui/core
+//= require jquery-ui/widget
 
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -33,6 +36,7 @@ function toggleChevron(e) {
         .find("i.indicator")
         .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
 }
+
 
 $('div[role=tablist]').on('hidden.bs.collapse', toggleChevron);
 $('div[role=tablist]').on('shown.bs.collapse', toggleChevron);

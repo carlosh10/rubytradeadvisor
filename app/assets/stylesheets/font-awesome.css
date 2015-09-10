@@ -4,6 +4,7 @@
  */
 /* FONT PATH
  * -------------------------- */
+ /*
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.4.0');
@@ -11,6 +12,17 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url("/assets/fonts/fontawesome-webfont.eot");
+  src: url("/assets/fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/fontawesome-webfont.woff2") format('woff2'), url("/assets/fonts/fontawesome-webfont.woff") format("woff"), url("/assets/fonts/fontawesome-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
