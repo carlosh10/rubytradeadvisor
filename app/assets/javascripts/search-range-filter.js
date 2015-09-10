@@ -14,6 +14,7 @@
         var maxRange = parseInt($(this).attr('data-max-range'));
         var minRange = parseInt($(this).attr('data-min-range'));
     
+
         $(this).slider({
           range: true,
           min: minRange,
@@ -25,6 +26,7 @@
             $(setMax).val(ui.values[1]);
           }
         });
+
         $(display).val( "$" + $(this).slider( "values", 0 ) +
           " - $" + $(this).slider( "values", 1 ) );
         })

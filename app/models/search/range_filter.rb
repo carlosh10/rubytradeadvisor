@@ -1,7 +1,5 @@
 class Search::RangeFilter
 	
-	#include FilterType
-
 	attr_accessor :min , :max, :min_range, :max_range, :type
   
 	def initialize min  = 0, max = 0, min_range = 0, max_range = 0, type = nil

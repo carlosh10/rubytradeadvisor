@@ -1,5 +1,7 @@
 class Search::Result
 	
+	include Search::SelectionFilterType
+
 	attr_accessor :products, :cif_total, :filters, :range_filters, :hits
 
 	def initialize raw_results, filters = nil, range_filters = nil
@@ -11,10 +13,10 @@ class Search::Result
 		#if don't have any filters in request, get it by search raw_results
 	    if filters == nil
 	    	#create ncm filters
-	    	self.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i }
+	    	self.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Search::SelectionFilterType::Ncm }
 	    	#create countiries filters
-	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Filter::FilterType::CountryOrigin }
-			self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Filter::FilterType::CountryAquisition}
+	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Search::SelectionFilterType::CountryOrigin }
+			self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false,  Search::SelectionFilterType::CountryAquisition }
 	    else
 	    	#set ncm filters 
 	    	self.filters = filters
@@ -23,13 +25,13 @@ class Search::Result
 			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryOrigin && e.selected == true  }
 	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryOrigin }
 	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| 
-				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Filter::FilterType::CountryOrigin 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, SelectionFilterType::CountryOrigin 
 			}
 
 			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryAquisition && e.selected == true  }
 	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryAquisition }
 	    	self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| 
-				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Filter::FilterType::CountryAquisition 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, SelectionFilterType::CountryAquisition 
 			}
 
 

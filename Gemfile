@@ -46,6 +46,8 @@ gem 'font-awesome-rails'
 # Application/Http Server
 gem 'unicorn-rails'
 
+gem 'nouislider-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

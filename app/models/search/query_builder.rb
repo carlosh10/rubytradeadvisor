@@ -1,5 +1,7 @@
 class Search::QueryBuilder
 
+  include Search::SelectionFilterType
+
   attr_accessor :struct
 
   def initialize

@@ -1,7 +1,5 @@
-module Filter
-  module FilterType
+module Search::SelectionFilterType
     Ncm = "Ncm"
     CountryOrigin = "CountryOrigin"
     CountryAquisition = "CountryAquisition"
-  end
-end
+ end

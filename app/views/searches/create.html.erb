@@ -17,7 +17,7 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Filter::FilterType::Ncm }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::Ncm }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -45,7 +45,7 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Filter::FilterType::CountryOrigin }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -72,7 +72,7 @@
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Filter::FilterType::CountryAquisition }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -105,7 +105,7 @@
 							  <input type="hidden" name="range_filters[CIF][min_range]" value="<%= @result.range_filters[:CIF][:min_range] %>">
 							  <input type="hidden" name="range_filters[CIF][max_range]" value="<%= @result.range_filters[:CIF][:max_range] %>">
 							  <input type="text" id="amount" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-						      <div class="slider-range"  data-min-range="<%= @result.range_filters[:CIF][:min_range] %>" data-max-range="<%= @result.range_filters[:CIF][:max_range] %>" data-min="<%= @result.range_filters[:CIF][:min] %>" data-max="<%= @result.range_filters[:CIF][:max] %>" data-max-field="input[name='range_filters[CIF][max]']" data-min-field="input[name='range_filters[CIF][min]']" data-display="#amount"></div>
+						      <div id="total-value-slider" class="slider-range"  data-min-range="<%= @result.range_filters[:CIF][:min_range] %>" data-max-range="<%= @result.range_filters[:CIF][:max_range] %>" data-min="<%= @result.range_filters[:CIF][:min] %>" data-max="<%= @result.range_filters[:CIF][:max] %>" data-max-field="input[name='range_filters[CIF][max]']" data-min-field="input[name='range_filters[CIF][min]']" data-display="#amount"></div>
 						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
 							</div>
 						</div>
