@@ -72,8 +72,8 @@
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
-							  <input type="hidden" name="range_filters[cif][min]">
-							  <input type="hidden" name="range_filters[cif][max]">
+							  <input type="hidden" name="range_filters[cif][min]" value="<%= @result.range_filters[:cif][:min] %>">
+							  <input type="hidden" name="range_filters[cif][max]" value="<%= @result.range_filters[:cif][:max] %>">
 							  <input type="hidden" name="range_filters[cif][min_range]" value="<%= @result.range_filters[:cif][:min_range] %>">
 							  <input type="hidden" name="range_filters[cif][max_range]" value="<%= @result.range_filters[:cif][:max_range] %>">
 							  <input type="text" id="amount" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
