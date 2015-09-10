@@ -11,16 +11,26 @@ class Search::Result
 	    	#create ncm filters
 	    	self.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i }
 	    	#create countiries filters
-	    	self.filters += raw_results["aggregations"]["countries"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i, false, FilterType::Country }
+	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i, false, FilterType::CountryOrigin }
+			self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i, false, FilterType::CountryAquisition}
 	    else
 	    	#set ncm filters 
 	    	self.filters = filters
 	    	#update contry filters
-			selected_countries = self.filters.select { |e| e.type == FilterType::Country && e.selected == true  }
-	    	self.filters.delete_if { |e| e.type == FilterType::Country }
-	    	self.filters += raw_results["aggregations"]["countries"]["buckets"].map { |e| 
-				Search::Filter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, FilterType::Country 
+
+			selected_countries = self.filters.select { |e| e.type == FilterType::CountryOrigin && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == FilterType::CountryOrigin }
+	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| 
+				Search::Filter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, FilterType::CountryOrigin 
 			}
+
+			selected_countries = self.filters.select { |e| e.type == FilterType::CountryAquisition && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == FilterType::CountryAquisition }
+	    	self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| 
+				Search::Filter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, FilterType::CountryAquisition 
+			}
+
+
 	    end
 
 #		self.range_filters = Hash.new

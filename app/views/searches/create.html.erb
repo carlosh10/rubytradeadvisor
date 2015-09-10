@@ -44,7 +44,7 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == FilterType::Country }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == FilterType::CountryOrigin }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -66,11 +66,40 @@
 						<div class="panel-heading" role="tab" id="headingThree">
 							<h4 class="panel-title">
 								<a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-									Valor total <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+									País de Aquisição <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
 								</a>
 							</h4>
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+							<div class="panel-body">
+								<% @result.filters.select { |e| e.type == FilterType::CountryAquisition }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingThree">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+									Valor total <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
 							  <input type="hidden" name="range_filters[cif][min]" value="<%= @result.range_filters[:cif][:min] %>">
 							  <input type="hidden" name="range_filters[cif][max]" value="<%= @result.range_filters[:cif][:max] %>">

@@ -1,6 +1,7 @@
 module FilterType
 	Ncm = "NCM"
-	Country = "CONTRY"
+	CountryOrigin = "CONTRY-ORIGIN"
+	CountryAquisition = "CONTRY-AQUISITION"
 end
 
 class Search::Filter
