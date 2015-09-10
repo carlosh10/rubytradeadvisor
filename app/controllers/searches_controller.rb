@@ -1,10 +1,7 @@
 class SearchesController < ApplicationController
 
-  #todo remove to deploy
-  skip_before_filter :verify_authenticity_token, :only => :create
-
   def show
-
+    redirect_to '/'
   end
 
   def create
@@ -12,12 +9,8 @@ class SearchesController < ApplicationController
     @search = Search.new(search_params)
 
     if @search.save
-
-      #todo move to query builder
       raw_results = client.search query.build(@search.query, filters, range_filters)
-        
       @result = Search::Result.new raw_results, filters, range_filters
-
       @query = query.build(@search.query, filters, range_filters)
     else
       # todo handle the case where it fails....
@@ -41,7 +34,7 @@ class SearchesController < ApplicationController
 
     def filters
       if filters_params != nil
-        filters_params.map { |e| Search::Filter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
+        filters_params.map { |e| Search::SelectionFilter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
       end
     end
 

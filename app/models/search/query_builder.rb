@@ -1,54 +1,59 @@
 class Search::QueryBuilder
-	
-	def build query, filters = nil, range_filters = nil 
 
-		struct = {
-				body: {
-					query: {
-						filtered: {
-							filter: {
-								bool: {
-									should: [{ term: { descricao_detalhada_produto: query }}],
-									must: []
-								}
-							}
-						}
-					},
-					aggs: { 
-						cif: { sum: { field: :CIF } } ,
-						filters: { terms: { field: :ncm}   },
-						countries_origin: { terms: { field: :siglaPaisOrigem }   },
-						countries_aquisition: { terms: { field: :siglaPaisAquisicao }   },
-						max_cif: { max: { field: :CIF } }
-					} 
-				}
-			}
-		
-		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::Ncm }.any? { |e| e.selected  }
-			struct[:body][:query][:filtered][:filter][:bool][:must][0] =  { terms: [] } 
-			struct[:body][:query][:filtered][:filter][:bool][:must][0][:terms] = { ncm: 
-				filters.select { |e| e.selected && e.type == FilterType::Ncm }.map { |filter| filter.value  }  }
-		end			 
+  include Filter
 
-		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::CountryOrigin }.any? { |e| e.selected  }
-			struct[:body][:query][:filtered][:filter][:bool][:must][1] =  { terms: [] } 
-			struct[:body][:query][:filtered][:filter][:bool][:must][1][:terms] = { siglaPaisOrigem:
-				filters.select { |e| e.selected && e.type == FilterType::CountryOrigin }.map { |filter| filter.value }}
-		end
+  attr_accessor :struct
 
+  def initialize
+    self.struct = {
+      body: {
+        query: {
+          filtered: {
+            filter: {
+              bool: {
+                should: [],
+                must: []
+              }
+            }
+          }
+        },
+        aggs: {
+          cif: { sum: { field: :CIF } } ,
+          filters: { terms: { field: :ncm}   },
+          countries_origin: { terms: { field: :siglaPaisOrigem }   },
+          countries_aquisition: { terms: { field: :siglaPaisAquisicao }   },
+          max_cif: { max: { field: :CIF } }
+        }
+      }
+    }
+  end
 
-		if filters != nil && filters.select { |e| e.selected && e.type == FilterType::CountryAquisition }.any? { |e| e.selected  }
-			struct[:body][:query][:filtered][:filter][:bool][:must][1] =  { terms: [] } 
-			struct[:body][:query][:filtered][:filter][:bool][:must][1][:terms] = { siglaPaisAquisicao:
-				filters.select { |e| e.selected && e.type == FilterType::CountryAquisition }.map { |filter| filter.value }}
-		end
+  def with_index_of type
+    return case type
+    when FilterType::Ncm then "ncm"
+    when FilterType::CountryOrigin  then "siglaPaisOrigem"
+    when FilterType::CountryAquisition then "siglaPaisAquisicao"
+    else "NotFound"
+    end
+  end
 
+  def build query, filters = nil, range_filters = nil
 
-		unless range_filters == nil
-			struct[:body][:query][:filtered][:filter][:bool][:must]  += range_filters.map { |e| e.build  }
-		end
+    self.struct[:body][:query][:filtered][:filter][:bool][:should] << { term: { descricao_detalhada_produto: query.downcase   }}
 
+    unless filters == nil
+      FilterType.constants.each do |type|
+        if filters.select { |e| e.type.intern == type }.any? { |e| e.selected  }
+          self.struct[:body][:query][:filtered][:filter][:bool][:must] <<
+            { terms:{ with_index_of(type.to_s) =>  filters.select { |e| e.selected && e.type.intern == type }.map { |filter| filter.value } } }
+        end
+      end
+    end
 
-		struct
-	end
+    unless range_filters == nil
+      self.struct[:body][:query][:filtered][:filter][:bool][:must]  += range_filters.map { |e| e.build  }
+    end
+
+    self.struct
+  end
 end

@@ -1,6 +1,6 @@
 class Search::RangeFilter
 	
-	include FilterType
+	#include FilterType
 
 	attr_accessor :min , :max, :min_range, :max_range, :type
   
@@ -15,7 +15,7 @@ class Search::RangeFilter
 	def build
 		{ range: 
 				{ 
-					CIF: { 
+					type.to_s => { 
 						gte: min.to_s, 
 						lte: max.to_s
 					} 

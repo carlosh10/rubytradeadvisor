@@ -1,59 +1,52 @@
 class Search::Result
 	
-	attr_accessor :products, :cif_total, :filters, :range_filters
+	attr_accessor :products, :cif_total, :filters, :range_filters, :hits
 
-	def initialize raw_results, filters = nil, range_filters
+	def initialize raw_results, filters = nil, range_filters = nil
+		
+		self.hits = raw_results["hits"]["total"]
 		self.products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
 	    self.cif_total = raw_results["aggregations"]["cif"]["value"]
 	    
 		#if don't have any filters in request, get it by search raw_results
 	    if filters == nil
 	    	#create ncm filters
-	    	self.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i }
+	    	self.filters = raw_results["aggregations"]["filters"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i }
 	    	#create countiries filters
-	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i, false, FilterType::CountryOrigin }
-			self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| Search::Filter.new e["key"], e["doc_count"].to_i, false, FilterType::CountryAquisition}
+	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Filter::FilterType::CountryOrigin }
+			self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, Filter::FilterType::CountryAquisition}
 	    else
 	    	#set ncm filters 
 	    	self.filters = filters
 	    	#update contry filters
 
-			selected_countries = self.filters.select { |e| e.type == FilterType::CountryOrigin && e.selected == true  }
-	    	self.filters.delete_if { |e| e.type == FilterType::CountryOrigin }
+			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryOrigin && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryOrigin }
 	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| 
-				Search::Filter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, FilterType::CountryOrigin 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Filter::FilterType::CountryOrigin 
 			}
 
-			selected_countries = self.filters.select { |e| e.type == FilterType::CountryAquisition && e.selected == true  }
-	    	self.filters.delete_if { |e| e.type == FilterType::CountryAquisition }
+			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryAquisition && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryAquisition }
 	    	self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| 
-				Search::Filter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, FilterType::CountryAquisition 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Filter::FilterType::CountryAquisition 
 			}
 
 
 	    end
 
-#		self.range_filters = Hash.new
-#		self.range_filters[:cif] = Hash.new
-#		self.range_filters[:cif][:min] = 0
-#		self.range_filters[:cif][:max] = raw_results["aggregations"]["max_cif"]["value"]
-#		self.range_filters[:cif][:min_range] = 0
-#		self.range_filters[:cif][:max_range] = raw_results["aggregations"]["max_cif"]["value"]
-
 		if range_filters == nil 
-			c = Search::RangeFilter.new 0, raw_results["aggregations"]["max_cif"]["value"], 0, raw_results["aggregations"]["max_cif"]["value"], "cif"
+			c = Search::RangeFilter.new 0, raw_results["aggregations"]["max_cif"]["value"], 0, raw_results["aggregations"]["max_cif"]["value"], "CIF"
 		else
-			c = range_filters.bsearch { |e| e.type == "cif" }
+			c = range_filters.bsearch { |e| e.type == "CIF" }
 		end
 
 		self.range_filters = Hash.new
-		self.range_filters[:cif] = Hash.new
-		self.range_filters[:cif][:min] = c.min
-		self.range_filters[:cif][:max] = c.max
-		self.range_filters[:cif][:min_range] = c.min_range
-		self.range_filters[:cif][:max_range] = c.max_range
-
-
+		self.range_filters[:CIF] = Hash.new
+		self.range_filters[:CIF][:min] = c.min
+		self.range_filters[:CIF][:max] = c.max
+		self.range_filters[:CIF][:min_range] = c.min_range
+		self.range_filters[:CIF][:max_range] = c.max_range
 
 	end
 
