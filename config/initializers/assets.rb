@@ -5,7 +5,7 @@ Rails.application.config.assets.version = '1.1'
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/fonts')
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/css/fonts')
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/css/fonts/lato')
-
+Rails.application.config.assets.precompile += %w( jquery.ui.touch-punch.js )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 

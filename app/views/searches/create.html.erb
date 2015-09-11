@@ -1,5 +1,7 @@
 <form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
+	
 	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	
 	<section class="search-page">
 		<input type="hidden" name="search[query]" value="<%= @search.query %>">
 		<div class="row">
@@ -15,16 +17,15 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == FilterType::Ncm }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::Ncm }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
-										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
 										<%= filter.value  %>
 										<span class="badge">
-											<%= filter.hits %></span>
+										<%= filter.hits %></span>
 									</div>
 								<% end %>
 							</div>
@@ -44,12 +45,11 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == FilterType::Country }.each do |filter| %>
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
-										<input type="hidden" name="filters[][guid]" value="<%= filter.guid %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
 									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
 										<span class="badge">
@@ -66,23 +66,231 @@
 						<div class="panel-heading" role="tab" id="headingThree">
 							<h4 class="panel-title">
 								<a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-									Valor total <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+									País de Aquisição <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
 								</a>
 							</h4>
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
-							  <input type="hidden" name="range_filters[cif][min]" value="<%= @result.range_filters[:cif][:min] %>">
-							  <input type="hidden" name="range_filters[cif][max]" value="<%= @result.range_filters[:cif][:max] %>">
-							  <input type="hidden" name="range_filters[cif][min_range]" value="<%= @result.range_filters[:cif][:min_range] %>">
-							  <input type="hidden" name="range_filters[cif][max_range]" value="<%= @result.range_filters[:cif][:max_range] %>">
-							  <input type="text" id="amount" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-						      <div class="slider-range"  data-min-range="<%= @result.range_filters[:cif][:min_range] %>" data-max-range="<%= @result.range_filters[:cif][:max_range] %>" data-min="<%= @result.range_filters[:cif][:min] %>" data-max="<%= @result.range_filters[:cif][:max] %>" data-max-field="input[name='range_filters[cif][max]']" data-min-field="input[name='range_filters[cif][min]']" data-display="#amount"></div>
-						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
+									<div>
+										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+										<span class="badge">
+											<%= filter.hits %></span>
+									</div>
+								<% end %>
 							</div>
 						</div>
 					</div>
 				</div>
+
+
+				<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingFour">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+									Valor total <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+
+							<div class="panel-body">
+
+							<% if @result.range_filters[Search::RangeFilterType::TotalValue.to_s] != nil %>
+								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min_range %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max_range %>">
+
+							  <input type="text" id="amount" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
+
+						      <div id="total-value-slider" 
+						      		class="slider-range"  
+						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min_range %>" 
+						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max_range %>" 
+						      		data-min="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min %>" 
+						      		data-max="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max %>" 
+						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max]']" 
+						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][min]']" 
+						      		data-display="#amount" 
+						      		data-display-prefix="$">
+						      </div>
+						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+
+						      		<% else %>
+						      			<%= @result.range_filters %>
+						      		<% end %>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="panel-group" id="accordion5" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingFive">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+									Valor unitário <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+
+							<div class="panel-body">
+
+							<% if @result.range_filters[Search::RangeFilterType::UnityValue.to_s] != nil %>
+								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min_range %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max_range %>">
+
+							  <input type="text" id="amount-unity" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
+
+						      <div id="total-value-slider" 
+						      		class="slider-range"  
+						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min_range %>" 
+						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max_range %>" 
+						      		data-min="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min %>" 
+						      		data-max="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max %>" 
+						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max]']" 
+						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][min]']" 
+						      		data-display="#amount-unity" 
+						      		data-display-prefix="$">
+						      </div>
+						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+
+						      		<% else %>
+						      			<%= @result.range_filters %>
+						      		<% end %>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group" id="accordion6" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingSix">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+									Quantidade Comercializada <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix">
+
+							<div class="panel-body">
+
+							<% if @result.range_filters[Search::RangeFilterType::Quantity.to_s] != nil %>
+								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min_range %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max_range %>">
+
+							  <input type="text" id="amount-quantity" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
+
+						      <div id="total-value-slider" 
+						      		class="slider-range"  
+						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min_range %>" 
+						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max_range %>" 
+						      		data-min="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min %>" 
+						      		data-max="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max %>" 
+						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max]']" 
+						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][min]']" 
+									data-display="#amount-quantity"
+									data-display-prefix="un. " >
+						      </div>
+						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+
+						      		<% else %>
+						      			<%= @result.range_filters %>
+						      		<% end %>
+
+							</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+
+
+				<div class="panel-group" id="accordion7" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingSeven">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+									Quantidade Aduaneira <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseSeven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+
+							<div class="panel-body">
+
+							<% if @result.range_filters[Search::RangeFilterType::Customs.to_s] != nil %>
+								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min_range %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max_range %>">
+
+							  <input type="text" id="amount-Customs" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
+
+						      <div id="total-value-slider" 
+						      		class="slider-range"  
+						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min_range %>" 
+						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max_range %>" 
+						      		data-min="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min %>" 
+						      		data-max="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max %>" 
+						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max]']" 
+						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::Customs.to_s %>][min]']" 
+									data-display="#amount-Customs"
+									data-display-prefix="un. " >
+						      </div>
+						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+
+						      		<% else %>
+						      			<%= @result.range_filters %>
+						      		<% end %>
+
+							</div>
+
+						</div>
+
+						
+
+					</div>
+				</div>
+
+
 
 			</div>
 
@@ -97,8 +305,8 @@
 						<div class="col-md-5">
 							<p>
 								Buscando por
-								<span id="search-query">
-									<%= @search.query %></span>
+								<span>
+									<%= @search.query %>,</span> total <%= @result.hits %> hits.
 							</p>
 						</div>
 						<div class="col-md-5">
@@ -166,3 +374,5 @@
 	<p><%= @result.range_filters %></p>
 
 	<p><%= @query %></p>
+
+	<p><%= @filters %></p>
