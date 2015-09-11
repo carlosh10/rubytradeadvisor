@@ -1,28 +1,18 @@
 class Search::QueryBuilder
 
   include Search::SelectionFilterType
+  include Search::RangeFilterType
 
   attr_accessor :struct
 
   def initialize
-    self.struct = {
-      body: {
-        query: {
-          filtered: {
-            filter: {
-              bool: {
-                should: [],
-                must: []
-              }
-            }
-          }
-        },
+    self.struct = { body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
         aggs: {
           cif: { sum: { field: :CIF } } ,
           Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
           Search::SelectionFilterType::CountryOrigin => { terms: { field: :siglaPaisOrigem }   },
           Search::SelectionFilterType::CountryAquisition => { terms: { field: :siglaPaisAquisicao }   },
-          max_cif: { max: { field: :CIF } }
+          Search::RangeFilterType::TotalValue => { max: { field: :CIF } }
         }
       }
     }
@@ -33,6 +23,7 @@ class Search::QueryBuilder
     when Search::SelectionFilterType::Ncm then "ncm"
     when Search::SelectionFilterType::CountryOrigin  then "siglaPaisOrigem"
     when Search::SelectionFilterType::CountryAquisition then "siglaPaisAquisicao"
+    when "TotalValue" then "CIF"
     else "NotFound"
     end
   end
@@ -51,7 +42,7 @@ class Search::QueryBuilder
     end
 
     unless range_filters == nil
-      self.struct[:body][:query][:filtered][:filter][:bool][:must]  += range_filters.map { |e| e.build  }
+      self.struct[:body][:query][:filtered][:filter][:bool][:must]  += range_filters.map { |filter| filter.build with_index_of filter.type  }
     end
 
     self.struct

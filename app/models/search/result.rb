@@ -1,11 +1,13 @@
 class Search::Result
 
   include Search::SelectionFilterType
+  include Search::RangeFilterType
 
   attr_accessor :products, :cif_total, :filters, :range_filters, :hits
 
-  def initialize raw_results, filters = nil, range_filters = nil
+  def initialize raw_results, filters = [], range_filters = []
 
+    self.range_filters = Hash.new
     self.hits = raw_results["hits"]["total"]
     self.products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
     self.cif_total = raw_results["aggregations"]["cif"]["value"]
@@ -17,18 +19,16 @@ class Search::Result
       update_selection_filters raw_results, filters
     end
 
-    if range_filters == nil
-      c = Search::RangeFilter.new 0, raw_results["aggregations"]["max_cif"]["value"], 0, raw_results["aggregations"]["max_cif"]["value"], "CIF"
-    else
-      c = range_filters.bsearch { |e| e.type == "CIF" }
-    end
 
-    self.range_filters = Hash.new
-    self.range_filters[:CIF] = Hash.new
-    self.range_filters[:CIF][:min] = c.min
-    self.range_filters[:CIF][:max] = c.max
-    self.range_filters[:CIF][:min_range] = c.min_range
-    self.range_filters[:CIF][:max_range] = c.max_range
+    if range_filters == nil
+      Search::RangeFilterType.constants.each do |type|
+        self.range_filters[type.to_s] = Search::RangeFilter.new 0, raw_results["aggregations"][type.to_s]["value"], 0, raw_results["aggregations"][type.to_s]["value"], type
+      end
+    else
+      range_filters.each do |range_filter|
+        self.range_filters[range_filter.type] = range_filter
+      end
+    end
 
   end
 
@@ -40,9 +40,9 @@ class Search::Result
     self.filters = []
 
     Search::SelectionFilterType.constants.each do |type|
-        self.filters += results["aggregations"][type.to_s]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, type.to_s }
+      self.filters += results["aggregations"][type.to_s]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, type.to_s }
     end
-    
+
   end
 
   def update_selection_filters results, filters

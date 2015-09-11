@@ -10,10 +10,10 @@ class Search::RangeFilter
 		self.type = type
 	end
 
-	def build
+	def build index = nil
 		{ range: 
 				{ 
-					type.to_s => { 
+					(index || type.to_s) => { 
 						gte: min.to_s, 
 						lte: max.to_s
 					} 

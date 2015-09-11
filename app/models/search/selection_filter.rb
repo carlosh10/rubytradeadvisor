@@ -1,6 +1,5 @@
 class Search::SelectionFilter
 
-  #include Filter
   attr_accessor :selected, :hits, :value, :type
 
   def initialize value, hits, selected = false, type = nil

@@ -98,16 +98,40 @@
 								</a>
 							</h4>
 						</div>
+
 						<div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+
 							<div class="panel-body">
-							  <input type="hidden" name="range_filters[CIF][min]" value="<%= @result.range_filters[:CIF][:min] %>">
-							  <input type="hidden" name="range_filters[CIF][max]" value="<%= @result.range_filters[:CIF][:max] %>">
-							  <input type="hidden" name="range_filters[CIF][min_range]" value="<%= @result.range_filters[:CIF][:min_range] %>">
-							  <input type="hidden" name="range_filters[CIF][max_range]" value="<%= @result.range_filters[:CIF][:max_range] %>">
+
+							<% if @result.range_filters[Search::RangeFilterType::TotalValue.to_s] != nil %>
+								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min_range %>">
+
+							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max_range %>">
+
 							  <input type="text" id="amount" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-						      <div id="total-value-slider" class="slider-range"  data-min-range="<%= @result.range_filters[:CIF][:min_range] %>" data-max-range="<%= @result.range_filters[:CIF][:max_range] %>" data-min="<%= @result.range_filters[:CIF][:min] %>" data-max="<%= @result.range_filters[:CIF][:max] %>" data-max-field="input[name='range_filters[CIF][max]']" data-min-field="input[name='range_filters[CIF][min]']" data-display="#amount"></div>
+
+						      <div id="total-value-slider" 
+						      		class="slider-range"  
+						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min_range %>" 
+						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max_range %>" 
+						      		data-min="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min %>" 
+						      		data-max="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max %>" 
+						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max]']" 
+						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][min]']" 
+						      		data-display="#amount" >
+						      </div>
 						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+
+						      		<% else %>
+						      			<%= @result.range_filters %>
+						      		<% end %>
+
 							</div>
+
 						</div>
 					</div>
 				</div>
