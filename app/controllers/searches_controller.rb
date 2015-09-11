@@ -11,7 +11,6 @@ class SearchesController < ApplicationController
     if @search.save
       raw_results = client.search query.build(@search.query, filters, range_filters)
       @result = Search::Result.new raw_results, filters, range_filters
-      @query = query.build(@search.query, filters, range_filters)
     else
       # todo handle the case where it fails....
     end
