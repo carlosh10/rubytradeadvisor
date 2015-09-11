@@ -6,7 +6,9 @@ class Search::QueryBuilder
   attr_accessor :struct
 
   def initialize
-    self.struct = { body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
+    self.struct = { 
+    	body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
+    	size: "30",
         aggs: {
 	        	cif: { sum: { field: :CIF } } ,
 	            Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
