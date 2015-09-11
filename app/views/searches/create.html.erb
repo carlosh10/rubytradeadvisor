@@ -46,7 +46,7 @@
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
 								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
-									<div>
+									<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
@@ -73,7 +73,7 @@
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
 								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
-									<div>
+									<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
@@ -302,9 +302,7 @@
 					<div class="row">
 						<div class="col-md-5">
 							<p>
-								Buscando por
-								<span>
-									<%= @search.query %>,</span> total <%= @result.hits %> hits.
+								Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
 							</p>
 						</div>
 						<div class="col-md-5">
@@ -323,33 +321,34 @@
 				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>
 					">
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-5">
 									<div>
-										<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
-										<small>O.</small>
+										<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
+											<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
+										</span>
+										<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
 										<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
-										<small>A.</small>
+										</span>
 									</div>
 								</div>
 								<div class="col-md-7">
-									<h2>
-										<%= product["ncm"] %></h2>
+									<span><%= product["ncm"] %></span>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<div>
-										<p>
-											<%= product["descricao_detalhada_produto"] %></p>
+										<p><%= product["descricao_detalhada_produto"].truncate(95, separator: /\s/) %></p>
 									</div>
 								</div>
 							</div>
 
 						</div>
 
-						<div class="col-md-4 cif">
+						<div class="col-md-5 cif">
+						<!--
 							<div>
 								<span>FOB / CIF Unit.</span>
 								<span style=""><%= number_to_currency(product["valor_unidade_produto_dolar"]) %> /	<%= product["vl_ift"] %></span>
@@ -358,6 +357,13 @@
 								<span>CIF Total</span>
 								<span>
 									<%= number_to_currency(product["CIF"]) %></span>
+							</div>
+							quantidade_comercializada_produto
+							-->
+							<div>
+							<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
+							<span><strong><%= number_to_currency(product["vl_ift"]) %></strong><span>FOB UNIT.</span></span>
+							<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
 							</div>
 						</div>
 

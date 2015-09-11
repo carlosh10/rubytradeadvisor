@@ -8,7 +8,7 @@ class Search::QueryBuilder
   def initialize
     self.struct = { 
     	body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
-    	size: "30",
+    	size: "36",
         aggs: {
 	        	cif: { sum: { field: :CIF } } ,
 	            Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },

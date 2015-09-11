@@ -82,16 +82,13 @@
     border-radius: 4px 0 4px 0;
 }
 
-.bs-docs h2 {
-    min-width: 107.392px;
-    margin-bottom: 0px;
-}
 
 .bs-docs p {
     overflow: hidden;
-    font-size: 12px;
+    font-size: 10px;
+    margin-top: 5px;
     margin-bottom: 0px;
-    min-height: 96px;
+    min-height: 50px;
 }
 
 
@@ -99,13 +96,15 @@
     margin-bottom: 15px;
 }
 
-.bs-docs .cif div span {
-    font-size:10px;
+.bs-docs .cif div > span {
+    font-size:12px;
+    margin-bottom: 6px;
+    display: block;
 }
 
-.bs-docs .cif div span:first-child {
-    font-size: 14px;
-    display: block;
+
+.bs-docs .cif div > span > span {
+    float: right;
 }
 
 
