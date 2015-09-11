@@ -49,6 +49,9 @@ gem 'unicorn-rails'
 # gem 'nouislider-rails'
 gem 'touchpunch-rails'
 
+# Monitor application in realtime
+gem 'newrelic_rpm'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
