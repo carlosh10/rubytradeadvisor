@@ -19,9 +19,9 @@ class Search::QueryBuilder
         },
         aggs: {
           cif: { sum: { field: :CIF } } ,
-          filters: { terms: { field: :ncm}   },
-          countries_origin: { terms: { field: :siglaPaisOrigem }   },
-          countries_aquisition: { terms: { field: :siglaPaisAquisicao }   },
+          Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
+          Search::SelectionFilterType::CountryOrigin => { terms: { field: :siglaPaisOrigem }   },
+          Search::SelectionFilterType::CountryAquisition => { terms: { field: :siglaPaisAquisicao }   },
           max_cif: { max: { field: :CIF } }
         }
       }
