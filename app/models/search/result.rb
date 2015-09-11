@@ -22,16 +22,16 @@ class Search::Result
 	    	self.filters = filters
 	    	#update contry filters
 
-			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryOrigin && e.selected == true  }
-	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryOrigin }
+			selected_countries = self.filters.select { |e| e.type == Search::SelectionFilterType::CountryOrigin && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == Search::SelectionFilterType::CountryOrigin }
 	    	self.filters += raw_results["aggregations"]["countries_origin"]["buckets"].map { |e| 
-				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, SelectionFilterType::CountryOrigin 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Search::SelectionFilterType::CountryOrigin 
 			}
 
-			selected_countries = self.filters.select { |e| e.type == Filter::FilterType::CountryAquisition && e.selected == true  }
-	    	self.filters.delete_if { |e| e.type == Filter::FilterType::CountryAquisition }
+			selected_countries = self.filters.select { |e| e.type == Search::SelectionFilterType::CountryAquisition && e.selected == true  }
+	    	self.filters.delete_if { |e| e.type == Search::SelectionFilterType::CountryAquisition }
 	    	self.filters += raw_results["aggregations"]["countries_aquisition"]["buckets"].map { |e| 
-				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, SelectionFilterType::CountryAquisition 
+				Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, Search::SelectionFilterType::CountryAquisition 
 			}
 
 

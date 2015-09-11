@@ -30,9 +30,9 @@ class Search::QueryBuilder
 
   def with_index_of type
     return case type
-    when FilterType::Ncm then "ncm"
-    when FilterType::CountryOrigin  then "siglaPaisOrigem"
-    when FilterType::CountryAquisition then "siglaPaisAquisicao"
+    when Search::SelectionFilterType::Ncm then "ncm"
+    when Search::SelectionFilterType::CountryOrigin  then "siglaPaisOrigem"
+    when Search::SelectionFilterType::CountryAquisition then "siglaPaisAquisicao"
     else "NotFound"
     end
   end
@@ -42,7 +42,7 @@ class Search::QueryBuilder
     self.struct[:body][:query][:filtered][:filter][:bool][:should] << { term: { descricao_detalhada_produto: query.downcase   }}
 
     unless filters == nil
-      FilterType.constants.each do |type|
+      Search::SelectionFilterType.constants.each do |type|
         if filters.select { |e| e.type.intern == type }.any? { |e| e.selected  }
           self.struct[:body][:query][:filtered][:filter][:bool][:must] <<
             { terms:{ with_index_of(type.to_s) =>  filters.select { |e| e.selected && e.type.intern == type }.map { |filter| filter.value } } }
