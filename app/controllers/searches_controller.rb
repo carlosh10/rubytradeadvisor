@@ -7,6 +7,7 @@ class SearchesController < ApplicationController
   def create
 
     @search = Search.new(search_params)
+    @search.user = current_user
 
     if @search.save
       raw_results = client.search query.build(@search.query, filters, range_filters)

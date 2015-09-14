@@ -30,11 +30,16 @@
 
                 <div class="uk-navbar-nav menu_top">
                     <ul class="menu_links">
-                        <li>
-                       <% if user_signed_in? %>
-                          <div>Signed in as... <%= current_user.email %></div>
+                        <li style="text-align: center;">
+                        <% if user_signed_in? %>
+                          <!--<div style="color:white;font-family:'latolight';padding: 5px 15px;margin:10px 0px;">Logado como <%= current_user.email %></div>-->
+                          <!--<a class="uk-button" disabled>Olá <%= current_user.email %>!</a>-->
+                          <a style="float: left; visibility: hidden" class="uk-button">&nbsp;</a>
+                          <span class="signed-in">
+                          Olá <%= current_user.email %>!</span></br>
+                          <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")  %> 
+                          </span>
                         <% else %>
-                        <%=  user_signed_in? %>
                              <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
                         <% end %>
                         </li>
@@ -46,6 +51,12 @@
 
         </nav>
     </header>
+
+<div style="display:none;">
+  <% if notice %>
+    <p class="notify alert alert-success"><%= notice %></p>
+  <% end %>
+</div>
 
   <%= yield %>
 
