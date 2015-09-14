@@ -9,8 +9,9 @@
  <header data-uk-sticky="{top:-600, animation: 'uk-animation-slide-top'}" class="topo_site dark_blue uk-width-1-1" style="margin: 0px;">
         <nav>
             <div class="uk-container uk-container-center">
+
                 <a class="uk-navbar-brand logo_box uk-hidden-small" href="/">
-               <%= image_tag "logo.svg", class: "uk-margin-remove" %>
+                    <%= image_tag "logo.svg", class: "uk-margin-remove" %>
                 </a>
 
                 <div class="busca_topo uk-hidden uk-width-medium-6-10">
@@ -30,7 +31,12 @@
                 <div class="uk-navbar-nav menu_top">
                     <ul class="menu_links">
                         <li>
-                            <a class="uk-button" href="#"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
+                       <% if user_signed_in? %>
+                          <div>Signed in as... <%= current_user.email %></div>
+                        <% else %>
+                        <%=  user_signed_in? %>
+                             <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
+                        <% end %>
                         </li>
                     </ul>
 
