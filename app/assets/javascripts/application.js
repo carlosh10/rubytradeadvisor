@@ -40,3 +40,19 @@ function toggleChevron(e) {
 
 $('div[role=tablist]').on('hidden.bs.collapse', toggleChevron);
 $('div[role=tablist]').on('shown.bs.collapse', toggleChevron);
+
+$(document).ready(function(){
+
+    $(".notify").each(function(){
+
+        var message = $(this).text()
+
+        UIkit.notify({
+            message : message,
+            status  : 'alert',
+            timeout : 5000,
+            pos     : 'top-center'
+        });
+
+    });
+});

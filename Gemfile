@@ -13,6 +13,8 @@ gem 'font_assets'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+# Use PostgreSQL as the database for Active Record
+gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -48,6 +50,9 @@ gem 'unicorn-rails'
 
 # gem 'nouislider-rails'
 gem 'touchpunch-rails'
+
+# Monitor application in realtime
+gem 'newrelic_rpm'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

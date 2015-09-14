@@ -9,20 +9,47 @@ default: &default
   pool: 5
   timeout: 5000
 
+#development:
+#  <<: *default
+#  database: db/development.sqlite3
 development:
-  <<: *default
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: tradeadvisor
+  pool: 5
+  timeout: 5000
+  username: alvaro
+  password:
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test: &test
-  <<: *default
-  database: db/test.sqlite3
+#test: &test
+#  <<: *default
+#  database: db/test.sqlite3
 
-production:
-  <<: *default
-  database: db/production.sqlite3
+test: &test
+  adapter: postgresql
+  encoding: unicode
+  database: tradeadvisor_test
+  pool: 5
+  timeout: 5000
+  username: alvaro
+  password:
+
+
+#production:
+#  <<: *default
+#  database: db/production.sqlite3
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: tradeadvisor_production
+  pool: 5
+  timeout: 5000
+  username: alvaro
+  password:
 
 cucumber:
   <<: *test

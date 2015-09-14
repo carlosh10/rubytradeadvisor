@@ -6,9 +6,11 @@ class Search::QueryBuilder
   attr_accessor :struct
 
   def initialize
-    self.struct = { body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
+    self.struct = { 
+    	body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
+    	size: "36",
         aggs: {
-	        	cif: { sum: { field: :CIF } } ,
+	        	  cif: { sum: { field: :CIF } } ,
 	            Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
 	            Search::SelectionFilterType::CountryOrigin => { terms: { field: :siglaPaisOrigem }   },
 	            Search::SelectionFilterType::CountryAquisition => { terms: { field: :siglaPaisAquisicao }   },
@@ -36,7 +38,7 @@ class Search::QueryBuilder
 
   def build query, filters = nil, range_filters = nil
 
-    self.struct[:body][:query][:filtered][:filter][:bool][:should] << { term: { descricao_detalhada_produto: query.downcase   }}
+    self.struct[:body][:query][:filtered][:filter][:bool][:should]   <<  { terms: { descricao_detalhada_produto: query.downcase.split(" ") , "execution" => "and", "_cache" => "true" }}
 
     unless filters == nil
       build_selection_filters query, filters

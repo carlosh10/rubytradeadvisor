@@ -17,6 +17,8 @@ module Rubytradeadvisor
         true
       end
     }
+
+    config.i18n.default_locale = :'pt-BR'
     
     # config.assets.prefix = ''
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
