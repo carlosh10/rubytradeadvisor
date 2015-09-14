@@ -38,9 +38,18 @@ test: &test
   password:
 
 
-production:
-  <<: *default
-  database: db/production.sqlite3
+#production:
+#  <<: *default
+#  database: db/production.sqlite3
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: tradeadvisor_production
+  pool: 5
+  timeout: 5000
+  username: alvaro
+  password:
 
 cucumber:
   <<: *test
