@@ -10,8 +10,9 @@ class SearchesController < ApplicationController
     @search.user = current_user
 
     if @search.save
-      raw_results = client.search query.build(@search.query, filters, range_filters)
-      @result = Search::Result.new raw_results, filters, range_filters
+      query_builder = Search::QueryBuilder.new
+      raw_results = client.search( query_builder.build(@search.query, selection_filters, range_filters, pagination) )
+      @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination)
     else
       # todo handle the case where it fails....
     end
@@ -32,7 +33,7 @@ class SearchesController < ApplicationController
       params[:filters]
     end
 
-    def filters
+    def selection_filters
       if filters_params != nil
         filters_params.map { |e| Search::SelectionFilter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
       end
@@ -46,6 +47,14 @@ class SearchesController < ApplicationController
     def range_filters
       if range_filters_params != nil
        range_filters_params.map { |key , value|  Search::RangeFilter.new value[:min], value[:max], value[:min_range], value[:max_range], key }
+      end
+    end
+
+    def pagination
+      if params[:pagination] != nil
+        Search::Pagination.new params[:pagination][:total_pages].to_i, params[:pagination][:page].to_i, params[:pagination][:count].to_i
+      else
+        Search::Pagination.new
       end
     end
 

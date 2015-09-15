@@ -3,14 +3,17 @@ class Search::Result
   include Search::SelectionFilterType
   include Search::RangeFilterType
 
-  attr_accessor :products, :cif_total, :filters, :range_filters, :hits
+  attr_accessor :products, :cif_total, :filters, :range_filters, :hits, :pagination
 
-  def initialize raw_results, filters = [], range_filters = []
+  def initialize raw_results, filters = [], range_filters = [], pagination = nil
 
     self.range_filters = Hash.new
     self.hits = raw_results["hits"]["total"]
     self.products = raw_results["hits"]["hits"].map { |hit| hit["_source"]  }
     self.cif_total = raw_results["aggregations"]["cif"]["value"]
+    
+    self.pagination = pagination
+    self.pagination.total_pages = (self.hits / self.pagination.count).to_i
 
     #if don't have any filters in request, get it by search raw_results
     if filters == nil

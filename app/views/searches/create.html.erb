@@ -123,7 +123,7 @@
 						      		data-display="#amount" 
 						      		data-display-prefix="$">
 						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
 
 						      		<% else %>
 						      			<%= @result.range_filters %>
@@ -173,7 +173,7 @@
 						      		data-display="#amount-unity" 
 						      		data-display-prefix="$">
 						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
 
 						      		<% else %>
 						      			<%= @result.range_filters %>
@@ -221,7 +221,7 @@
 									data-display="#amount-quantity"
 									data-display-prefix="un. " >
 						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
 
 						      		<% else %>
 						      			<%= @result.range_filters %>
@@ -273,7 +273,7 @@
 									data-display="#amount-Customs"
 									data-display-prefix="un. " >
 						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="submit" value="Aplicar" />
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
 
 						      		<% else %>
 						      			<%= @result.range_filters %>
@@ -356,7 +356,14 @@
 					</div>
 				</div>
 				<% end %>
-				<% end %></div>
+				<% end %>				
+			</div>
+			<div class="col-md-12">
+					<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
+					<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page %>" />
+					<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
+					<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page %>}"></ul>
+				</div>
 		</div>
 	</section>
 </form>

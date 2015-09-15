@@ -3,12 +3,13 @@ class Search::QueryBuilder
   include Search::SelectionFilterType
   include Search::RangeFilterType
 
-  attr_accessor :struct
+  attr_accessor :struct, :pagination
 
   def initialize
     self.struct = { 
     	body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
     	size: "36",
+      from: "1",
         aggs: {
 	        	  cif: { sum: { field: :CIF } } ,
 	            Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
@@ -36,9 +37,19 @@ class Search::QueryBuilder
     end
   end
 
-  def build query, filters = nil, range_filters = nil
+  def build query, filters = nil, range_filters = nil, pagination = nil
 
     self.struct[:body][:query][:filtered][:filter][:bool][:should]   <<  { terms: { descricao_detalhada_produto: query.downcase.split(" ") , "execution" => "and", "_cache" => "true" }}
+
+    self.pagination = pagination
+    
+    if pagination != nil && pagination.count != 0
+        # self.struct[:size] = pagination.count
+        self.struct[:from] = pagination.page
+    else
+      self.pagination.count = 36
+      self.pagination.page = 1 
+    end
 
     unless filters == nil
       build_selection_filters query, filters
