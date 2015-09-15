@@ -52,8 +52,7 @@
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
 									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
-										<span class="badge">
-											<%= filter.hits %></span>
+										<span class="badge"><%= filter.hits %></span>
 									</div>
 								<% end %>
 							</div>
@@ -79,8 +78,7 @@
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
 									    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
-										<span class="badge">
-											<%= filter.hits %></span>
+										<span class="badge"><%= filter.hits %></span>
 									</div>
 								<% end %>
 							</div>
@@ -348,21 +346,9 @@
 						</div>
 
 						<div class="col-md-5 cif">
-						<!--
-							<div>
-								<span>FOB / CIF Unit.</span>
-								<span style=""><%= number_to_currency(product["valor_unidade_produto_dolar"]) %> /	<%= product["vl_ift"] %></span>
-							</div>
-							<div>
-								<span>CIF Total</span>
-								<span>
-									<%= number_to_currency(product["CIF"]) %></span>
-							</div>
-							quantidade_comercializada_produto
-							-->
 							<div>
 							<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
-							<span><strong><%= number_to_currency(product["vl_ift"]) %></strong><span>FOB UNIT.</span></span>
+							<span><strong><%= number_to_currency(product["CIF_unitario"]) %></strong><span>FOB UNIT.</span></span>
 							<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
 							</div>
 						</div>
