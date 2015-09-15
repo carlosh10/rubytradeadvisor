@@ -52,7 +52,7 @@ class Search::Result
 
     if range_filters == nil
       Search::RangeFilterType.constants.each do |type|
-        self.range_filters[type.to_s] = Search::RangeFilter.new 0, raw_results["aggregations"][type.to_s]["value"], 0, raw_results["aggregations"][type.to_s]["value"], type
+        self.range_filters[type.to_s] = Search::RangeFilter.new 0, results["aggregations"][type.to_s]["value"], 0, results["aggregations"][type.to_s]["value"], type
       end
     else
       range_filters.each do |range_filter|

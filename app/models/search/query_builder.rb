@@ -5,8 +5,6 @@ class Search::QueryBuilder
 
   attr_accessor :struct, :pagination, :index_of
 
-
-
   def initialize
     self.struct = {
       body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
@@ -25,6 +23,7 @@ class Search::QueryBuilder
               }
     }
 
+    # TODO refactor iterate over ao filter types and add to strutc to build_aggregations
     self.index_of =  {
       Search::SelectionFilterType::Ncm => :ncm,
       Search::SelectionFilterType::CountryOrigin  => :siglaPaisOrigem,
@@ -39,28 +38,38 @@ class Search::QueryBuilder
 
 
   def build query, selection_filters = nil, range_filters = nil, pagination = nil
-
-    self.struct[:body][:query][:filtered][:filter][:bool][:should]   <<  { terms: { descricao_detalhada_produto: query.downcase.split(" ") , "execution" => "and", "_cache" => "true" }}
-
-    self.pagination = pagination
-
-    if pagination != nil && pagination.count != 0
-      # self.struct[:size] = pagination.count
-      self.struct[:from] = pagination.page
-    else
-      self.pagination.count = 36
-      self.pagination.page = 1
-    end
-
+  	build_query(query)
+    build_pagination(pagination)
     build_selection_filters(query, selection_filters || [])
     build_range_filters(query, range_filters || [])
-
-
     self.struct
   end
 
 
   private
+
+  def build_query query
+  	self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
+  		terms: { descricao_detalhada_produto: query.downcase.split(" ") , 
+  				"execution" => "and", 
+  				"_cache" => "true" 
+  				}
+  			}
+  end
+
+  def build_pagination pagination
+    
+    self.pagination = pagination
+
+    if self.pagination != nil && self.pagination.count != 0
+      # self.struct[:size] = pagination.count
+      self.struct[:from] = self.pagination.page
+    else
+      self.pagination.count = 36
+      self.pagination.page = 1
+    end
+
+  end
 
   def build_selection_filters query, filters
     Search::SelectionFilterType.constants.each do |type|
