@@ -43,7 +43,7 @@ class Search::Result
     self.filters = []
 
     Search::SelectionFilterType.constants.each do |type|
-      self.filters += results["aggregations"][type.to_s]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, type.to_s }
+      self.filters += results["aggregations"][type.to_s]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, false, type }
     end
 
   end
@@ -54,9 +54,9 @@ class Search::Result
     self.filters = filters
 
     #update contry filters
-    Search::SelectionFilterType.constants.select { |t| t.to_s != Search::SelectionFilterType::Ncm }.each do |type|
-      selected_countries = self.filters.select { |e| e.type == type.to_s && e.selected }
-      self.filters.delete_if { |e| e.type == type.to_s }
+    Search::SelectionFilterType.constants.select { |t| t != Search::SelectionFilterType::Ncm }.each do |type|
+      selected_countries = self.filters.select { |e| e.type.intern == type.intern && e.selected }
+      self.filters.delete_if { |e| e.type.intern == type.intern }
       self.filters += results["aggregations"][type.to_s]["buckets"].map { |e| Search::SelectionFilter.new e["key"], e["doc_count"].to_i, selected_countries.any? { |f| f.value == e["key"] }, type.to_s }
     end
 

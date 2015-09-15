@@ -35,7 +35,7 @@ class SearchesController < ApplicationController
 
     def selection_filters
       if filters_params != nil
-        filters_params.map { |e| Search::SelectionFilter.new e[:value], e[:hits] , e[:selected] == "true", e[:type] }
+        filters_params.map { |e| Search::SelectionFilter.new e[:value], e[:hits] , e[:selected] == "true", e[:type].intern }
       end
     end
 
@@ -56,10 +56,6 @@ class SearchesController < ApplicationController
       else
         Search::Pagination.new
       end
-    end
-
-    def query
-      Search::QueryBuilder.new
     end
 
 end

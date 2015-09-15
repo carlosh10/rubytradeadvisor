@@ -17,7 +17,7 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::Ncm }.each do |filter| %>
+								<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::Ncm }.each do |filter| %>
 									<div>
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -45,7 +45,7 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
+								<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
 									<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
@@ -71,7 +71,7 @@
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
-								<% @result.filters.select { |e| e.type == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
+								<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
 									<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
 										<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
