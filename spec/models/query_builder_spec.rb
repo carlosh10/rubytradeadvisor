@@ -101,13 +101,36 @@ RSpec.describe Search::QueryBuilder, type: :model do
 		builder.build(start, nil, filters )
 		
 		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
-		# [{:range=>{:CIF=>{:gte=>"1", :lte=>"2"}}}]
-
+	
 		expect(must).to be_kind_of(Array)
 		expect(must.count).to eq(1)
 		expect(must.first).to eq({:range=>{:CIF=>{:gte=>"1", :lte=>"2"}}})
 	end
 	
+	it "after build, with selection filters selected, builder must include select clause" do
+    	builder = Search::QueryBuilder.new
+		start = "caneta azul"
+    	filters = [ Search::SelectionFilter.new(1, 10, true, Search::SelectionFilterType::CountryAquisition) ]
+		builder.build(start, filters )
+		
+		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
+	
+		expect(must).to be_kind_of(Array)
+		expect(must.count).to eq(1)
+		expect(must.first).to eq({:terms=>{:siglaPaisAquisicao=>[1]}})
+	end
+	
+	it "after build, with selection filters not selected, builder must include select clause" do
+    	builder = Search::QueryBuilder.new
+		start = "caneta azul"
+    	filters = [ Search::SelectionFilter.new(1, 10, false, Search::SelectionFilterType::CountryAquisition) ]
+		builder.build(start, filters )
+		
+		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
+	
+		expect(must).to be_kind_of(Array)
+		expect(must.count).to eq(0)
+	end
 	
 
 end
