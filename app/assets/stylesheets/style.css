@@ -1444,6 +1444,7 @@ section {
         background-position: -240px -33px;
     }
 
+
     .flag.flag-er {
         background-position: 0 -44px;
     }
@@ -1491,6 +1492,11 @@ section {
     .flag.flag-gb {
         background-position: -176px -44px;
     }
+
+    .flag.flag-uk {
+        background-position: -176px -44px;
+    }
+
 
     .flag.flag-gd {
         background-position: -192px -44px;
@@ -2098,6 +2104,10 @@ section {
 
     .flag.flag-tv {
         background-position: -48px -154px;
+    }
+
+    .flag.flag-rc {
+        background-position: -64px -154px;
     }
 
     .flag.flag-tw {

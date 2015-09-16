@@ -8,11 +8,11 @@
         var setMax =  $(this).attr('data-max-field');
         var display = $(this).attr('data-display');
 
-        var max = parseInt($(this).attr('data-max'));
-        var min = parseInt($(this).attr('data-min'));
+        var max = parseInt($(this).attr('data-max')) || 0;
+        var min = parseInt($(this).attr('data-min')) || 0;
 
-        var maxRange = parseInt($(this).attr('data-max-range'));
-        var minRange = parseInt($(this).attr('data-min-range'));
+        var maxRange = parseInt($(this).attr('data-max-range')) || 0;
+        var minRange = parseInt($(this).attr('data-min-range')) || 0;
         var prefix = $(this).attr('data-display-prefix');
 
         $(this).slider({

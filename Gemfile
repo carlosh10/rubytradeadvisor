@@ -77,5 +77,8 @@ group :test do
   gem 'factory_girl_rails'
   # Check html asserts and test it
   gem 'selenium-webdriver'
+  # RSpec is a testing tool for Ruby, created for behavior-driven development (BDD).
+  gem 'rspec-rails'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
