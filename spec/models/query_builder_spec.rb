@@ -1,7 +1,9 @@
 require 'rails_helper'
 
+include Search::RangeFilterType
+
 RSpec.describe Search::QueryBuilder, type: :model do
-     
+    
     it "should has a struct" do
     	builder = Search::QueryBuilder.new
     	expect(builder.struct).to be_kind_of(Hash)
@@ -78,7 +80,34 @@ RSpec.describe Search::QueryBuilder, type: :model do
 		expect(pagination.page).to eq(1)
 		expect(pagination.count).to eq(36)
 		expect(pagination.total_pages).to eq(0)
-		
 	end
+	
+	it "after build, without filter, builder must not include any select clause" do
+    	builder = Search::QueryBuilder.new
+		start = "caneta azul"
+    	
+		builder.build(start)
+		
+		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
+			
+		expect(must).to be_kind_of(Array)
+		expect(must.count).to eq(0)
+	end
+	
+	it "after build, with range filters, builder must include select clause" do
+    	builder = Search::QueryBuilder.new
+		start = "caneta azul"
+    	filters = [ Search::RangeFilter.new(1, 2, 3, 4, Search::RangeFilterType::TotalValue) ]
+		builder.build(start, nil, filters )
+		
+		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
+		# [{:range=>{:CIF=>{:gte=>"1", :lte=>"2"}}}]
+
+		expect(must).to be_kind_of(Array)
+		expect(must.count).to eq(1)
+		expect(must.first).to eq({:range=>{:CIF=>{:gte=>"1", :lte=>"2"}}})
+	end
+	
+	
 
 end
