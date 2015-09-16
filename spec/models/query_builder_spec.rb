@@ -82,6 +82,19 @@ RSpec.describe Search::QueryBuilder, type: :model do
 		expect(pagination.total_pages).to eq(0)
 	end
 	
+	it "build should mount a pagination passing as paramenter" do
+    	builder = Search::QueryBuilder.new
+
+		start = "caneta azul"    	
+		builder.build(start,nil, nil, Search::Pagination.new(10, 5, 1)
+)
+		pagination = builder.pagination
+		
+		expect(pagination.page).to eq(5)
+		expect(pagination.count).to eq(1)
+		expect(pagination.total_pages).to eq(10)
+	end
+	
 	it "after build, without filter, builder must not include any select clause" do
     	builder = Search::QueryBuilder.new
 		start = "caneta azul"
@@ -124,7 +137,7 @@ RSpec.describe Search::QueryBuilder, type: :model do
     	builder = Search::QueryBuilder.new
 		start = "caneta azul"
     	filters = [ Search::SelectionFilter.new(1, 10, false, Search::SelectionFilterType::CountryAquisition) ]
-		builder.build(start, filters )
+		builder.build(start, filters, nil, nil )
 		
 		must = builder.struct[:body][:query][:filtered][:filter][:bool][:must]
 	
