@@ -53,8 +53,32 @@ RSpec.describe Search::QueryBuilder, type: :model do
 
 	it "build should mount a query with multi terms" do
     	builder = Search::QueryBuilder.new
-    	builder.build("caneta azul")
-   
+		start = "caneta azul"
+    	
+		builder.build(start)
+		
+		should = builder.struct[:body][:query][:filtered][:filter][:bool][:should].first
+		terms = should[:terms][:descricao_detalhada_produto]
+		
+		expect(terms).to be_kind_of(Array)
+		
+		terms.each do |t|
+			expect(start.include? t).to be_truthy
+		end
+		
+	end
+	
+	it "build should mount a pagination" do
+    	builder = Search::QueryBuilder.new
+		start = "caneta azul"
+    	
+		builder.build(start)
+		pagination = builder.pagination
+		
+		expect(pagination.page).to eq(1)
+		expect(pagination.count).to eq(36)
+		expect(pagination.total_pages).to eq(0)
+		
 	end
 
 end

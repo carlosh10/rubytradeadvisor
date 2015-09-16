@@ -59,7 +59,7 @@ class Search::QueryBuilder
 
   def build_pagination pagination
     
-    self.pagination = pagination
+    self.pagination = pagination || Search::Pagination.new
 
     if self.pagination != nil && self.pagination.count != 0
       # self.struct[:size] = pagination.count
