@@ -2,23 +2,24 @@ class Search::QueryBuilder
 
   include Search::SelectionFilterType
   include Search::RangeFilterType
+  include Search::DateRangeFilterType
 
-  attr_accessor :struct, :pagination, :index_of
+  attr_accessor :struct, :pagination, :index_of, :sort_by
 
   def initialize
     self.struct = {
       body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
-              size: "36",
+              size: "42",
               from: "1",
               aggs: {
                 cif: { sum: { field: :CIF } } ,
                 Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
                 Search::SelectionFilterType::CountryOrigin => { terms: { field: :siglaPaisOrigem }   },
                 Search::SelectionFilterType::CountryAquisition => { terms: { field: :siglaPaisAquisicao }   },
-                Search::RangeFilterType::TotalValue => { max: { field: :CIF } },
-                Search::RangeFilterType::UnityValue => { max: { field: :CIF_unitario } },
-                Search::RangeFilterType::Quantity => { max: { field: :quantidade_comercializada_produto } },
-                Search::RangeFilterType::Customs => { max: { field: :quantidade_aduaneira } }
+                Search::RangeFilterType::TotalValue => { stats: { field: :CIF } },
+                Search::RangeFilterType::UnityValue => { stats: { field: :CIF_unitario } },
+                Search::RangeFilterType::Quantity => { stats: { field: :quantidade_comercializada_produto } },
+                Search::RangeFilterType::Customs => { stats: { field: :quantidade_aduaneira } },
               }
               }
     }
@@ -31,17 +32,27 @@ class Search::QueryBuilder
       Search::RangeFilterType::TotalValue => :CIF,
       Search::RangeFilterType::UnityValue => :CIF_unitario,
       Search::RangeFilterType::Quantity => :quantidade_comercializada_produto,
-      Search::RangeFilterType::Customs => :quantidade_aduaneira
+      Search::RangeFilterType::Customs => :quantidade_aduaneira,
+      Search::DateRangeFilterType::Period => :data_ordem 
+    }
+
+    self.sort_by = {
+      date: :data_ordem,
+      unit_value: :CIF_unitario,
+      total_value: :CIF,
+      quantity: :quantidade_comercializada_produto
     }
 
   end
 
 
-  def build query, selection_filters = nil, range_filters = nil, pagination = nil
+  def build query, selection_filters = nil, range_filters = nil, pagination = nil, date_range_filters = [], sort = nil
   	build_query(query)
     build_pagination(pagination)
     build_selection_filters(query, selection_filters || [])
     build_range_filters(query, range_filters || [])
+    build_range_filters(query, date_range_filters || [])
+    build_sort(sort)
     self.struct
   end
 
@@ -63,9 +74,9 @@ class Search::QueryBuilder
 
     if self.pagination != nil && self.pagination.count != 0
       # self.struct[:size] = pagination.count
-      self.struct[:from] = self.pagination.page
+      self.struct[:body][:from] = self.pagination.page
     else
-      self.pagination.count = 36
+      self.pagination.count = 42
       self.pagination.page = 1
     end
 
@@ -82,6 +93,12 @@ class Search::QueryBuilder
 
   def build_range_filters query, filters
     self.struct[:body][:query][:filtered][:filter][:bool][:must]  += filters.map { |filter| filter.build self.index_of[filter.type.intern]  }
+  end
+
+  def build_sort sort
+    unless sort == nil && sort_by[sort] == nil
+      self.struct[:body][:sort] =  [{ sort_by[sort.intern] => { order: :desc,  ignore_unmapped: :true }}]
+    end
   end
 
 end

@@ -86,6 +86,37 @@
 					</div>
 				</div>
 
+				<div class="panel-group" id="accordion8" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingEigth">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion8" href="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+									Período <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseEight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEigth">
+
+							<div class="panel-body">
+
+							<small>De:</small>
+
+							<input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period %>][from]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].from %>">
+
+							  <small>Até:</small>
+							  <input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period.to_s %>][to]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].to %>">
+
+						      
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
 
 				<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
@@ -307,10 +338,13 @@
 							<p>Total US<%= number_to_currency(@result.cif_total) %></p>
 						</div>
 						<div class="col-md-2">
+						<!-- data, valor unit, valor total, qtde -->
 							<select name="order" class="form-control">
-								<option>Sort by:</option>
-								<option>aa</option>
-								<option>aa</option>
+								<option value="none">Orderna por:</option>
+								<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
+								<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
+								<option value="total_value" <% if @result.sort_by == "total_value" %> <%= "selected" %> <% end %>>Valor Total</option>
+								<option value="quantity" <% if @result.sort_by == "quantity" %> <%= "selected" %> <% end %>>Quantidade</option>
 							</select>
 						</div>
 					</div>

@@ -3,13 +3,15 @@ class Search::Result
   include Search::SelectionFilterType
   include Search::RangeFilterType
 
-  attr_accessor :products, :cif_total, :filters, :range_filters, :hits, :pagination
+  attr_accessor :products, :cif_total, :filters, :range_filters, :hits, :pagination, :date_range_filters, :sort_by
 
-  def initialize raw_results, filters = [], range_filters = [], pagination = nil
+  def initialize raw_results, filters = [], range_filters = [], pagination = nil, date_range_filters = nil, sort_by = nil
     parse_results(raw_results)
     build_pagination(pagination)
     update_selection_filters(raw_results, filters)
     update_range_filters(raw_results, range_filters)
+    set_date_range_filters(date_range_filters)
+    self.sort_by = sort_by
   end
 
   private
@@ -52,7 +54,9 @@ class Search::Result
 
     if range_filters == nil
       Search::RangeFilterType.constants.each do |type|
-        self.range_filters[type.to_s] = Search::RangeFilter.new 0, results["aggregations"][type.to_s]["value"], 0, results["aggregations"][type.to_s]["value"], type
+        min = results["aggregations"][type.to_s]["min"]
+        max = results["aggregations"][type.to_s]["max"]
+        self.range_filters[type.to_s] = Search::RangeFilter.new min, max, min , max, type
       end
     else
       range_filters.each do |range_filter|
@@ -60,6 +64,17 @@ class Search::Result
       end
     end
 
+  end
+
+  def set_date_range_filters date_range_filters
+    self.date_range_filters = Hash.new
+    if date_range_filters == nil
+      self.date_range_filters[Search::DateRangeFilterType::Period.to_s] = Search::DateRangeFilter.new  5.years.ago.to_date.to_s,  DateTime.now.to_date.to_s, Search::DateRangeFilterType::Period
+    else
+      date_range_filters.each do |filter|
+        self.date_range_filters[filter.type] = filter
+      end
+    end
   end
 
 end
