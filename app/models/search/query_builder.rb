@@ -9,7 +9,7 @@ class Search::QueryBuilder
   def initialize
     self.struct = {
       body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
-              size: "36",
+              size: "42",
               from: "1",
               aggs: {
                 cif: { sum: { field: :CIF } } ,
@@ -68,7 +68,7 @@ class Search::QueryBuilder
       # self.struct[:size] = pagination.count
       self.struct[:from] = self.pagination.page
     else
-      self.pagination.count = 36
+      self.pagination.count = 42
       self.pagination.page = 1
     end
 
