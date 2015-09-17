@@ -4,7 +4,7 @@ class Search::QueryBuilder
   include Search::RangeFilterType
   include Search::DateRangeFilterType
 
-  attr_accessor :struct, :pagination, :index_of
+  attr_accessor :struct, :pagination, :index_of, :sort_by
 
   def initialize
     self.struct = {
@@ -36,15 +36,23 @@ class Search::QueryBuilder
       Search::DateRangeFilterType::Period => :data_ordem 
     }
 
+    self.sort_by = {
+      date: :data_ordem,
+      unit_value: :CIF_unitario,
+      total_value: :CIF,
+      quantity: :quantidade_comercializada_produto
+    }
+
   end
 
 
-  def build query, selection_filters = nil, range_filters = nil, pagination = nil, date_range_filters = []
+  def build query, selection_filters = nil, range_filters = nil, pagination = nil, date_range_filters = [], sort = nil
   	build_query(query)
     build_pagination(pagination)
     build_selection_filters(query, selection_filters || [])
     build_range_filters(query, range_filters || [])
     build_range_filters(query, date_range_filters || [])
+    build_sort(sort)
     self.struct
   end
 
@@ -66,7 +74,7 @@ class Search::QueryBuilder
 
     if self.pagination != nil && self.pagination.count != 0
       # self.struct[:size] = pagination.count
-      self.struct[:from] = self.pagination.page
+      self.struct[:body][:from] = self.pagination.page
     else
       self.pagination.count = 42
       self.pagination.page = 1
@@ -87,5 +95,10 @@ class Search::QueryBuilder
     self.struct[:body][:query][:filtered][:filter][:bool][:must]  += filters.map { |filter| filter.build self.index_of[filter.type.intern]  }
   end
 
+  def build_sort sort
+    unless sort == nil && sort_by[sort] == nil
+      self.struct[:body][:sort] =  [{ sort_by[sort.intern] => { order: :desc,  ignore_unmapped: :true }}]
+    end
+  end
 
 end

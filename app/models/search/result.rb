@@ -3,14 +3,15 @@ class Search::Result
   include Search::SelectionFilterType
   include Search::RangeFilterType
 
-  attr_accessor :products, :cif_total, :filters, :range_filters, :hits, :pagination, :date_range_filters
+  attr_accessor :products, :cif_total, :filters, :range_filters, :hits, :pagination, :date_range_filters, :sort_by
 
-  def initialize raw_results, filters = [], range_filters = [], pagination = nil, date_range_filters = nil
+  def initialize raw_results, filters = [], range_filters = [], pagination = nil, date_range_filters = nil, sort_by = nil
     parse_results(raw_results)
     build_pagination(pagination)
     update_selection_filters(raw_results, filters)
     update_range_filters(raw_results, range_filters)
     set_date_range_filters(date_range_filters)
+    self.sort_by = sort_by
   end
 
   private

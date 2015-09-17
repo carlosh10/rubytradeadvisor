@@ -338,10 +338,13 @@
 							<p>Total US<%= number_to_currency(@result.cif_total) %></p>
 						</div>
 						<div class="col-md-2">
+						<!-- data, valor unit, valor total, qtde -->
 							<select name="order" class="form-control">
-								<option>Sort by:</option>
-								<option>aa</option>
-								<option>aa</option>
+								<option value="none">Orderna por:</option>
+								<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
+								<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
+								<option value="total_value" <% if @result.sort_by == "total_value" %> <%= "selected" %> <% end %>>Valor Total</option>
+								<option value="quantity" <% if @result.sort_by == "quantity" %> <%= "selected" %> <% end %>>Quantidade</option>
 							</select>
 						</div>
 					</div>
