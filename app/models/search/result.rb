@@ -12,7 +12,6 @@ class Search::Result
     update_range_filters(raw_results, range_filters)
   end
 
-
   private
 
   def parse_results raw_results
@@ -46,6 +45,7 @@ class Search::Result
       }
 
     end   
+    
   end
 
   def update_range_filters results, range_filters

@@ -107,6 +107,11 @@
     float: right;
 }
 
+.bs-docs .uk-modal .col-md-6 > span {
+    display: block;
+    margin-bottom: -10px;
+    font-size: 11px;
+}
 
 .search-page {
     word-wrap:break-word;
