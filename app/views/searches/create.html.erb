@@ -86,6 +86,37 @@
 					</div>
 				</div>
 
+				<div class="panel-group" id="accordion8" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingEigth">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion8" href="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+									Período <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+								</a>
+							</h4>
+						</div>
+
+						<div id="collapseEight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEigth">
+
+							<div class="panel-body">
+
+							<small>De:</small>
+
+							<input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period %>][from]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].from %>">
+
+							  <small>Até:</small>
+							  <input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period.to_s %>][to]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].to %>">
+
+						      
+						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
 
 				<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">

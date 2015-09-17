@@ -11,8 +11,8 @@ class SearchesController < ApplicationController
 
     if @search.save
       query_builder = Search::QueryBuilder.new
-      raw_results = client.search( query_builder.build(@search.query, selection_filters, range_filters, pagination) )
-      @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination)
+      raw_results = client.search( query_builder.build(@search.query, selection_filters, range_filters, pagination, date_range_filters) )
+      @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination, date_range_filters)
     else
       # todo handle the case where it fails....
     end
@@ -47,6 +47,16 @@ class SearchesController < ApplicationController
     def range_filters
       if range_filters_params != nil
        range_filters_params.map { |key , value|  Search::RangeFilter.new value[:min], value[:max], value[:min_range], value[:max_range], key }
+      end
+    end
+
+    def date_range_filters_params
+        params[:date_range_filters]
+    end
+
+    def date_range_filters
+      if date_range_filters_params != nil
+       date_range_filters_params.map { |key , value|  Search::DateRangeFilter.new value[:from], value[:to], key }
       end
     end
 
