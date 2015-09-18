@@ -404,7 +404,7 @@
 									</thead>
 									<tr>
 										<td>PRODUTO (FOB)</td>
-										<td><%= number_to_currency(product["valor_fob_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %></td>
+										<td><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></td>
 										<td><%= number_to_currency(product["valor_fob_dolar"]) %></td>
 									</tr>
 									<tr>
@@ -522,7 +522,9 @@
 							<div class="col-md-5 cif">
 								<div>
 								<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
-								<span><strong><%= number_to_currency(product["CIF_unitario"]) %></strong><span>FOB UNIT.</span></span>
+								<span>
+									<strong><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></strong><span>FOB UNIT.</span>
+								</span>
 								<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
 								</div>
 							</div>
