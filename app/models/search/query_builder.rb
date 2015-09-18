@@ -17,7 +17,7 @@ class Search::QueryBuilder
                 Search::SelectionFilterType::CountryOrigin => { terms: { field: :siglaPaisOrigem }   },
                 Search::SelectionFilterType::CountryAquisition => { terms: { field: :siglaPaisAquisicao }   },
                 Search::RangeFilterType::TotalValue => { stats: { field: :CIF } },
-                Search::RangeFilterType::UnityValue => { stats: { field: :CIF_unitario } },
+                Search::RangeFilterType::UnityValue => { stats: { field: :valor_fob_dolar_unitario } },
                 Search::RangeFilterType::Quantity => { stats: { field: :quantidade_comercializada_produto } },
                 Search::RangeFilterType::Customs => { stats: { field: :quantidade_aduaneira } },
               }
@@ -30,7 +30,7 @@ class Search::QueryBuilder
       Search::SelectionFilterType::CountryOrigin  => :siglaPaisOrigem,
       Search::SelectionFilterType::CountryAquisition => :siglaPaisAquisicao,
       Search::RangeFilterType::TotalValue => :CIF,
-      Search::RangeFilterType::UnityValue => :CIF_unitario,
+      Search::RangeFilterType::UnityValue => :valor_fob_dolar_unitario,
       Search::RangeFilterType::Quantity => :quantidade_comercializada_produto,
       Search::RangeFilterType::Customs => :quantidade_aduaneira,
       Search::DateRangeFilterType::Period => :data_ordem 
@@ -38,7 +38,7 @@ class Search::QueryBuilder
 
     self.sort_by = {
       date: :data_ordem,
-      unit_value: :CIF_unitario,
+      unit_value: :valor_fob_dolar_unitario,
       total_value: :CIF,
       quantity: :quantidade_comercializada_produto
     }
