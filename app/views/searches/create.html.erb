@@ -23,7 +23,7 @@
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
-										<%= filter.value  %>
+										<span class="ncm-hovertip"><%= filter.value  %></span>
 										<span class="badge">
 										<%= filter.hits %></span>
 									</div>
@@ -350,8 +350,7 @@
 					</div>
 				</div>
 				<% @result.products.each do |product| %>
-				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" data-content="<%= product["mes_ano"] %>
-					">
+				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" >
 
 					<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">
 					    <div class="uk-modal-dialog">
@@ -493,7 +492,7 @@
 
 					<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<div class="row">
 									<div class="col-md-5">
 										<div>
@@ -504,6 +503,7 @@
 											<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
 											</span>
 										</div>
+
 									</div>
 									<div class="col-md-7">
 										<span><%= product["ncm"] %></span>
@@ -512,7 +512,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div>
-											<p><%= product["descricao_detalhada_produto"].truncate(95, separator: /\s/) %></p>
+											<p><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></p>
 										</div>
 									</div>
 								</div>
@@ -521,6 +521,7 @@
 
 							<div class="col-md-5 cif">
 								<div>
+									<span><strong> <%= product["mes_ano"] %></strong><span>DATA</span></span>
 								<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
 								<span>
 									<strong><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></strong><span>FOB UNIT.</span>

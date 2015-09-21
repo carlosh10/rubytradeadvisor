@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
-  get 'welcome/about'
-
   devise_for :users
 
   resource :search
 
-  get 'search', to: 'searches#index'
+  get 'ncm', to: 'ncm#show'
+
+  get 'search', to: 'searches#index', :defaults => { :format => 'json' }
   
-  # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

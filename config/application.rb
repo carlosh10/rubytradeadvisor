@@ -32,6 +32,7 @@ module Rubytradeadvisor
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.x.elasticsearch.address = 'http://104.197.79.244:9400/'
     
   end
 end
