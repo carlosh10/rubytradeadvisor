@@ -23,7 +23,7 @@
 										<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
 										<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
 										<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
-										<%= filter.value  %>
+										<span class="ncm-hovertip"><%= filter.value  %></span>
 										<span class="badge">
 										<%= filter.hits %></span>
 									</div>
