@@ -54,6 +54,9 @@ gem 'touchpunch-rails'
 # Monitor application in realtime
 gem 'newrelic_rpm'
 
+# cache support gem
+gem 'actionpack-action_caching'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

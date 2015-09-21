@@ -1,5 +1,7 @@
+
 class NcmController < ApplicationController
-	
+
+	caches_action :show, :cache_path => Proc.new { |c| c.params }
 	respond_to :json
 
 	def show
