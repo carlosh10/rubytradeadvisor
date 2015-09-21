@@ -1,5 +1,7 @@
 class SearchesController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token  
+  
   def show
     redirect_to '/'
   end
