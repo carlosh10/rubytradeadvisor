@@ -457,7 +457,7 @@
 									</tr>									
 									<tr>
 										<td>IPI</td>
-										<td><%= number_to_currency(product["CIF"]) %></td>
+										<td><%= number_to_currency(product["CIF"] + calc(product, "ALIQUOTA_II")) %></td>
 										<td><%= product["ALIQUOTA_IPI"] %>%</td>
 										<td><%= calc_unit(product,"ALIQUOTA_IPI")  %></td>
 										<td><%= calc_total(product,"ALIQUOTA_IPI")  %></td>

@@ -1,10 +1,19 @@
 module ApplicationHelper
 	def calc_unit(product, aliquota)
-		number_to_currency((product["CIF"] * product[aliquota].gsub(',','.').to_f / 100)/product["quantidade_comercializada_produto"].to_i) 
+		number_to_currency(calc(product, aliquota)/product["quantidade_comercializada_produto"].to_i) 
 	end
 	def calc_total(product, aliquota)
-		number_to_currency((product["CIF"] * product[aliquota].gsub(',','.').to_f / 100)) 
+		number_to_currency(calc(product, aliquota)) 
 	end
+
+	def calc(product, aliquota)
+		if aliquota == "ALIQUOTA_IPI"
+			((product["CIF"] + calc(product, "ALIQUOTA_II")) * product["ALIQUOTA_IPI"].gsub(',','.').to_f / 100) 
+		else
+			(product["CIF"] * product[aliquota].gsub(',','.').to_f / 100)
+		end
+	end
+
 	def calc_sum_percent(product)
 		(product["ALIQUOTA_COFINS_ADVAL"].gsub(',','.').to_f + 
 			product["ALIQUOTA_PIS_ADVAL"].gsub(',','.').to_f + 
