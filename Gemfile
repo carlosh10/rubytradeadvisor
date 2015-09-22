@@ -57,6 +57,11 @@ gem 'newrelic_rpm'
 # cache support gem
 gem 'actionpack-action_caching'
 
+#ominiauth support gems
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
