@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
   end
 
   def index
-  	
+  	@searches = Search.last(30)
   end
 
 end

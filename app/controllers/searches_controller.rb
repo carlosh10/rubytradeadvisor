@@ -13,15 +13,13 @@ class SearchesController < ApplicationController
 
   def create
 
-    @search = Search.new(search_params)
-    @search.user = current_user
+    @search = search
 
     if @search.save
       query_builder = Search::QueryBuilder.new
-      raw_results = client.search( 
-      	query_builder.build(@search.query, selection_filters, range_filters, pagination, date_range_filters, sort_by))
-      @result = Search::Result.new(
-      	raw_results, selection_filters, range_filters, query_builder.pagination, date_range_filters,sort_by)
+      query = query_builder.build(@search.query, selection_filters, range_filters, pagination, date_range_filters, sort_by) 
+      raw_results = client.search(query)
+      @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination, date_range_filters,sort_by)
     else
       # todo handle the case where it fails....
     end
@@ -36,6 +34,13 @@ class SearchesController < ApplicationController
 
     def search_params
       params[:search].permit(:query)
+    end
+
+    def search
+      s = Search.new(search_params)
+      s.user = current_user
+      s.ip_address = request.remote_ip
+      s
     end
 
     def filters_params
