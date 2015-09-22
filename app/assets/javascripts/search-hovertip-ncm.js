@@ -4,7 +4,7 @@ $(document).ready(function(){
 			$.get($(this).attr('action'), $(this).serialize(), function(data){
 				$("span[data-ncm=" + $this.find("[name=ncm]").first().val() + "]").attr({
 						"data-uk-tooltip": "{pos:'top-left'}",
-						"title": JSON.parse(data)["key"]
+						"title": data["key"]
 					});
 			});
 		});
