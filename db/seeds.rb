@@ -8,6 +8,11 @@
 
 require 'faker'
 
+
+['registered', 'banned', 'admin'].each do |role|
+  Role.find_or_create_by({name: role})
+end
+
 5.times do
   user = User.new(
     name: Faker::Name.name,
@@ -23,10 +28,10 @@ users = User.all
  # Create an admin user
  admin = User.new(
    name:     'Admin User',
-   email:    'admin@example.com',
-   password: 'helloworld',
-   role:     'admin'
+   email:    'admin@pinho.com',
+   password: 'Pinho@15',
  )
+ 
  admin.skip_confirmation!
  admin.save!
  
@@ -35,17 +40,19 @@ users = User.all
    name:     'Moderator User',
    email:    'carlos@comex.guru',
    password: 'helloworld',
-   role:     'moderator'
  )
  moderator.skip_confirmation!
  moderator.save!
  
+
  # Create a member
  member = User.new(
    name:     'Member User',
    email:    'member@example.com',
    password: 'helloworld'
  )
+
+
  member.skip_confirmation!
  member.save!
 
