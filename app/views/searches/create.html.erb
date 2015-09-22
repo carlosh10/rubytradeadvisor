@@ -1,4 +1,5 @@
-<form class="uk-form" action="/search" accept-charset="UTF-8" method="post" style="font-family: 'latolight'">
+<form class="uk-form" action="/search" accept-charset="UTF-8" method="post" style="font-family: 'latolight';
+background-color: #DCDCDC;">
 	
 	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 	
@@ -519,7 +520,7 @@
 
 							</div>
 
-							<div class="col-md-5 cif">
+							<div class="col-md-5 cif" style="padding: 0px 8px 0px 0px;">
 								<div>
 									<span><strong> <%= product["mes_ano"] %></strong><span>DATA</span></span>
 								<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
@@ -548,7 +549,6 @@
 
 <% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::Ncm }.each do |filter| %>
 		<form method="get" action="/ncm" style="display:none;" class="form-ncm">
-			<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 			<input type="hidden" name="ncm" value="<%= filter.value  %>">
 		</form>
 <% end %>

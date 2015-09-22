@@ -1,6 +1,6 @@
 <% cache do %>
-<section id="topo">
-    <div class="banner_principal uk-width-1-1" data-uk-parallax="{bg: '-200'}">
+<section style="background-image: url(<%= image_path("hires-bg.jpg") %>); height: 100%; background-size: 100%;">
+    <div>
         <div class="uk-container uk-container-center">
 
             <div class="mensagem_banner uk-width-medium-3-5 uk-container-center">
@@ -8,8 +8,8 @@
                     <%= image_tag "logo.svg", class: "uk-margin-remove" %>
                 </a>
 
-                <h2 class="titulo_banner">
-                    Vá além da superfície, descubra tudo sobre comércio exterior:
+                <h2 class="titulo_banner" style="text-align: center">
+                    Pesquise por produtos importados:
                 </h2>
 
                 <form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
@@ -23,129 +23,11 @@
                         </div>
                     </div>
                 </form>
-
-                <a href="#exemplos" data-uk-smooth-scroll="{offset:60}" class="descer">
-                    <span>Exemplos</span>
-                    <i class="uk-icon-angle-double-down uk-icon-medium"></i>
+           
                 </a>
             </div>
         </div>
     </div>
 
-</section>
-<!--exemplos-->
-<section id="exemplos">
-    <div class="green_back">
-        <div class="pading_block">
-            <div class="uk-container uk-container-center text_center">
-                <h2>Não sabe por onde começar?</h2>
-                <p>Sua busca pode ser direcionada a:</p>
-
-
-            </div>
-        </div>
-
-        <div class="uk-width-small-1-1 polygon_balao">
-            <svg height="20" width="30">
-                <polygon points="0,0 30,0 15,15" style="fill:#3ef192;"></polygon>
-                Sorry, your browser does not support inline SVG.
-            </svg>
-        </div>
-
-    </div>
-    <div class="gray_back uk-width-1-1">
-        <div class="pading_block">
-            <div class="uk-container uk-container-center">
-
-                <div class="uk-grid uk-grid-medium uk-grid-divider">
-
-                    <div class="uk-width-small-1-1 uk-width-medium-1-3">
-                        <article class="blocos_exemplo">
-                            <div class="imagem_exemplos">
-                                <%= image_tag "documentos.svg" %>
-                            </div>
-                            <h3>Documentos</h3>
-                            <p class="justify">
-                                
-                            </p>
-                        </article>
-                    </div>
-
-                    <div class="uk-width-small-1-1 uk-width-medium-1-3">
-                        <article class="blocos_exemplo">
-                            <div class="imagem_exemplos">
-                                <%= image_tag "produtos.svg" %>
-                            </div>
-                            <h3>Produtos</h3>
-                            <p class="justify">
-                                
-                            </p>
-                        </article>
-                    </div>
-
-                    <div class="uk-width-small-1-1 uk-width-medium-1-3">
-                        <article class="blocos_exemplo">
-                            <div class="imagem_exemplos">
-                                <%= image_tag "ncms.svg" %>
-                            </div>
-                            <h3>NCM's</h3>
-                            <p class="justify">
-                                
-                            </p>
-                        </article>
-                    </div>
-                </div>
-
-                <div class="uk-width-medium-2-3 uk-container-center">
-                    <div class="uk-grid uk-grid-medium uk-grid-divider">
-
-
-                        <div class="uk-width-small-1-1 uk-width-medium-1-2">
-                            <article class="blocos_exemplo">
-                                <div class="imagem_exemplos">
-                                    <%= image_tag "empresas.svg" %>
-                                </div>
-
-                                <h3>Empresas</h3>
-                                <p class="justify">
-                                    
-                                </p>
-                            </article>
-                        </div>
-
-                        <div class="uk-width-small-1-1 uk-width-medium-1-2">
-                            <article class="blocos_exemplo">
-                                <div class="imagem_exemplos">
-                                    <%= image_tag "pessoas.svg" %>
-                                </div>
-                                <h3>Pessoas</h3>
-                                <p class="justify">
-                                    
-                                </p>
-                            </article>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="blog">
-    <div class="uk-width-1-1">
-        <div class="pading_block">
-            <div class="uk-container uk-container-center">
-
-
-                <h2 class="titulo_blog">
-                    <a href="#blog" data-uk-smooth-scroll="{offset:60}" class="blog_icon">Blog <span></span></a>
-                    <span class="uk-hidden-small">Saiba tudo sobre os principais temas ligados ao Comércio Exterior</span>
-                </h2>
-
-            </div>
-        </div>
-    </div>
 </section>
 <% end %>
