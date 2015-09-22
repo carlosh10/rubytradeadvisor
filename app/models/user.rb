@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   before_create :set_default_role
 
   def is_admin?
-    self.role == 'admin'
+    self.role != nil && self.role.name == 'admin'
   end
 
   def self.from_omniauth(auth)
