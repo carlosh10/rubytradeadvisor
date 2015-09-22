@@ -15,7 +15,7 @@
                     <%= image_tag "logo.svg", class: "uk-margin-remove" %>
                 </a>
 
-                <div class="busca_topo uk-hidden uk-width-medium-6-10">
+                <div class="busca_topo td-hidden uk-width-medium-6-10">
                     <form class="uk-form" action="/search" accept-charset="UTF-8" method="post">
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <div class="uk-grid uk-grid-collapse">
@@ -35,7 +35,6 @@
                         <% if user_signed_in? %>
                           <!--<div style="color:white;font-family:'latolight';padding: 5px 15px;margin:10px 0px;">Logado como <%= current_user.email %></div>-->
                           <!--<a class="uk-button" disabled>Olá <%= current_user.email %>!</a>-->
-                          <a style="float: left; visibility: hidden" class="uk-button">&nbsp;</a>
                           <span class="signed-in">
                           Olá <%= current_user.email %>!</span></br>
                           <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")  %> 
