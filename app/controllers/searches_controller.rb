@@ -1,6 +1,11 @@
 class SearchesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token  
+  before_filter :authenticate_user!
+  
+  #before_filter do 
+  #  redirect_to "/users/sign_in" unless current_user && current_user.is_admin?
+  #end
   
   def show
     redirect_to '/'
@@ -26,7 +31,7 @@ class SearchesController < ApplicationController
   private
 
     def client
-      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.address
+      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.address 
     end
 
     def search_params
