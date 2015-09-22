@@ -8,9 +8,9 @@ class Search::QueryBuilder
 
   def initialize
     self.struct = {
-      body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
+      index: 'documents_v1', body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
               size: "42",
-              from: "1",
+              from: "0",
               aggs: {
                 cif: { sum: { field: :CIF } } ,
                 Search::SelectionFilterType::Ncm => { terms: { field: :ncm}   },
@@ -61,7 +61,7 @@ class Search::QueryBuilder
 
   def build_query query
   	self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
-  		terms: { descricao_detalhada_produto: query.downcase.split(" ") , 
+  		terms: { "prodsense.descricao_detalhada_produto" => query.downcase.split(" ") , 
   				"execution" => "and", 
   				"_cache" => "true" 
   				}
@@ -77,7 +77,7 @@ class Search::QueryBuilder
       self.struct[:body][:from] = self.pagination.page
     else
       self.pagination.count = 42
-      self.pagination.page = 1
+      self.pagination.page = 0
     end
 
   end

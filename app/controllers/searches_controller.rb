@@ -26,7 +26,7 @@ class SearchesController < ApplicationController
   private
 
     def client
-      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.address
+      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.address 
     end
 
     def search_params
