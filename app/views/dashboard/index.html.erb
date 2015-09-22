@@ -1,0 +1,25 @@
+<div class="container" style="background-color: white; font-family: 'latolight';">
+	<div class="row">
+		<div class="col-md-12" style="margin: 10px;">
+			<h3>Últimas 30 consultas</h3>
+			<table class="table table-striped table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<td>Query</td>
+						<td>IP</td>
+						<td>User</td>
+					</tr>
+				</thead>
+				<tbody>
+					<% @searches.each do |search| %>
+					<tr>
+						<td><%= search.query %></td>
+						<td><%= search.ip_address %></td>
+						<td><%= search.user == nil ? "Anônimo" : search.user.name || search.user.email %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
