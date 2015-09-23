@@ -86,15 +86,15 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   #http://dove.tradeadvisor-staging.c66.me/
-  config.action_mailer.default_url_options = { :host => 'dove.tradeadvisor-staging.c66.me' }
+  config.action_mailer.default_url_options = { :host => 'tradeadvisor.com.br' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => "587",
-    :domain => "pinho.com.br",
-    :user_name => "suporte@pinho.com.br",
-    :password => "suporte30it@o",
+    :domain => "tradeadvisor.com.br",
+    :user_name => "noreply@tradeadvisor.com.br",
+    :password => "Pinho@14",
     :authentication => "plain",
     :enable_starttls_auto => true
   } 
