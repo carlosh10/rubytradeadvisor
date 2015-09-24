@@ -7,6 +7,6 @@ $(document).ready(function(){
 		//set value on query field at top
 		$(".input_busca").val(query);
 		//dísplay query form at navbar
-		$(".busca_topo").removeClass("td-hidden");
+		$(".td-hidden").removeClass("td-hidden");
 	}
 })

@@ -1,0 +1,36 @@
+<header class="dark_blue">
+        <nav>
+            <div class="row">
+
+                <div class="col-xs-2 col-md-3">
+                    <a class="logo" href="/">
+                        <%= image_tag "logo.svg" %>
+                    </a>
+                </div>
+
+                <div class="col-xs-7 col-md-6" style="magin-left 5px;">
+                    <form class="uk-form td-hidden" action="/search" accept-charset="UTF-8" method="post">
+                        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                        <div class="uk-grid uk-grid-collapse">
+                            <div class="uk-width-5-6 uk-width-medium-9-10">
+                                <input class="input_busca uk-width-1-1" type="text" style="border-radius: 3px 0px 0px 3px !important;" placeholder="Pesquisa" name="search[query]">
+                            </div>
+                            <div class="uk-width-1-6 uk-width-medium-1-10">
+                                <button class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-xs-3 col-md-3 pull-right" style="text-align: center; padding: 15px;">
+                        <% if user_signed_in? %>
+                          <span style="color: white; font-size: 11px;"><%= current_user.name || current.user.email %></span></br>
+                          <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")%> 
+                        <% else %>
+                             <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
+                        <% end %>
+                </div>
+
+            </div>
+        </nav>
+</header>
