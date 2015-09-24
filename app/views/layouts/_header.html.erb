@@ -22,10 +22,13 @@
                     </form>
                 </div>
 
-                <div class="col-xs-3 col-md-3 pull-right" style="text-align: center; padding: 15px;">
+                <div class="col-xs-3 col-md-3 pull-right" style="text-align: center;">
                         <% if user_signed_in? %>
-                          <span style="color: white; font-size: 11px;"><%= current_user.name || current.user.email %></span></br>
-                          <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")%> 
+                        <div  style="color: white; font-size: 11px; margin: 20px 1px !important;"class="">
+                          <%= current_user.name || current_user.email %><br />
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")%>
+
+                        </div>
                         <% else %>
                              <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
                         <% end %>
