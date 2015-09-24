@@ -86,6 +86,7 @@
 
 html , body{
     height:100% !important;
+    min-height: 100% !important;
 }
 
 .bs-docs p {
@@ -153,5 +154,22 @@ html , body{
 }
 
 .td-hidden {
-    visibility: hidden;
+    display: none;
+}
+
+
+.logo {
+    -webkit-appearance: none;
+    margin: 6px 55px !important;
+    border: none;
+    overflow: visible;
+    font: inherit;
+    text-transform: none;
+    display: inline-block;
+    padding: 5px 15px !important;
+    vertical-align: middle;
+    line-height: 30px;
+    min-height:30px;
+    text-decoration: none;
+    text-align: center;
 }
