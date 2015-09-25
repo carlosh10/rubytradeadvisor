@@ -15,7 +15,7 @@ def self.provides_callback_for(provider)
     }
   end
 
-  [:facebook, :linked_in].each do |provider|
+  [:facebook, :linkedin].each do |provider|
     provides_callback_for provider
   end
 
