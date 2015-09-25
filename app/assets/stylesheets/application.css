@@ -13,10 +13,9 @@
  *= require font-awesome
  *= require uikit
  *= require_self
- *= require_tree .
- *= require style.css
  *= require jquery-ui
  *= require jquery-ui/core
+ *= require_tree .
  */
 
 
@@ -153,23 +152,9 @@ html , body{
    margin-bottom: 6px;
 }
 
-.td-hidden {
-    display: none;
-}
-
-
-.logo {
-    -webkit-appearance: none;
-    margin: 10px 60px !important;
-    border: none;
-    overflow: visible;
-    font: inherit;
-    text-transform: none;
-    display: inline-block;
-    padding: 5px 15px !important;
-    vertical-align: middle;
-    line-height: 30px;
-    min-height:30px;
-    text-decoration: none;
-    text-align: center;
+.input_busca {
+    border-radius: 3px 0 0 3px !important;
+    -webkit-border-radius: 3px 0 0 3px !important;
+    float: left;
+    height: 44px;
 }
