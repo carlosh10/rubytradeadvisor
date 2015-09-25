@@ -2,13 +2,13 @@
         <nav>
             <div class="row">
 
-                <div class="col-xs-2 col-md-3 logo_box">
-                    <a class="logo" href="/">
+                <div class="col-xs-2 col-md-3">
+                    <a class="" href="/">
                         <%= image_tag "logo.svg" %>
                     </a>
                 </div>
 
-                <div class="col-xs-7 col-md-6" style="magin-left 5px;">
+                <div class="col-xs-7 col-md-6">
                     <form class="uk-form td-hidden" action="/search" accept-charset="UTF-8" method="post">
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <div class="uk-grid uk-grid-collapse">
@@ -22,7 +22,7 @@
                     </form>
                 </div>
 
-                <div class="col-xs-3 col-md-3 pull-right" style="text-align: center;">
+                <div class="col-xs-3 col-md-3">
                         <% if user_signed_in? %>
                         <div  style="color: white; font-size: 11px; margin: px 1px !important;"class="">
                           <%= current_user.name || current_user.email %><br />

@@ -7,12 +7,11 @@ gem 'pundit'
 gem 'pry'
 gem 'chewy'
 
+
 gem 'font_assets'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -23,6 +22,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+# Add font awesome
+gem 'font-awesome-sass', '~> 4.4.0'
 
 gem 'rails_12factor', group: :production
 
