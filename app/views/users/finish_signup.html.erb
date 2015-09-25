@@ -1,0 +1,26 @@
+<div class="banner_principal uk-width-1-1"  style="background-size: cover; height: 100%; background-repeat: no-repeat;">
+  <div class="uk-vertical-align uk-text-center uk-height-2-2">
+    <div class="uk-vertical-align-middle" style="width: 250px; margin: 10%;">
+
+  <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { :class => 'uk-panel uk-panel-box uk-form' }) do |f| %>
+    <% if @show_errors && current_user.errors.any? %>
+      <div id="error_explanation">
+        <% current_user.errors.full_messages.each do |msg| %>
+          <%= msg %><br>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <div class="controls">
+         <%= f.hidden_field :id %>
+        <%= f.text_field :email, :autofocus => true, :value => '', class: 'form-control input-lg', placeholder: 'Exemplo: email@me.com' %>
+        <p class="help-block">Por favor, confirme seu endereço de email. Sem spam.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit "Continuar", :class =>
+        "uk-width-1-1 btn btn-primary btn-lg" , :style => "color:white;" %>
+    </div>
+  <% end %>
+  </div></div></div>

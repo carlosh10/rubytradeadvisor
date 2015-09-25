@@ -1,0 +1,34 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+$font-stack:  'latolight';
+
+$small-distance: 1%;
+
+$accordion-title-background: #112433 ;
+$accordion-title-font: white ;
+
+.uk-form .search-page {
+	margin : $small-distance;
+}
+
+.widgets-block {
+	margin-bottom : $small-distance !important;
+}
+
+.uk-accordion-title {
+	background: $accordion-title-background !important;
+	color : $accordion-title-font !important;
+}
+
+.not-found {
+	font-family : 'latolight';
+}
+
+.uk-panel .uk-panel-box {
+	margin : $small-distance !important;
+}

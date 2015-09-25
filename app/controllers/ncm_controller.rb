@@ -33,7 +33,7 @@ class NcmController < ApplicationController
 	private
 
 	def client
-      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.address + "/_all/"
+      Elasticsearch::Client.new host: Rails.configuration.x.elasticsearch.credentials
     end
 
 
