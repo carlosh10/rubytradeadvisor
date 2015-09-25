@@ -1,19 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'devise'
-gem 'figaro', '1.0'
-gem 'faker'
-gem 'pundit'
-gem 'pry'
-gem 'chewy'
-
-
-gem 'font_assets'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
+# Use ElasticSearch for external search
+gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -22,11 +15,12 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-# Add font awesome
-gem 'font-awesome-sass', '~> 4.4.0'
+
 
 gem 'rails_12factor', group: :production
 
+# Use for users authentaction
+gem 'devise'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Use jquery ui
@@ -42,9 +36,7 @@ gem 'uikit-sass-rails', git: 'https://github.com/8398a7/uikit-sass-rails'
 # http://migre.me/roo8Q enjoy :)
 gem "twitter-bootstrap-rails"
 # fonts and icons
-gem 'font-awesome-rails'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'font-awesome-sass', '~> 4.4.0'
 
 # Application/Http Server
 gem 'unicorn-rails'
@@ -62,9 +54,6 @@ gem 'actionpack-action_caching'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
