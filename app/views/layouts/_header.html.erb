@@ -1,39 +1,37 @@
-<header class="dark_blue">
-        <nav>
-            <div class="row">
-
-                <div class="col-xs-2 col-md-3 logo_box">
-                    <a class="logo" href="/">
-                        <%= image_tag "logo.svg" %>
-                    </a>
-                </div>
-
-                <div class="col-xs-7 col-md-6" style="magin-left 5px;">
-                    <form class="uk-form td-hidden" action="/search" accept-charset="UTF-8" method="post">
-                        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                        <div class="uk-grid uk-grid-collapse">
-                            <div class="uk-width-5-6 uk-width-medium-9-10">
-                                <input class="input_busca uk-width-1-1" type="text" style="border-radius: 3px 0px 0px 3px !important;" placeholder="Pesquisa" name="search[query]">
-                            </div>
-                            <div class="uk-width-1-6 uk-width-medium-1-10">
-                                <button class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="col-xs-3 col-md-3 pull-right" style="text-align: center;">
-                        <% if user_signed_in? %>
-                        <div  style="color: white; font-size: 11px; margin: px 1px !important;"class="">
-                          <%= current_user.name || current_user.email %><br />
-              <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "logout")%>
-
-                        </div>
-                        <% else %>
-                             <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> Entrar</a>
-                        <% end %>
-                </div>
-
+<header class="topo_site dark_blue uk-width-1-1">
+    <nav>
+        <div class="uk-container uk-container-center">
+            <div class="uk-navbar-nav menu_top uk-hidden-small" style="float : left !important;">
+                <a class="uk-align-center uk-navbar-brand logo_box uk-hidden-small" href="/">
+                     <%= image_tag "logo.svg", width: "100%", :class => "uk-margin-remove" %>
+                </a>
             </div>
-        </nav>
+
+            <div class="busca_topo uk-hidden uk-width-medium-6-10">
+                <form class="uk-form" action="@Url.Action("ResumoConsulta", "Ncm")">
+                    <div class="uk-grid uk-grid-collapse">
+                        <div class="uk-width-5-6 uk-width-medium-9-10">
+                            <input class="input_busca uk-width-1-1" style="border-radius: 3px 0px 0px 3px !important;" type="text" placeholder="Pesquisa" name="search[query]" value="">
+                        </div>
+                        <div class="uk-width-1-6 uk-width-medium-1-10">
+                            <button class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="uk-navbar-nav menu_top uk-hidden-small">
+                <ul class="menu_links">
+                    <li>
+                        <% if user_signed_in? %>
+                           <%= link_to("Bem vindo #{current_user.name || current_user.email}".truncate(23), destroy_user_session_path, :method => :delete, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Clique para sair" )%>
+                        <% else %>
+                        <a class="uk-button" href="#"> <i class="uk-icon-user btn_icon"></i> <span class="uk-hidden-small">Entrar</span></a>
+                        <% end %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 </header>

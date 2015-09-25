@@ -6,23 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-require 'faker'
 
 
 ['registered', 'banned', 'admin'].each do |role|
   Role.find_or_create_by({name: role})
 end
-
-5.times do
-  user = User.new(
-    name: Faker::Name.name,
-    email: Faker::Internet.email,
-    password: Faker::Lorem.characters(10)
-    )
-  user.skip_confirmation!
-  user.save!
-end
-users = User.all
 
 
  # Create an admin user
