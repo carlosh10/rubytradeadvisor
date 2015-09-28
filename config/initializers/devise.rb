@@ -26,9 +26,9 @@ Devise.setup do |config|
   config.omniauth :linkedin, "770ng8pvbaenya", "W1kfv2c7B06aNPq3"
 
   #production
-  #config.omniauth :facebook, "863667513730949", "14759b2ff0ac39e9115a16bfc4d8b63b"
+  config.omniauth :facebook, "863667513730949", "14759b2ff0ac39e9115a16bfc4d8b63b"
   #development
-  config.omniauth :facebook, "864130677017966", "61bdc69f9187811d8e69d151161661e2"
+  #config.omniauth :facebook, "864130677017966", "61bdc69f9187811d8e69d151161661e2"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
