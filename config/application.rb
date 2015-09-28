@@ -19,7 +19,7 @@ module Rubytradeadvisor
     }
 
     config.i18n.default_locale = :'pt-BR'
-    
+
     # config.assets.prefix = ''
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -32,7 +32,16 @@ module Rubytradeadvisor
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.x.elasticsearch.address = 'http://104.197.79.244:9400/'
-    
+    config.x.elasticsearch.credentials = [
+      { host: '104.197.79.244',
+        port: '9400',
+        user: 'tradeadvisor_user',
+        password: 'Pinho14',
+        scheme: 'http'
+      } 
+  ]
+
+
+
   end
 end

@@ -63,7 +63,7 @@
     padding-right: 0px;
 }
 
-/*
+
  
 .bs-docs::after
 {
@@ -81,13 +81,12 @@
     -moz-border-radius: 4px 0 4px 0;
     border-radius: 4px 0 4px 0;
 }
-*/
+
 
 html , body{
     height:100% !important;
     min-height: 100% !important;
 }
-
 .bs-docs p {
     overflow: hidden;
     font-size: 10px;

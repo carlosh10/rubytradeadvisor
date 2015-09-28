@@ -1,12 +1,15 @@
-<form class="uk-form" action="/search" accept-charset="UTF-8" method="post" style="font-family: 'latolight';
-background-color: #DCDCDC;">
+<form class="uk-form" action="/search" accept-charset="UTF-8" method="post" style="font-family: 'latolight';display : none;background-color: #DCDCDC;">
 	
 	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 	
 	<section class="search-page">
+
 		<input type="hidden" name="search[query]" value="<%= @search.query %>">
+	
 		<div class="row">
+	
 			<div class="col-md-3 col-lg-2">
+	
 				<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingOne">
@@ -118,7 +121,6 @@ background-color: #DCDCDC;">
 				</div>
 
 
-
 				<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingFour">
@@ -166,8 +168,6 @@ background-color: #DCDCDC;">
 						</div>
 					</div>
 				</div>
-
-
 
 				<div class="panel-group" id="accordion5" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
@@ -317,238 +317,366 @@ background-color: #DCDCDC;">
 
 					</div>
 				</div>
-
-
-
-			</div>
+		    </div>
 
 			<div class="col-md-9 col-lg-10">
-				<%  if @result.products.count == 0 %>
-				<div class="bs-docs" data-content="404">
-					<h1>Não existem resultados para os valores pesquisados!</h1>
-				</div>
-				<% else %>
-				<div class="bs-result">
-					<div class="row">
-						<div class="col-md-5">
-							<p>
-								Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
-							</p>
-						</div>
-						<div class="col-md-5">
-							<p>Total US<%= number_to_currency(@result.cif_total) %></p>
-						</div>
-						<div class="col-md-2">
-						<!-- data, valor unit, valor total, qtde -->
-							<select name="order" class="form-control">
-								<option value="none">Orderna por:</option>
-								<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
-								<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
-								<option value="total_value" <% if @result.sort_by == "total_value" %> <%= "selected" %> <% end %>>Valor Total</option>
-								<option value="quantity" <% if @result.sort_by == "quantity" %> <%= "selected" %> <% end %>>Quantidade</option>
-							</select>
-						</div>
+
+					<%  if @result.products.count == 0 %>
+					<div class="bs-docs" data-content="404">
+						<h1>Não existem resultados para os valores pesquisados!</h1>
 					</div>
-				</div>
-				<% @result.products.each do |product| %>
-				<div class="bs-docs col-md-6 col-sm-12 col-lg-4" >
-
-					<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">
-					    <div class="uk-modal-dialog">
-					        <a class="uk-modal-close uk-close"></a>
-							<div class="row">
-								<div class="col-md-6">
-								<br />
-									<span><i class="fa fa-calendar"></i> <%= product["mes_ano"] %></span><br />
-									<span><i class="fa fa-barcode"></i> Código NCM: <%= product["ncm"] %></span><br />
-									<span><%= product["DESCRICAO"] %></span><br />
-								</div>
-								<div class="col-md-6">
-									<span><img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" /> ORIGEM : <%= product["paisOrigem"] %></span><br />
-									<span><img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" /> AQUISIÇÃO : <%= product["paisAquisicao"] %></span>
-								</div>
-							</div>
-							<hr />
-							<div class="row">
-								<div class="col-md-12">
-									<p><%= product["descricao_detalhada_produto"] %></p>
-								</div>
-							</div>
-							<div class="panel panel-default">
-							  <div class="panel-body" style="text-align:center;font-size: 13px;">
-								<table style="width:100%;">
-									<tr>
-										<td>Qtd. Comercial</td>
-										<td>Un. Comercial</td>
-										<td>Qtd. Aduaneira</td>
-										<td>Un. Aduaneira</td>
-									</tr>
-									<tr>
-										<td><%= product["quantidade_comercializada_produto"] %></td>
-										<td><%= product["unidade_comercializacao"] %></td>
-										<td><%= product["quantidade_aduaneira"] %></td>
-										<td><%= product["unidade_aduaneira"] %></td>
-									</tr>
-								</table>
-							</div>
-							</div>
-							<div class="panel panel-default">
-							  <div class="panel-body" style="font-size: 12px;">
-								<table class="table" style="text-align: center;">
-									<thead>
-										<tr>
-											<td>NCM</td>
-											<td>Unitário</td>
-											<td>Total</td>
-										</tr>
-									</thead>
-									<tr>
-										<td>PRODUTO (FOB)</td>
-										<td><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></td>
-										<td><%= number_to_currency(product["valor_fob_dolar"]) %></td>
-									</tr>
-									<tr>
-										<td>FRETE</td>
-										<td><%= number_to_currency(product["valor_frete_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %></td>
-										<td><%= number_to_currency(product["valor_frete_dolar"]) %></td>
-									</tr>
-									<tr>
-										<td>SEGURO</td>
-										<td>
-										<% if product["valor_seguro_dolar"].to_i != 0 %>
-											<%= number_to_currency(product["valor_seguro_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %>
-										<% else %>
-											0
-										<% end %>
-										</td>
-										<td>
-										<% if product["valor_seguro_dolar"].to_i != 0 %>
-											<%= number_to_currency(product["valor_seguro_dolar"])  %>
-										<% else %>
-											0
-										<% end %>
-										</td>
-									</tr>
-									<tr>
-										<td>CIF</td>
-										<td><%= number_to_currency(product["CIF_unitario"]) %></td>
-										<td><%= number_to_currency(product["CIF"]) %></td>
-									</tr>
-								</table>
-							</div>
-							</div>
-							<div class="panel panel-default">
-							  <div class="panel-body" style="font-size: 12px;">
-								<table class="table" style="text-align: center;">
-									<thead>
-										<tr>
-											<td>Impostos</td>
-											<td>BC</td>
-											<td>Aliq.</td>
-											<td>Unitário</td>
-											<td>Total</td>
-										</tr>
-									</thead>
-									<tr>
-										<td>II</td>
-										<td><%= number_to_currency(product["CIF"]) %></td>
-										<td><%= product["ALIQUOTA_II"] %>%</td>
-										<td><%= calc_unit(product,"ALIQUOTA_II")  %></td>
-										<td><%= calc_total(product,"ALIQUOTA_II")  %></td>
-									</tr>									
-									<tr>
-										<td>IPI</td>
-										<td><%= number_to_currency(product["CIF"] + calc(product, "ALIQUOTA_II")) %></td>
-										<td><%= product["ALIQUOTA_IPI"] %>%</td>
-										<td><%= calc_unit(product,"ALIQUOTA_IPI")  %></td>
-										<td><%= calc_total(product,"ALIQUOTA_IPI")  %></td>
-									</tr>
-									<tr>
-										<td>PIS</td>
-										<td><%= number_to_currency(product["CIF"]) %></td>
-										<td><%= product["ALIQUOTA_PIS_ADVAL"] %>%</td>
-										<td><%= calc_unit(product,"ALIQUOTA_PIS_ADVAL")  %></td>
-										<td><%= calc_total(product,"ALIQUOTA_PIS_ADVAL")  %></td>
-									</tr>
-									<tr>
-										<td>COFINS</td>
-										<td><%= number_to_currency(product["CIF"]) %></td>
-										<td><%= product["ALIQUOTA_COFINS_ADVAL"] %>%</td>
-										<td><%= calc_unit(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
-										<td><%= calc_total(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
-									</tr>									
-									<tr>
-										<td></td>
-										<td>TOTAL</td>
-										<td><%= calc_sum_percent(product) %> </td>
-										<td><%= calc_sum_unit(product) %> </td>
-										<td><%= calc_sum_total(product) %> </td>
-									</tr>
-
-								</table>	
-							</div>
-							</div>
-					    </div>
-					</div>
-
-					<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
+					<% else %>
+					<div class="bs-result">
 						<div class="row">
-							<div class="col-md-7">
+							<div class="col-md-5">
+								<p>
+									Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
+								</p>
+							</div>
+							<div class="col-md-5">
+								<p>Total US<%= number_to_currency(@result.cif_total) %></p>
+							</div>
+							<div class="col-md-2">
+							<!-- data, valor unit, valor total, qtde -->
+								<select name="order" class="form-control">
+									<option value="none">Orderna por:</option>
+									<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
+									<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
+									<option value="total_value" <% if @result.sort_by == "total_value" %> <%= "selected" %> <% end %>>Valor Total</option>
+									<option value="quantity" <% if @result.sort_by == "quantity" %> <%= "selected" %> <% end %>>Quantidade</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<% @result.products.each do |product| %>
+					<div class="bs-docs col-md-6 col-sm-12 col-lg-4" >
+						<!--
+						<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">
+						    <div class="uk-modal-dialog">
+						        <a class="uk-modal-close uk-close"></a>
 								<div class="row">
-									<div class="col-md-5">
-										<div>
-											<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
-												<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
-											</span>
-											<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
-											<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
-											</span>
-										</div>
-
+									<div class="col-md-6">
+									<br />
+										<span><i class="fa fa-calendar"></i> <%= product["mes_ano"] %></span><br />
+										<span><i class="fa fa-barcode"></i> Código NCM: <%= product["ncm"] %></span><br />
+										<span><%= product["DESCRICAO"] %></span><br />
 									</div>
-									<div class="col-md-7">
-										<span><%= product["ncm"] %></span>
+									<div class="col-md-6">
+										<span><img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" /> ORIGEM : <%= product["paisOrigem"] %></span><br />
+										<span><img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" /> AQUISIÇÃO : <%= product["paisAquisicao"] %></span>
 									</div>
 								</div>
+								<hr />
 								<div class="row">
 									<div class="col-md-12">
-										<div>
-											<p><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></p>
-										</div>
+										<p><%= product["descricao_detalhada_produto"] %></p>
 									</div>
 								</div>
-
-							</div>
-
-							<div class="col-md-5 cif" style="padding: 0px 8px 0px 0px;">
-								<div>
-									<span><strong> <%= product["mes_ano"] %></strong><span>DATA</span></span>
-								<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
-								<span>
-									<strong><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></strong><span>FOB UNIT.</span>
-								</span>
-								<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
+								<div class="panel panel-default">
+								  <div class="panel-body" style="text-align:center;font-size: 13px;">
+									<table style="width:100%;">
+										<tr>
+											<td>Qtd. Comercial</td>
+											<td>Un. Comercial</td>
+											<td>Qtd. Aduaneira</td>
+											<td>Un. Aduaneira</td>
+										</tr>
+										<tr>
+											<td><%= product["quantidade_comercializada_produto"] %></td>
+											<td><%= product["unidade_comercializacao"] %></td>
+											<td><%= product["quantidade_aduaneira"] %></td>
+											<td><%= product["unidade_aduaneira"] %></td>
+										</tr>
+									</table>
 								</div>
-							</div>
-		
+								</div>
+								<div class="panel panel-default">
+								  <div class="panel-body" style="font-size: 12px;">
+									<table class="table" style="text-align: center;">
+										<thead>
+											<tr>
+												<td>NCM</td>
+												<td>Unitário</td>
+												<td>Total</td>
+											</tr>
+										</thead>
+										<tr>
+											<td>PRODUTO (FOB)</td>
+											<td><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></td>
+											<td><%= number_to_currency(product["valor_fob_dolar"]) %></td>
+										</tr>
+										<tr>
+											<td>FRETE</td>
+											<td><%= number_to_currency(product["valor_frete_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %></td>
+											<td><%= number_to_currency(product["valor_frete_dolar"]) %></td>
+										</tr>
+										<tr>
+											<td>SEGURO</td>
+											<td>
+											<% if product["valor_seguro_dolar"].to_i != 0 %>
+												<%= number_to_currency(product["valor_seguro_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %>
+											<% else %>
+												0
+											<% end %>
+											</td>
+											<td>
+											<% if product["valor_seguro_dolar"].to_i != 0 %>
+												<%= number_to_currency(product["valor_seguro_dolar"])  %>
+											<% else %>
+												0
+											<% end %>
+											</td>
+										</tr>
+										<tr>
+											<td>CIF</td>
+											<td><%= number_to_currency(product["CIF_unitario"]) %></td>
+											<td><%= number_to_currency(product["CIF"]) %></td>
+										</tr>
+									</table>
+								</div>
+								</div>
+								<div class="panel panel-default">
+								  <div class="panel-body" style="font-size: 12px;">
+									<table class="table" style="text-align: center;">
+										<thead>
+											<tr>
+												<td>Impostos</td>
+												<td>BC</td>
+												<td>Aliq.</td>
+												<td>Unitário</td>
+												<td>Total</td>
+											</tr>
+										</thead>
+										<tr>
+											<td>II</td>
+											<td><%= number_to_currency(product["CIF"]) %></td>
+											<td><%= product["ALIQUOTA_II"] %>%</td>
+											<td><%= calc_unit(product,"ALIQUOTA_II")  %></td>
+											<td><%= calc_total(product,"ALIQUOTA_II")  %></td>
+										</tr>									
+										<tr>
+											<td>IPI</td>
+											<td><%= number_to_currency(product["CIF"] + calc(product, "ALIQUOTA_II")) %></td>
+											<td><%= product["ALIQUOTA_IPI"] %>%</td>
+											<td><%= calc_unit(product,"ALIQUOTA_IPI")  %></td>
+											<td><%= calc_total(product,"ALIQUOTA_IPI")  %></td>
+										</tr>
+										<tr>
+											<td>PIS</td>
+											<td><%= number_to_currency(product["CIF"]) %></td>
+											<td><%= product["ALIQUOTA_PIS_ADVAL"] %>%</td>
+											<td><%= calc_unit(product,"ALIQUOTA_PIS_ADVAL")  %></td>
+											<td><%= calc_total(product,"ALIQUOTA_PIS_ADVAL")  %></td>
+										</tr>
+										<tr>
+											<td>COFINS</td>
+											<td><%= number_to_currency(product["CIF"]) %></td>
+											<td><%= product["ALIQUOTA_COFINS_ADVAL"] %>%</td>
+											<td><%= calc_unit(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
+											<td><%= calc_total(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
+										</tr>									
+										<tr>
+											<td></td>
+											<td>TOTAL</td>
+											<td><%= calc_sum_percent(product) %> </td>
+											<td><%= calc_sum_unit(product) %> </td>
+											<td><%= calc_sum_total(product) %> </td>
+										</tr>
+
+									</table>	
+								</div>
+								</div>
+						    </div>
 						</div>
-					</a>
-				</div>
-				<% end %>
-				<% end %>				
+						-->
+						<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
+							<div class="row">
+								<div class="col-md-7">
+									<div class="row">
+										<div class="col-md-5">
+											<div>
+												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
+													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
+												</span>
+												<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
+												<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
+												</span>
+											</div>
+
+										</div>
+										<div class="col-md-7">
+											<span><%= product["ncm"] %></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div>
+												<p><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></p>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="col-md-5 cif" style="padding: 0px 8px 0px 0px;">
+									<div>
+										<span><strong> <%= product["mes_ano"] %></strong><span>DATA</span></span>
+									<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
+									<span>
+										<strong><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></strong><span>FOB UNIT.</span>
+									</span>
+									<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
+									</div>
+								</div>
+			
+							</div>
+						</a>
+					</div>
+					<% end %>
+					<% end %>				
 			</div>
-			<div class="col-md-12">
+
+			<div class="col-md-12 col-md-pull-12">
 					<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
 					<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page %>" />
 					<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
 					<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page %>}"></ul>
 				</div>
 		</div>
+
 	</section>
 </form>
 
+<% if false %>
 <% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::Ncm }.each do |filter| %>
 		<form method="get" action="/ncm" style="display:none;" class="form-ncm">
 			<input type="hidden" name="ncm" value="<%= filter.value  %>">
 		</form>
 <% end %>
+<% end %>
+
+
+
+<style type="text/css">
+	body {
+		height: initial !important;
+	}
+</style>
+
+<form class="uk-form uk-responsive-height search-page">
+	<div uk-grid class="uk-grid uk-grid-small">
+		
+		<!-- -->
+	    <div class="uk-width-small-1-1 uk-width-medium-1-5 widgets-block" data-content="FILTROS">
+	    	<div class="uk-panel uk-panel-box">
+				<div class="uk-accordion" data-uk-accordion="{collapse: false}">
+
+				    <h3 class="uk-accordion-title">NCM</h3>
+				    <div class="uk-accordion-content">
+						<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::Ncm }.each do |filter| %>
+							<div>
+								<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+								<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+								<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+								<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+								<span class="ncm-hovertip" data-ncm="<%= filter.value  %>">&nbsp;<%= filter.value  %></span>
+								<span class="badge"><%= filter.hits %></span>
+							</div>
+						<% end %>
+				    </div>
+
+				    <h3 class="uk-accordion-title">PAÍS DE ORIGEM</h3>
+				    <div class="uk-accordion-content">
+						<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::CountryOrigin }.each do |filter| %>
+							<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
+								<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+								<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+								<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+								<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+							    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+								<span class="badge"><%= filter.hits %></span>
+							</div>
+						<% end %>
+				    </div>
+
+				    <h3 class="uk-accordion-title">PAÍS DE AQUISIÇÃO</h3>
+				    <div class="uk-accordion-content">
+		    			<% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::CountryAquisition }.each do |filter| %>
+							<div data-uk-tooltip="{pos:'top-left'}" title="<%= filter.value %>">
+								<input type="hidden" name="filters[][hits]" value="<%= filter.hits %>">
+								<input type="hidden" name="filters[][type]" value="<%= filter.type %>">
+								<input type="hidden" name="filters[][value]" value="<%= filter.value %>">
+								<input type="checkbox" name="filters[][selected]" <%= filter.selected ? "checked" : ""  %> value="true">
+							    <img class="flag flag-<%= filter.value.downcase %>" data-toggle="tooltip" data-placement="bottom" />
+								<span class="badge"><%= filter.hits %></span>
+							</div>
+						<% end %>
+				    </div>
+
+
+				    <h3 class="uk-accordion-title">VALOR TOTAL</h3>
+				    <div class="uk-accordion-content">
+				    	 <small>De:</small>
+			    		 <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::TotalValue %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].min.to_f.round(2)  %>">
+						  <small>Até:</small>
+						  <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::TotalValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::TotalValue.to_s].max.to_f.round(2) %>">
+					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+				    </div>
+
+				    <h3 class="uk-accordion-title">...</h3>
+				    <div class="uk-accordion-content">...</div>
+
+				</div>
+	    	</div>
+	    </div>
+
+		 <div class="uk-width-small-1-1 uk-width-medium-4-5 search-cards-block">
+	    	<div class="uk-panel uk-panel-box">
+				<%  if @result.products.count == 0 %>
+					<div class="text-center">
+						<h1 class="not-found">Não existem resultados para os valores pesquisados!</h1>
+					</div>
+				<% else %>
+					<div data-uk-grid> 
+					<!-- <div uk-grid class="uk-grid uk-grid-small"> -->
+						<% @result.products.each do |product| %>
+						<div class="uk-width-large-1-3 uk-width-medium-1-2 uk-width-small-1-1">
+							<div class="uk-panel uk-panel-box">
+								<!-- modal -->
+								<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">modal</div>
+								<!-- card -->
+								<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
+									<div data-uk-grid>
+									<!--<div uk-grid class="uk-grid uk-grid-small">-->
+										<div class="uk-width-small-3-5 uk-width-large-3-5">
+												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
+													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
+												</span>
+												<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
+												<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
+												</span>
+											<span>&nbsp;<%= product["ncm"] %></span>
+										</div>
+										<div class="uk-width-small-2-5 uk-width-large-2-5 uk-clearfix" style="font-size: 12px;">
+											
+											<span class="uk-float-left"><%= product["mes_ano"] %>&nbsp;</span>
+
+											<span class="uk-float-left">FOB UNIT. <%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;</span>
+											
+											<span class="uk-float-left">CIF TOTAL <%= number_to_currency(product["CIF"]) %></span>
+
+										</div>
+										<div class="uk-width-small-3-5" style="font-size: 10px; padding-top: 2px;">
+											<%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<% end %>
+					</div>
+				<% end %>
+	    	</div>
+	    </div>
+	</div>
+</form>
