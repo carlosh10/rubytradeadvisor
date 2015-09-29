@@ -4,10 +4,9 @@ class Search::QueryBuilder
   include Search::RangeFilterType
   include Search::DateRangeFilterType
 
-  attr_accessor :struct, :pagination, :index_of, :sort_by, :debug
+  attr_accessor :struct, :pagination, :index_of, :sort_by
 
   def initialize
-    self.debug = Array.new
     self.struct = {
         body: { query: { filtered: { filter: { bool: { should: [], must: [] }}}},
               size: "42",
@@ -93,7 +92,6 @@ class Search::QueryBuilder
   end
 
   def build_range_filters query, filters
-    @debug << filters
     self.struct[:body][:query][:filtered][:filter][:bool][:must]  += filters.map { |filter| filter.build self.index_of[filter.type.intern]  }
   end
 

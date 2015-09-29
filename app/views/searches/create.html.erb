@@ -1,252 +1,3 @@
-<div class="uk-form" action="/search" accept-charset="UTF-8" method="post" style="font-family: 'latolight';display : none;background-color: #DCDCDC;">
-	
-	<section class="search-page">
-
-		<input type="hidden" name="search[query]" value="<%= @search.query %>">
-	
-		<div class="row">
-	
-			<div class="col-md-3 col-lg-2">
-	
-				<div class="panel-group" id="accordion5" role="tablist" aria-multiselectable="true">
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="headingFive">
-							<h4 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-									Valor unitário <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-								</a>
-							</h4>
-						</div>
-
-						<div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
-
-							<div class="panel-body">
-
-							<% if @result.range_filters[Search::RangeFilterType::UnityValue.to_s] != nil %>
-								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min_range %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max_range %>">
-
-							  <input type="text" id="amount-unity" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-
-						      <div id="total-value-slider" 
-						      		class="slider-range"  
-						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min_range %>" 
-						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max_range %>" 
-						      		data-min="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min %>" 
-						      		data-max="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max %>" 
-						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max]']" 
-						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][min]']" 
-						      		data-display="#amount-unity" 
-						      		data-display-prefix="$">
-						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
-
-						      		<% else %>
-						      			<%= @result.range_filters %>
-						      		<% end %>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="panel-group" id="accordion6" role="tablist" aria-multiselectable="true">
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="headingSix">
-							<h4 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-									Quantidade Comercializada <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-								</a>
-							</h4>
-						</div>
-
-						<div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix">
-
-							<div class="panel-body">
-
-							<% if @result.range_filters[Search::RangeFilterType::Quantity.to_s] != nil %>
-								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min_range %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max_range %>">
-
-							  <input type="text" id="amount-quantity" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-
-						      <div id="total-value-slider" 
-						      		class="slider-range"  
-						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min_range %>" 
-						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max_range %>" 
-						      		data-min="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].min %>" 
-						      		data-max="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s].max %>" 
-						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max]']" 
-						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][min]']" 
-									data-display="#amount-quantity"
-									data-display-prefix="un. " >
-						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
-
-						      		<% else %>
-						      			<%= @result.range_filters %>
-						      		<% end %>
-
-							</div>
-
-						</div>
-
-
-
-					</div>
-				</div>
-
-
-				<div class="panel-group" id="accordion7" role="tablist" aria-multiselectable="true">
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="headingSeven">
-							<h4 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
-									Quantidade Aduaneira <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-								</a>
-							</h4>
-						</div>
-
-						<div id="collapseSeven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-
-							<div class="panel-body">
-
-							<% if @result.range_filters[Search::RangeFilterType::Customs.to_s] != nil %>
-								<input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs %>][min]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][min_range]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min_range %>">
-
-							  <input type="hidden" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max_range]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max_range %>">
-
-							  <input type="text" id="amount-Customs" readonly style="text-align:center;font-weight:bold;margin-top:0px !important;">
-
-						      <div id="total-value-slider" 
-						      		class="slider-range"  
-						      		data-min-range="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min_range %>" 
-						      		data-max-range="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max_range %>" 
-						      		data-min="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].min %>" 
-						      		data-max="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s].max %>" 
-						      		data-max-field="input[name='range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max]']" 
-						      		data-min-field="input[name='range_filters[<%= Search::RangeFilterType::Customs.to_s %>][min]']" 
-									data-display="#amount-Customs"
-									data-display-prefix="un. " >
-						      </div>
-						      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
-
-						      		<% else %>
-						      			<%= @result.range_filters %>
-						      		<% end %>
-
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-		    </div>
-
-			<div class="col-md-9 col-lg-10">
-
-					<%  if @result.products.count == 0 %>
-					<div class="bs-docs" data-content="404">
-						<h1>Não existem resultados para os valores pesquisados!</h1>
-					</div>
-					<% else %>
-					<div class="bs-result">
-						<div class="row">
-							<div class="col-md-5">
-								<p>
-									Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
-								</p>
-							</div>
-							<div class="col-md-5">
-								<p>Total US<%= number_to_currency(@result.cif_total) %></p>
-							</div>
-							<div class="col-md-2">
-							<!-- data, valor unit, valor total, qtde -->
-								<select name="order" class="form-control">
-									<option value="none">Orderna por:</option>
-									<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
-									<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
-									<option value="total_value" <% if @result.sort_by == "total_value" %> <%= "selected" %> <% end %>>Valor Total</option>
-									<option value="quantity" <% if @result.sort_by == "quantity" %> <%= "selected" %> <% end %>>Quantidade</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<% @result.products.each do |product| %>
-					<div class="bs-docs col-md-6 col-sm-12 col-lg-4" >
-						
-						<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
-							<div class="row">
-								<div class="col-md-7">
-									<div class="row">
-										<div class="col-md-5">
-											<div>
-												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
-													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
-												</span>
-												<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
-												<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
-												</span>
-											</div>
-
-										</div>
-										<div class="col-md-7">
-											<span><%= product["ncm"] %></span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<div>
-												<p><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></p>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-md-5 cif" style="padding: 0px 8px 0px 0px;">
-									<div>
-										<span><strong> <%= product["mes_ano"] %></strong><span>DATA</span></span>
-									<span><strong><%= product["quantidade_comercializada_produto"] %> </strong><span>PEÇAS</span></span>
-									<span>
-										<strong><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></strong><span>FOB UNIT.</span>
-									</span>
-									<span><strong><%= number_to_currency(product["CIF"]) %></strong><span>CIF TOTAL</span></span>
-									</div>
-								</div>
-			
-							</div>
-						</a>
-					</div>
-					<% end %>
-					<% end %>				
-			</div>
-
-			<div class="col-md-12 col-md-pull-12">
-					<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
-					<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page %>" />
-					<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
-					<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page %>}"></ul>
-				</div>
-		</div>
-
-	</section>
-</div>
 
 <% if false %>
 <% @result.filters.select { |e| e.type.intern == Search::SelectionFilterType::Ncm }.each do |filter| %>
@@ -255,8 +6,6 @@
 		</form>
 <% end %>
 <% end %>
-
-
 
 <style type="text/css">
 	body {
@@ -318,6 +67,14 @@
 						<% end %>
 				    </div>
 
+				    <h3 class="uk-accordion-title">DATA DE ORIGEM</h3>
+				    <div class="uk-accordion-content">
+							<small>De:</small>
+							<input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period %>][from]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].from %>">
+							  <small>Até:</small>
+							  <input type="date" name="date_range_filters[<%= Search::DateRangeFilterType::Period.to_s %>][to]" value="<%= @result.date_range_filters[Search::DateRangeFilterType::Period.to_s].to %>">
+					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+				    </div>
 
 				    <h3 class="uk-accordion-title">VALOR TOTAL</h3>
 				    <div class="uk-accordion-content">
@@ -328,8 +85,33 @@
 					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
 				    </div>
 
-				    <h3 class="uk-accordion-title">...</h3>
-				    <div class="uk-accordion-content">...</div>
+				    <h3 class="uk-accordion-title">VALOR UNITÁRIO</h3>
+				    <div class="uk-accordion-content">
+				    	 <small>De:</small>
+			    		 <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::UnityValue %>][min]" value="<%=  @result.range_filters[Search::RangeFilterType::UnityValue.to_s] != nil ? @result.range_filters[Search::RangeFilterType::UnityValue.to_s].min.to_f.round(2) : "" %>">
+						  <small>Até:</small>
+						  <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::UnityValue.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::UnityValue.to_s] != nil ? @result.range_filters[Search::RangeFilterType::UnityValue.to_s].max.to_f.round(2) : "" %>">
+					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+					  </div>
+
+
+					 <h3 class="uk-accordion-title">QUANTIDADE COMERCIALIZADA</h3>
+				    <div class="uk-accordion-content">
+				    	<small>De:</small>
+			    		 <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::Quantity %>][min]" value="<%=  @result.range_filters[Search::RangeFilterType::Quantity.to_s] != nil ? @result.range_filters[Search::RangeFilterType::Quantity.to_s].min : "" %>">
+						  <small>Até:</small>
+						  <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::Quantity.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Quantity.to_s] != nil ? @result.range_filters[Search::RangeFilterType::Quantity.to_s].max : "" %>">
+					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+					  </div>
+
+				    <h3 class="uk-accordion-title">QUNTIDADE ADUANEIRA</h3>
+				    <div class="uk-accordion-content">
+				    	<small>De:</small>
+			    		 <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::Customs %>][min]" value="<%=  @result.range_filters[Search::RangeFilterType::Customs.to_s] != nil ? @result.range_filters[Search::RangeFilterType::Customs.to_s].min : "" %>">
+						  <small>Até:</small>
+						  <input type="text" class="uk-width-1-1 uk-form-larg" name="range_filters[<%= Search::RangeFilterType::Customs.to_s %>][max]" value="<%= @result.range_filters[Search::RangeFilterType::Customs.to_s] != nil ? @result.range_filters[Search::RangeFilterType::Customs.to_s].max : "" %>">
+					      <input class="uk-button uk-button-mini pull-right" type="button" value="Aplicar" />
+				    </div>
 
 				</div>
 	    	</div>
@@ -344,18 +126,18 @@
 				<% else %>
 					<div data-uk-grid> 
 						<div class="uk-width-large-1-1">
-						  <div class="uk-panel uk-panel-box">
-							<div class="col-md-6">
+						  <div class="uk-panel uk-panel-box results-stats" style="padding-top: 12px !important; margin: 0px !important;">
+							<div class="col-md-5">
 								<p>
 									Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
 								</p>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-5">
 								<p>Total US<%= number_to_currency(@result.cif_total) %></p>
 							</div>
 							<div class="col-md-2">
 							<!-- data, valor unit, valor total, qtde -->
-								<select name="order" style="font-size: 10px !important;margin-top: -10px !important;">
+								<select name="order" style="margin: -10px !important; font-size: 12px !important;">
 									<option value="none">Orderna por:</option>
 									<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
 									<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
@@ -542,9 +324,14 @@
 						</div>
 						<% end %>
 					</div>
+					<div class="uk-width-large-1-1 uk-width-medium-1-1 uk-width-medium-1-1">
+						<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
+						<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page == 0 ? 1 : @result.pagination.page %>" />
+						<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
+						<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page == 0 ? 1 : @result.pagination.page %>}"></ul>
+					</div>
 				<% end %>
 	    	</div>
 	    </div>
 	</div>
 </form>
-
