@@ -12,15 +12,13 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @pagination = params[:pagination][:page]
+
     @search = search
 
     if @search.save
       query_builder = Search::QueryBuilder.new
       query = query_builder.build(@search.query, selection_filters, range_filters, pagination, date_range_filters, sort_by) 
-      #@query = range_filters
       raw_results = client.search(query)
-      #@results = raw_results
       @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination, date_range_filters,sort_by)
     else
       # todo handle the case where it fails....
