@@ -12,7 +12,7 @@ class SearchesController < ApplicationController
   end
 
   def create
-
+    @pagination = params[:pagination][:page]
     @search = search
 
     if @search.save

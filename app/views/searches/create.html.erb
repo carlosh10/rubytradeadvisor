@@ -238,10 +238,7 @@
 			</div>
 
 			<div class="col-md-12 col-md-pull-12">
-					<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
-					<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page %>" />
-					<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
-					<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page %>}"></ul>
+
 				</div>
 		</div>
 
@@ -344,18 +341,18 @@
 				<% else %>
 					<div data-uk-grid> 
 						<div class="uk-width-large-1-1">
-						  <div class="uk-panel uk-panel-box">
-							<div class="col-md-6">
+						  <div class="uk-panel uk-panel-box results-stats" style="padding-top: 12px !important; margin: 0px !important;">
+							<div class="col-md-5">
 								<p>
 									Buscando por&nbsp;<span><%= @search.query %>,</span> total <%= @result.hits %> hits.
 								</p>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-5">
 								<p>Total US<%= number_to_currency(@result.cif_total) %></p>
 							</div>
 							<div class="col-md-2">
 							<!-- data, valor unit, valor total, qtde -->
-								<select name="order" style="font-size: 10px !important;margin-top: -10px !important;">
+								<select name="order" style="margin: -10px !important; font-size: 12px !important;">
 									<option value="none">Orderna por:</option>
 									<option value="date" <% if @result.sort_by == "date" %> <%= "selected" %> <% end %> >Data</option>
 									<option value="unit_value" <% if @result.sort_by == "unit_value" %> <%= "selected" %> <% end %>>Valor Unitário</option>
@@ -541,6 +538,12 @@
 							</div>
 						</div>
 						<% end %>
+					</div>
+					<div class="uk-width-large-1-1 uk-width-medium-1-1 uk-width-medium-1-1">
+						<input type="hidden" name="pagination[count]" value="<%= @result.pagination.count %>" />
+						<input type="hidden" id="pagination-page" name="pagination[page]" value="<%= @result.pagination.page == 0 ? 1 : @result.pagination.page %>" />
+						<input type="hidden" name="pagination[total_pages]" value="<%= @result.pagination.total_pages %>" />
+						<ul class="uk-pagination" data-uk-pagination="{items:<%= @result.hits %> , itemsOnPage:<%= @result.pagination.count %>, currentPage:<%= @result.pagination.page == 0 ? 1 : @result.pagination.page %>}"></ul>
 					</div>
 				<% end %>
 	    	</div>
