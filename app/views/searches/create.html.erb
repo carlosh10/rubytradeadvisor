@@ -303,6 +303,9 @@
 
 											<span class="uk-float-left">FOB UNIT. <%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;</span>
 											
+											<span class="uk-float-left">QUANTIDADE <%= product["quantidade_comercializada_produto"] %></span>
+
+
 											<span class="uk-float-left">CIF TOTAL <%= number_to_currency(product["CIF"]) %></span>
 
 										</div>
