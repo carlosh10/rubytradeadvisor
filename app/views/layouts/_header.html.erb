@@ -1,6 +1,15 @@
 <header class="topo_site dark_blue uk-width-1-1">
     <nav>
-        <div class="uk-container uk-container-center">
+        <div class="uk-container uk-container-center" style="max-width: 100% !important;">
+            
+        <div class="uk-navbar-nav uk-hidden-small uk-hidden-medium" style="float: left !important; padding-right: 26px; padding-left:0px !important;">
+                <ul class="menu_links" style="padding-left: 0px;">
+                    <li>
+                        <a class="uk-button" target="_blank" href="http://blog.tradeadvisor.com.br/"><span class="uk-hidden-small">Acesse nosso blog!</span></a>
+                    </li>
+                </ul>
+        </div>
+
             <div class="uk-navbar-nav menu_top uk-hidden-small" style="float : left !important;">
                 <a class="uk-align-center uk-navbar-brand logo_box uk-hidden-small" href="/">
                      <%= image_tag "logo.svg", width: "100%", :class => "uk-margin-remove" %>
@@ -28,11 +37,13 @@
                         <% if user_signed_in? %>
                            <%= link_to("Olá #{current_user.name || current_user.email}".truncate(15), destroy_user_session_path, :method => :delete, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Clique para sair" )%>
                         <% else %>
-                        <a class="uk-button" href="/users/sign_up"> <i class="uk-icon-user btn_icon"></i> <span class="uk-hidden-small">Entrar</span></a>
+                        <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> <span class="uk-hidden-small">Entrar</span></a>
                         <% end %>
                     </li>
                 </ul>
             </div>
+
+
         </div>
     </nav>
 </header>
