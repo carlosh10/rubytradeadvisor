@@ -49,21 +49,15 @@
 .bs-result select {
     margin-bottom: 0.7em;
 }
-
-.bs-docs
+ 
+.bs-docs 
 {
     position: relative;
-    margin: 5px 0px;
-    padding: 10px;
-    background-color: white;
-    border: 1px solid #DDD;
-    -webkit-border-radius: 4px;
+    border: 0px;
+    /*-webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
-    padding-right: 0px;
+    border-radius: 4px; */
 }
-
-
  
 .bs-docs::after
 {
@@ -77,9 +71,7 @@
     background-color: whiteSmoke;
     border: 1px solid #DDD;
     color: #9DA0A4;
-    -webkit-border-radius: 4px 0 4px 0;
-    -moz-border-radius: 4px 0 4px 0;
-    border-radius: 4px 0 4px 0;
+
 }
 
 

@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
-Rails.application.config.assets.version = '3.2'
+Rails.application.config.assets.version = '3.3'
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/fonts')
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/css/fonts')
 Rails.application.config.assets.paths << Rails.root.join('/app/assets/css/fonts/lato')
