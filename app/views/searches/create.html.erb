@@ -116,7 +116,7 @@
 					</div>
 				<% else %>
 					<div data-uk-grid> 
-						<div class="uk-width-large-1-1">
+						<div class="uk-width-large-1-1" style="margin-bottom: 5px;">
 						  <div class="uk-panel uk-panel-box results-stats" style="padding-top: 12px !important; margin: 0px !important;">
 							<div class="col-md-5">
 								<p>
@@ -140,7 +140,7 @@
 					</div>
 					<!-- <div uk-grid class="uk-grid uk-grid-small"> -->
 						<% @result.products.each do |product| %>
-						<div class="uk-width-large-1-3 uk-width-medium-1-2 uk-width-small-1-1">
+						<div class="uk-width-large-1-3 uk-width-medium-1-2 uk-width-small-1-1 bs-docs" data-content="<%= product["mes_ano"] %>" style="padding 0px; border 0px;">
 
 
 						<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">
@@ -161,7 +161,7 @@
 								<hr />
 								<div class="row">
 									<div class="col-md-12">
-										<p><%= product["descricao_detalhada_produto"] %></p>
+										<p style="min-height: 20px;"><%= product["descricao_detalhada_produto"] %></p>
 									</div>
 								</div>
 								<div class="panel panel-default">
@@ -279,6 +279,8 @@
 								</div>
 								</div>
 						    </div>
+
+					
 						</div>
 
 							<div class="uk-panel uk-panel-box">
@@ -287,7 +289,7 @@
 								<!-- card -->
 								<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
 									<div data-uk-grid>
-									<!--<div uk-grid class="uk-grid uk-grid-small">-->
+										<!--
 										<div class="uk-width-small-3-5 uk-width-large-3-5">
 												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
 													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
@@ -312,8 +314,32 @@
 										<div class="uk-width-small-3-5" style="font-size: 10px; padding-top: 2px;">
 											<%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %>
 										</div>
+										-->
+										<div class="uk-width-small-5-5 uk-width-large-5-5" data-uk-grid>
+											<div  class="uk-width-small-1-5 uk-width-large-1-5">
+												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
+													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
+												</span>
+												<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
+												<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
+												</span>
+											</div>
+											<div class="uk-text-right uk-width-small-4-5 uk-width-large-4-5">
+											<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM"><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;&nbsp;&nbsp;</span>
+
+											<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc(product,"ALIQUOTA_IPI")/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>
+											</div>
+
+										</div>
+
+
+										<div class="uk-width-small-5-5 uk-width-large-5-5">
+											<span style="font-size: 10px; padding-top: 5px; display: block;" class="uk-text-justify"><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></span>
+										</div>
+
 									</div>
 								</a>
+
 							</div>
 						</div>
 						<% end %>
