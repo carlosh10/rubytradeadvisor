@@ -32,12 +32,16 @@ module ApplicationHelper
 	end
 
 	def calc_sum_total(product)
+		number_to_currency(calc_sum_total_f(product))
+	end
+
+	def calc_sum_total_f(product)
 		aliquotas = ["ALIQUOTA_COFINS_ADVAL", "ALIQUOTA_PIS_ADVAL", "ALIQUOTA_IPI", "ALIQUOTA_II" ]
 		sum = 0
 		aliquotas.each do |aliquota|
 			sum += calc(product, aliquota)
 		end
-		number_to_currency(sum)
+		sum
 	end
 end
  

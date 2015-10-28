@@ -327,7 +327,7 @@
 											<div class="uk-text-right uk-width-small-4-5 uk-width-large-4-5">
 											<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM"><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;&nbsp;&nbsp;</span>
 
-											<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc(product,"ALIQUOTA_IPI")/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>
+											<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc_sum_total_f(product)/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>
 											</div>
 
 										</div>
