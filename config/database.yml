@@ -15,8 +15,9 @@ development:
   database: tradeadvisor
   pool: 5
   timeout: 5000
-  username: alvaro
-  password:
+  username: postgres
+  password: senha
+  host: 127.0.0.1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -31,9 +32,9 @@ test: &test
   database: tradeadvisor_test
   pool: 5
   timeout: 5000
-  username: alvaro
-  password:
-
+  username: postgres
+  password: senha
+  host: 127.0.0.1
 
 #production:
 #  <<: *default
@@ -45,8 +46,9 @@ development:
   database: tradeadvisor_production
   pool: 5
   timeout: 5000
-  username: alvaro
-  password:
+  username: postgres
+  password: senha
+  host: 127.0.0.1
 
 cucumber:
   <<: *test
