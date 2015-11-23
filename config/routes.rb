@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
-  get 'dashboard', to: 'dashboard#index'
+  get 'admin', to: 'admin#index'
 
+  get 'dashboard', to: 'dashboard#get'
 
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
 
