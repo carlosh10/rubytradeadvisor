@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   
   resource :search
 
+  resource :plans,  :path => "planos"
+
+  resource :subscriptions, :path => "checkout"
+
   get 'ncm', to: 'ncm#show'
 
   get 'search', to: 'searches#index', :defaults => { :format => 'json' }

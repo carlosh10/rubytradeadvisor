@@ -1,0 +1,29 @@
+<div class="plans banner_principal uk-width-1-1"  style="background-size: cover; background-repeat: no-repeat;  min-height : 100%">
+	<div class="uk-vertical-align uk-text-center uk-height-2-2">
+		<div class="uk-vertical-align-middle" style="width: 500px; margin: 10%">
+			<div class="uk-panel uk-panel-box uk-text-center">
+					<h3>Olá <%= @user.name || @user.email %></h3>
+					<p>Clique em confirmar para o redirecionar-mos ao ambiente seguro de pagamento</p>
+					<table class="uk-table">
+						<thead>
+							<tr>
+								<td>Item</td>
+								<td>Valor</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Plano <%= @plan.name %></td>
+								<td>R<%= number_to_currency(@plan.price) %></td>
+							</tr>
+							<tr>
+								<td class="uk-text-right">TOTAL:</td>
+								<td>R<%= number_to_currency(@plan.price) %></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="button" value="CONFIRMAR COMPRA" />
+			</div>
+		</div>
+	</div>
+</div>

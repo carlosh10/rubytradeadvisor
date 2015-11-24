@@ -9,7 +9,8 @@ Feature: Home page
 
   Scenario: Searching on home page
     Given there's a application titled "Tradeadvisor"
+    And a user with email "joseph@tradeadvisor.com"
     When I am on the homepage
-    And I am fill in "search[query]" whitin "#topo" with "opala"
-    And I press "#search-button" within "#topo"
+    And I am fill in "search[query]" whitin "body > header form" with "opala"
+    And I press ".button_busca" within "body > header form"
     Then I should redirected to "/search"
