@@ -22,7 +22,10 @@
 							</tr>
 						</tbody>
 					</table>
-					<input type="button" value="CONFIRMAR COMPRA" />
+					<%= form_for @subscription do |f| %>
+						<%=  hidden_field(:subscription, :plan_id) %>
+						<input type="submit" value="CONFIRMAR COMPRA" />
+					<% end %>
 			</div>
 		</div>
 	</div>

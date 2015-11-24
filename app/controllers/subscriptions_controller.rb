@@ -5,11 +5,18 @@ class SubscriptionsController < ApplicationController
 	def show
 		@plan = Plan.find_by_id(plan_id)
 		@user = current_user
+		@subscription = Subscription.new plan: @plan, user: @user
 	end
 
 	def create
-
+		@subscription = Subscription.new subscription
+		@subscription.user = current_user
+		redirect_to '/'
+		#create a payment redirect to gateway
 	end
+
+	#def postback
+	#end
 
 
 	private
@@ -19,6 +26,6 @@ class SubscriptionsController < ApplicationController
 	end
 
 	def subscription
-		
+		params.require(:subscription).permit(:plan_id)
 	end
 end
