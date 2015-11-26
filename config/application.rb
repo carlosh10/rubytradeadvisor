@@ -12,13 +12,18 @@ module Rubytradeadvisor
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # add fonts to assets precompile pipeline
     config.assets.precompile << Proc.new { |path|
       if path =~ /\.(eot|svg|ttf|woff)\z/
         true
       end
     }
 
+    # brazil default locale
     config.i18n.default_locale = :'pt-BR'
+
+    # iugu api setting
+    Iugu.api_key = "4892f579301011ef9168a53d8ec3f566"
 
     # config.assets.prefix = ''
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

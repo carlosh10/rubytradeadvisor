@@ -18,6 +18,16 @@ class User < ActiveRecord::Base
     self.role != nil && self.role.name == 'admin'
   end
 
+
+  def iugu_identifier
+    if self[:iugu_identifier] == nil
+      customer = Iugu::Customer.create({email: self.email, name: self.name})
+      self[:iugu_identifier] = customer.id
+      self.save!
+    end
+    return self[:iugu_identifier]
+  end
+
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
     identity = Identity.find_for_oauth(auth)
@@ -59,7 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def active_subscription
-    subscriptions.where(is_active?: true).first
+    self.subscriptions.all.bsearch{ |s| s.is_active? }
   end
 
   private

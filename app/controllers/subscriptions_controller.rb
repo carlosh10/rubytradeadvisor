@@ -11,13 +11,12 @@ class SubscriptionsController < ApplicationController
 	def create
 		@subscription = Subscription.new subscription
 		@subscription.user = current_user
+		@subscription.hire
 		redirect_to '/'
-		#create a payment redirect to gateway
 	end
 
 	#def postback
 	#end
-
 
 	private
 

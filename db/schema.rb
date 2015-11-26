@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124190510) do
+ActiveRecord::Schema.define(version: 20151126122720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20151124190510) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "payments", force: :cascade do |t|
+    t.float    "value"
+    t.boolean  "is_payed"
+    t.integer  "subscription_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "payments", ["subscription_id"], name: "index_payments_on_subscription_id", using: :btree
 
   create_table "plans", force: :cascade do |t|
     t.string   "name"
@@ -73,10 +83,11 @@ ActiveRecord::Schema.define(version: 20151124190510) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.date     "due_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "user_id"
     t.integer  "plan_id"
+    t.string   "iugu_identifier"
   end
 
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
@@ -101,6 +112,7 @@ ActiveRecord::Schema.define(version: 20151124190510) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "role_id"
+    t.string   "iugu_identifier"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -108,6 +120,7 @@ ActiveRecord::Schema.define(version: 20151124190510) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
   add_foreign_key "identities", "users"
+  add_foreign_key "payments", "subscriptions"
   add_foreign_key "plans_features", "features"
   add_foreign_key "plans_features", "plans"
   add_foreign_key "searches", "users"
