@@ -35,7 +35,7 @@
                 <ul class="menu_links">
                     <li>
                         <% if user_signed_in? %>
-                           <%= link_to("Olá #{current_user.name || current_user.email}".truncate(15), destroy_user_session_path, :method => :delete, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Clique para sair" )%>
+                           <%= link_to("Olá #{current_user.name || current_user.email}".truncate(15), '/dashboard', :method => :get, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Clique para acessar o dashboard" )%>
                         <% else %>
                         <a class="uk-button" href="/users/sign_in"> <i class="uk-icon-user btn_icon"></i> <span class="uk-hidden-small">Entrar</span></a>
                         <% end %>

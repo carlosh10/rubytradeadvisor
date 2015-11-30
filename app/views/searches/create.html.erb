@@ -142,7 +142,7 @@
 						<% @result.products.each do |product| %>
 						<div class="uk-width-large-1-3 uk-width-medium-1-2 uk-width-small-1-1 bs-docs" data-content="<%= product["mes_ano"] %>" style="padding 0px; border 0px;">
 
-
+						<!-- modal -->
 						<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">
 						    <div class="uk-modal-dialog">
 						        <a class="uk-modal-close uk-close"></a>
@@ -165,156 +165,138 @@
 									</div>
 								</div>
 								<div class="panel panel-default">
-								  <div class="panel-body" style="text-align:center;font-size: 13px;">
-									<table style="width:100%;">
-										<tr>
-											<td>Qtd. Comercial</td>
-											<td>Un. Comercial</td>
-											<td>Qtd. Aduaneira</td>
-											<td>Un. Aduaneira</td>
-										</tr>
-										<tr>
-											<td><%= product["quantidade_comercializada_produto"] %></td>
-											<td><%= product["unidade_comercializacao"] %></td>
-											<td><%= product["quantidade_aduaneira"] %></td>
-											<td><%= product["unidade_aduaneira"] %></td>
-										</tr>
-									</table>
-								</div>
-								</div>
-								<div class="panel panel-default">
-								  <div class="panel-body" style="font-size: 12px;">
-									<table class="table" style="text-align: center;">
-										<thead>
+								  	<div class="panel-body" style="text-align:center;font-size: 13px;">
+										<table style="width:100%;">
 											<tr>
-												<td>NCM</td>
-												<td>Unitário</td>
-												<td>Total</td>
+												<td>Qtd. Comercial</td>
+												<td>Un. Comercial</td>
+												<td>Qtd. Aduaneira</td>
+												<td>Un. Aduaneira</td>
 											</tr>
-										</thead>
-										<tr>
-											<td>PRODUTO (FOB)</td>
-											<td><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></td>
-											<td><%= number_to_currency(product["valor_fob_dolar"]) %></td>
-										</tr>
-										<tr>
-											<td>FRETE</td>
-											<td><%= number_to_currency(product["valor_frete_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %></td>
-											<td><%= number_to_currency(product["valor_frete_dolar"]) %></td>
-										</tr>
-										<tr>
-											<td>SEGURO</td>
-											<td>
-											<% if product["valor_seguro_dolar"].to_i != 0 %>
-												<%= number_to_currency(product["valor_seguro_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %>
-											<% else %>
-												0
-											<% end %>
-											</td>
-											<td>
-											<% if product["valor_seguro_dolar"].to_i != 0 %>
-												<%= number_to_currency(product["valor_seguro_dolar"])  %>
-											<% else %>
-												0
-											<% end %>
-											</td>
-										</tr>
-										<tr>
-											<td>CIF</td>
-											<td><%= number_to_currency(product["CIF_unitario"]) %></td>
-											<td><%= number_to_currency(product["CIF"]) %></td>
-										</tr>
-									</table>
-								</div>
-								</div>
-								<div class="panel panel-default">
-								  <div class="panel-body" style="font-size: 12px;">
-									<table class="table" style="text-align: center;">
-										<thead>
 											<tr>
-												<td>Impostos</td>
-												<td>BC</td>
-												<td>Aliq.</td>
-												<td>Unitário</td>
-												<td>Total</td>
+												<td><%= product["quantidade_comercializada_produto"] %></td>
+												<td><%= product["unidade_comercializacao"] %></td>
+												<td><%= product["quantidade_aduaneira"] %></td>
+												<td><%= product["unidade_aduaneira"] %></td>
 											</tr>
-										</thead>
-										<tr>
-											<td>II</td>
-											<td><%= number_to_currency(product["CIF"]) %></td>
-											<td><%= product["ALIQUOTA_II"] %>%</td>
-											<td><%= calc_unit(product,"ALIQUOTA_II")  %></td>
-											<td><%= calc_total(product,"ALIQUOTA_II")  %></td>
-										</tr>									
-										<tr>
-											<td>IPI</td>
-											<td><%= number_to_currency(product["CIF"] + calc(product, "ALIQUOTA_II")) %></td>
-											<td><%= product["ALIQUOTA_IPI"] %>%</td>
-											<td><%= calc_unit(product,"ALIQUOTA_IPI")  %></td>
-											<td><%= calc_total(product,"ALIQUOTA_IPI")  %></td>
-										</tr>
-										<tr>
-											<td>PIS</td>
-											<td><%= number_to_currency(product["CIF"]) %></td>
-											<td><%= product["ALIQUOTA_PIS_ADVAL"] %>%</td>
-											<td><%= calc_unit(product,"ALIQUOTA_PIS_ADVAL")  %></td>
-											<td><%= calc_total(product,"ALIQUOTA_PIS_ADVAL")  %></td>
-										</tr>
-										<tr>
-											<td>COFINS</td>
-											<td><%= number_to_currency(product["CIF"]) %></td>
-											<td><%= product["ALIQUOTA_COFINS_ADVAL"] %>%</td>
-											<td><%= calc_unit(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
-											<td><%= calc_total(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
-										</tr>									
-										<tr>
-											<td></td>
-											<td>TOTAL</td>
-											<td><%= calc_sum_percent(product) %> </td>
-											<td><%= calc_sum_unit(product) %> </td>
-											<td><%= calc_sum_total(product) %> </td>
-										</tr>
+										</table>
+									</div>
+								</div>
+								<% if @has_active_subscription %>
+									<div class="panel panel-default">
+									  <div class="panel-body" style="font-size: 12px;">
+										<table class="table" style="text-align: center;">
+											<thead>
+												<tr>
+													<td>NCM</td>
+													<td>Unitário</td>
+													<td>Total</td>
+												</tr>
+											</thead>
+											<tr>
+												<td>PRODUTO (FOB)</td>
+												<td><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %></td>
+												<td><%= number_to_currency(product["valor_fob_dolar"]) %></td>
+											</tr>
+											<tr>
+												<td>FRETE</td>
+												<td><%= number_to_currency(product["valor_frete_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %></td>
+												<td><%= number_to_currency(product["valor_frete_dolar"]) %></td>
+											</tr>
+											<tr>
+												<td>SEGURO</td>
+												<td>
+												<% if product["valor_seguro_dolar"].to_i != 0 %>
+													<%= number_to_currency(product["valor_seguro_dolar"].to_f / product["quantidade_comercializada_produto"].to_f)  %>
+												<% else %>
+													0
+												<% end %>
+												</td>
+												<td>
+												<% if product["valor_seguro_dolar"].to_i != 0 %>
+													<%= number_to_currency(product["valor_seguro_dolar"])  %>
+												<% else %>
+													0
+												<% end %>
+												</td>
+											</tr>
+											<tr>
+												<td>CIF</td>
+												<td><%= number_to_currency(product["CIF_unitario"]) %></td>
+												<td><%= number_to_currency(product["CIF"]) %></td>
+											</tr>
+										</table>
+									</div>
+									</div>
+									<div class="panel panel-default">
+									  <div class="panel-body" style="font-size: 12px;">
+										<table class="table" style="text-align: center;">
+											<thead>
+												<tr>
+													<td>Impostos</td>
+													<td>BC</td>
+													<td>Aliq.</td>
+													<td>Unitário</td>
+													<td>Total</td>
+												</tr>
+											</thead>
+											<tr>
+												<td>II</td>
+												<td><%= number_to_currency(product["CIF"]) %></td>
+												<td><%= product["ALIQUOTA_II"] %>%</td>
+												<td><%= calc_unit(product,"ALIQUOTA_II")  %></td>
+												<td><%= calc_total(product,"ALIQUOTA_II")  %></td>
+											</tr>									
+											<tr>
+												<td>IPI</td>
+												<td><%= number_to_currency(product["CIF"] + calc(product, "ALIQUOTA_II")) %></td>
+												<td><%= product["ALIQUOTA_IPI"] %>%</td>
+												<td><%= calc_unit(product,"ALIQUOTA_IPI")  %></td>
+												<td><%= calc_total(product,"ALIQUOTA_IPI")  %></td>
+											</tr>
+											<tr>
+												<td>PIS</td>
+												<td><%= number_to_currency(product["CIF"]) %></td>
+												<td><%= product["ALIQUOTA_PIS_ADVAL"] %>%</td>
+												<td><%= calc_unit(product,"ALIQUOTA_PIS_ADVAL")  %></td>
+												<td><%= calc_total(product,"ALIQUOTA_PIS_ADVAL")  %></td>
+											</tr>
+											<tr>
+												<td>COFINS</td>
+												<td><%= number_to_currency(product["CIF"]) %></td>
+												<td><%= product["ALIQUOTA_COFINS_ADVAL"] %>%</td>
+												<td><%= calc_unit(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
+												<td><%= calc_total(product,"ALIQUOTA_COFINS_ADVAL")  %></td>
+											</tr>									
+											<tr>
+												<td></td>
+												<td>TOTAL</td>
+												<td><%= calc_sum_percent(product) %> </td>
+												<td><%= calc_sum_unit(product) %> </td>
+												<td><%= calc_sum_total(product) %> </td>
+											</tr>
 
-									</table>	
-								</div>
-								</div>
+										</table>	
+									</div>
+									</div>
+								<% else %>
+									<a href="/planos">
+										<h2 style="text-align:center;">Assine já um de nossos planos e tenha acesso a todo conteúdo!</h2>
+									</a>
+									<div class="uk-text-center">
+										<a href="/planos" class="uk-button uk-button-primary">
+											CLIQUE AQUI PARA ASSINAR
+										</a>
+									</div>
+								<% end %>
 						    </div>
 
 					
 						</div>
-
+						<!-- card -->
 							<div class="uk-panel uk-panel-box">
-								<!-- modal -->
-								<div id="modal-<%= product["pk_ncmrf_15a"] %>" class="uk-modal" style="font-family: 'latolight'">modal</div>
-								<!-- card -->
 								<a href="#modal-<%= product["pk_ncmrf_15a"] %>" data-uk-modal style="text-decoration:none;color:black;">
 									<div data-uk-grid>
-										<!--
-										<div class="uk-width-small-3-5 uk-width-large-3-5">
-												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
-													<img class="flag flag-<%= product["siglaPaisOrigem"].downcase %>" data-toggle="tooltip"  data-placement="bottom" />
-												</span>
-												<span data-uk-tooltip title="AQUISIÇÃO : <%= product["paisAquisicao"] %>">
-												<img class="flag flag-<%= product["siglaPaisAquisicao"].downcase %>" data-toggle="tooltip" data-placement="bottom" />
-												</span>
-											<span>&nbsp;<%= product["ncm"] %></span>
-										</div>
-										<div class="uk-width-small-2-5 uk-width-large-2-5 uk-clearfix" style="font-size: 12px;">
-											
-											<span class="uk-float-left"><%= product["mes_ano"] %>&nbsp;</span>
-
-											<span class="uk-float-left">FOB UNIT. <%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;</span>
-											
-											<span class="uk-float-left">QUANTIDADE <%= product["quantidade_comercializada_produto"] %></span>
-
-
-											<span class="uk-float-left">CIF TOTAL <%= number_to_currency(product["CIF"]) %></span>
-
-										</div>
-										<div class="uk-width-small-3-5" style="font-size: 10px; padding-top: 2px;">
-											<%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %>
-										</div>
-										-->
 										<div class="uk-width-small-5-5 uk-width-large-5-5" data-uk-grid>
 											<div  class="uk-width-small-1-5 uk-width-large-1-5">
 												<span data-uk-tooltip title="ORIGEM : <%= product["paisOrigem"] %>">
@@ -325,13 +307,19 @@
 												</span>
 											</div>
 											<div class="uk-text-right uk-width-small-4-5 uk-width-large-4-5">
-											<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM"><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;&nbsp;&nbsp;</span>
+											<% if @has_active_subscription %>
+												<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM"><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;&nbsp;&nbsp;</span>
 
-											<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc_sum_total_f(product)/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>
+												<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc_sum_total_f(product)/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>
+											<% else %>
+												<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM - PARA TER ACESSO FAÇA JÁ UMA ASSINATURA">$ -&nbsp;&nbsp;&nbsp;</span>
+
+												<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL - PARA TER ACESSO FAÇA JÁ UMA ASSINATURA">$ -</span>
+
+											<% end %>
 											</div>
 
 										</div>
-
 
 										<div class="uk-width-small-5-5 uk-width-large-5-5">
 											<span style="font-size: 10px; padding-top: 5px; display: block;" class="uk-text-justify"><%= product["descricao_detalhada_produto"].truncate(250, separator: /\s/) %></span>

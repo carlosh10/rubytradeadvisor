@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925211601) do
+ActiveRecord::Schema.define(version: 20151126122720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "features", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -25,6 +32,37 @@ ActiveRecord::Schema.define(version: 20150925211601) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "payments", force: :cascade do |t|
+    t.float    "value"
+    t.boolean  "is_payed"
+    t.integer  "subscription_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "payments", ["subscription_id"], name: "index_payments_on_subscription_id", using: :btree
+
+  create_table "plans", force: :cascade do |t|
+    t.string   "name"
+    t.float    "price"
+    t.integer  "days"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "is_active"
+    t.boolean  "is_visible"
+    t.integer  "free_days"
+  end
+
+  create_table "plans_features", force: :cascade do |t|
+    t.integer  "plan_id"
+    t.integer  "feature_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "plans_features", ["feature_id"], name: "index_plans_features_on_feature_id", using: :btree
+  add_index "plans_features", ["plan_id"], name: "index_plans_features_on_plan_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -42,6 +80,18 @@ ActiveRecord::Schema.define(version: 20150925211601) do
   end
 
   add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.date     "due_date"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.string   "iugu_identifier"
+  end
+
+  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -62,6 +112,7 @@ ActiveRecord::Schema.define(version: 20150925211601) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "role_id"
+    t.string   "iugu_identifier"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -69,6 +120,11 @@ ActiveRecord::Schema.define(version: 20150925211601) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
   add_foreign_key "identities", "users"
+  add_foreign_key "payments", "subscriptions"
+  add_foreign_key "plans_features", "features"
+  add_foreign_key "plans_features", "plans"
   add_foreign_key "searches", "users"
+  add_foreign_key "subscriptions", "plans"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "users", "roles"
 end

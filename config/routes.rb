@@ -1,14 +1,19 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
-  get 'dashboard', to: 'dashboard#index'
+  get 'admin', to: 'admin#index'
 
+  get 'dashboard', to: 'dashboard#get'
 
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
   
   resource :search
+
+  resource :plans,  :path => "planos"
+
+  resource :subscriptions, :path => "checkout"
 
   get 'ncm', to: 'ncm#show'
 

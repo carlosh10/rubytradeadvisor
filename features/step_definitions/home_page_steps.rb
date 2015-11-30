@@ -2,6 +2,21 @@ Given(/^there's a application titled "(.*?)"$/) do |arg1|
   @application_name = arg1
 end
 
+Given(/^a user with email "(.*?)"$/) do |email|
+  password = 'secretpass'
+
+  user = User.new(:email => email, :password => password, :password_confirmation => password)
+  user.skip_confirmation!
+  user.save!
+  
+  visit '/users/sign_in'
+  fill_in "user_email", :with => email
+  fill_in "user_password", :with => password
+  click_button "Log in"
+
+end
+
+
 When(/^I am on the homepage$/) do
   visit root_path
 end

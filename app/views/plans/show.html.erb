@@ -1,0 +1,54 @@
+<div class="plans banner_principal uk-width-1-1"  style="background-size: cover; background-repeat: no-repeat;">
+
+<div class="uk-vertical-align uk-text-center uk-height-2-2">
+            <div class="uk-vertical-align-middle" style="width: 400px; margin: 10%;">
+	<div class="uk-grid" data-uk-grid-margin="">
+	    <div class="uk-width-1-1 uk-text-center">
+	        <!--<h2 class="uk-heading-large">Faça já uma assinatura!</h2>-->
+	            <p class="uk-text-large">Escolha um de nossos planos para ter acesso a todos os recursos do Tradeadvisor!</p>
+	         </div>
+	</div>
+	<div class="uk-grid" data-uk-grid-margin="">
+		<% @plans.each do |plan| %>
+                <div class="uk-width-medium-1-3 uk-text-center">
+                    <div class="container">
+					    <div class="row">
+					        <div class="uk-width-medium-1-3">
+					            <div class="panel panel-primary">
+					                <div class="panel-heading">
+					                    <h3 class="panel-title">
+					                        <%= plan.name.upcase %></h3>
+					                </div>
+					                <div class="panel-body" >
+					                    <div class="the-price">
+					                        <h1>R<%= number_to_currency(plan.price) %><span class="subscript">/m</span></h1>
+					                       	<% if plan.free_days %>
+					                        	<small><%= plan.free_days %> dias grátis!</small>
+					                        <% end %>
+					                    </div>
+					                    <table class="table">
+					                    <% plan.features.each do |feature| %>
+					                        <tr>
+					                            <td>
+					                                 <%= feature.title %>
+					                            </td>
+					                        </tr>
+					                      <% end %>
+					                    </table>
+					                </div>
+					                <div class="panel-footer">
+					                    <!-- <a href="<%= subscriptions_path %>" class="btn btn-success" role="button">Contratar!</a> -->
+					                    <%= link_to "Contratar!", controller: "subscriptions", action: "show", plan: plan.id  %>
+					                 </div>
+					            </div>
+					        </div>
+					    </div>
+                    </div>
+                </div>
+             <% end %>
+            </div>
+            <div>
+            	<h3 class="uk-text-center">Qualquer dúvida, entre em contato com nossa equipe!</h3>       </div>
+</div>
+</div>
+</div>

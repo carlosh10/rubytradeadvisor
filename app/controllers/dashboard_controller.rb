@@ -1,13 +1,8 @@
 class DashboardController < ApplicationController
 
-  before_filter :authenticate_user!
-  
-  before_filter do 
-    redirect_to "/users/sign_in" unless current_user && current_user.is_admin?
-  end
-
-  def index
-  	@searches = Search.last(30)
-  end
+	def get
+		@user = User.eager_load(:subscriptions).find_by_id(current_user.id)
+		@subscription = @user.active_subscription
+	end
 
 end

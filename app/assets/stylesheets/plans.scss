@@ -1,0 +1,26 @@
+// Place all the styles related to the Plans controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.plans {
+	background-color: white; 
+	font-family: 'latolight';
+}
+
+.plans .panel-primary {
+	border-color: #112433 !important;
+}
+
+.plans .panel-heading {
+	border-color: #112433 !important; 
+	background-color: #112433 !important;
+}
+
+body > div.plans.banner_principal.uk-width-1-1 > div > div > div:nth-child(2) > div > div > div > div > div > div.panel-body {
+	color: black;
+}
+
+body > div.plans.banner_principal.uk-width-1-1 > div > div > div:nth-child(3) > h3 {
+	color : white;
+}
