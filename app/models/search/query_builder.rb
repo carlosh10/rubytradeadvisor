@@ -24,7 +24,7 @@ class Search::QueryBuilder
               }
     }
 
-    # TODO refactor iterate over ao filter types and add to strutc to build_aggregations
+    # TODO refactor iterate over ao filter types and add to struct to build_aggregations
     self.index_of =  {
       Search::SelectionFilterType::Ncm => :ncm,
       Search::SelectionFilterType::CountryOrigin  => :siglaPaisOrigem,
@@ -61,16 +61,14 @@ class Search::QueryBuilder
 
   def build_query query
   	self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
-  		terms: { "prodsense.descricao_detalhada_produto" => query.downcase.split(" ").reject{ |b| b.to_s[/\d+$/] }  , 
-               #"prodsense.ncm" => query.downcase.split(" ") , 
+  		terms: { "prodsense.descricao_detalhada_produto" => query.downcase.split(" ").reject{ |b| b.to_s[/\d+$/] and b.to_s.length > 5 }, 
   				"execution" => "and", 
   				"_cache" => "true" 
   				}
   			}
 
     self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
-      terms: { #{ }"prodsense.descricao_detalhada_produto" => query.downcase.split(" ") , 
-               "prodsense.ncm" => query.downcase.split(" ").select{ |b| b.to_s[/\d+$/] } , 
+      terms: {  "prodsense.ncm" => query.downcase.split(" ").select{ |b| b.to_s[/\d+$/] and b.to_s.length > 5 } , 
           "execution" => "and", 
           "_cache" => "true" 
           }
@@ -82,7 +80,6 @@ class Search::QueryBuilder
     self.pagination = pagination || Search::Pagination.new
 
     if self.pagination != nil && self.pagination.count != 0
-      # self.struct[:size] = pagination.count
       self.struct[:body][:from] = self.pagination.page
     else
       self.pagination.count = 42
