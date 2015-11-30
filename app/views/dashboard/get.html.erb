@@ -1,0 +1,28 @@
+<div class="plans banner_principal uk-width-1-1"  style="background-size: cover; background-repeat: no-repeat; min-height: 100%">
+	<div class="uk-vertical-align uk-height-2-2">
+        <div class="uk-vertical-align-middle uk-text-left" style="margin: 5%;">
+        	<div class="uk-panel uk-panel-box">
+				<% if @subscription %>
+					<h4>Assinatura plano  <%= @subscription.plan.name  %></h4>
+					<% if @subscription.in_trial? %>
+						<p>Assinatura em trial.  <%= @subscription.remaining_trial_days %> dias restantes.</p>
+					<% end %>
+					<p>ID da assinatura : <%= @subscription.iugu_identifier %></p>
+				<% else %>
+					<p>Você não possui assinaturas</p>
+				<% end %>
+			</div>
+			<!--
+			<div class="uk-panel uk-panel-box" style="margin-top:5px;">
+				<h4>Pagamentos</h4>
+				<% if @user.invoices  %>
+					
+				<% else %>
+					a
+				<% end %>
+			</div>
+			-->
+		</div>
+	</div>
+</div>
+

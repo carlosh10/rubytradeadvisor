@@ -11,13 +11,14 @@ class User < ActiveRecord::Base
   has_many :searches
   has_many :subscriptions
 
+  attr_accessor :iugu
+
   before_create :set_default_role
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   def is_admin?
     self.role != nil && self.role.name == 'admin'
   end
-
 
   def iugu_identifier
     if self[:iugu_identifier] == nil
@@ -26,6 +27,10 @@ class User < ActiveRecord::Base
       self.save!
     end
     return self[:iugu_identifier]
+  end
+
+  def invoices
+    iugu_user.invoices
   end
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
@@ -76,6 +81,14 @@ class User < ActiveRecord::Base
 
   def set_default_role
     self.role ||= Role.find_by_name('registered')
+  end
+
+
+  def iugu_user
+    if self.iugu == nil
+     self.iugu = Iugu::Customer.fetch(self.iugu_identifier)
+    end
+    return self.iugu
   end
 
 end

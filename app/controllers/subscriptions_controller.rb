@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
 		@subscription = Subscription.new subscription
 		@subscription.user = current_user
 		@subscription.hire
-		redirect_to '/'
+		redirect_to '/dashboard'
 	end
 
 	#def postback
