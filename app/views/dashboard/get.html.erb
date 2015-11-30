@@ -11,6 +11,10 @@
 				<% else %>
 					<p>Você não possui assinaturas</p>
 				<% end %>
+				<div class="uk-text-center">
+				<%= link_to("CLIQUE AQUI PARA SAIR", destroy_user_session_path, :method => :delete, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Clique para sair" )%>
+				<%= link_to("CLIQUE AQUI PARA FAZER UMA BUSCA", '/', :method => :get, :class => "uk-button", :style => "font-size: 10px !important;", "data-uk-tooltip" => "{pos:'top'}", "title" => "Busca por produtos" )%>
+				</div>
 			</div>
 			<!--
 			<div class="uk-panel uk-panel-box" style="margin-top:5px;">

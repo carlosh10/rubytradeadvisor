@@ -3,9 +3,12 @@ class SubscriptionsController < ApplicationController
 	before_filter :authenticate_user!
 
 	def show
-		@plan = Plan.find_by_id(plan_id)
-		@user = current_user
-		@subscription = Subscription.new plan: @plan, user: @user
+		@has_active_subscription = User.eager_load(:subscriptions).find_by_id(current_user.id).active_subscription
+		if not @has_active_subscription
+			@plan = Plan.find_by_id(plan_id)
+			@user = current_user
+			@subscription = Subscription.new plan: @plan, user: @user
+		end
 	end
 
 	def create

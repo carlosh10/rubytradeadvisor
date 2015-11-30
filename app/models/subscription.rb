@@ -31,7 +31,6 @@ class Subscription < ActiveRecord::Base
 				customer_id: self.user.iugu_identifier })
 			self.iugu_identifier = subscription.id
 			self.save!
-			# return subscription.recent_invoices.first["secure_url"]
 		end
 	end
 
