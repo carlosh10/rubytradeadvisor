@@ -61,11 +61,20 @@ class Search::QueryBuilder
 
   def build_query query
   	self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
-  		terms: { "prodsense.descricao_detalhada_produto" => query.downcase.split(" ") , 
+  		terms: { "prodsense.descricao_detalhada_produto" => query.downcase.split(" ").reject{ |b| b.to_s[/\d+$/] }  , 
+               #"prodsense.ncm" => query.downcase.split(" ") , 
   				"execution" => "and", 
   				"_cache" => "true" 
   				}
   			}
+
+    self.struct[:body][:query][:filtered][:filter][:bool][:should]  <<  { 
+      terms: { #{ }"prodsense.descricao_detalhada_produto" => query.downcase.split(" ") , 
+               "prodsense.ncm" => query.downcase.split(" ").select{ |b| b.to_s[/\d+$/] } , 
+          "execution" => "and", 
+          "_cache" => "true" 
+          }
+        }
   end
 
   def build_pagination pagination
