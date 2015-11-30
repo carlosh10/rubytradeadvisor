@@ -25,6 +25,9 @@ module Rubytradeadvisor
     # iugu api setting
     Iugu.api_key = "4892f579301011ef9168a53d8ec3f566"
 
+    # hubspot api settings
+    Hubspot.configure(hapikey: "d4439698-c202-4dae-b520-0d3a379dae4b")
+
     # config.assets.prefix = ''
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

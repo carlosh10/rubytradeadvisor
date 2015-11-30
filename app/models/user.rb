@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   attr_accessor :iugu
 
   before_create :set_default_role
+  after_create :call_hubspot
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   def is_admin?
@@ -83,6 +84,9 @@ class User < ActiveRecord::Base
     self.role ||= Role.find_by_name('registered')
   end
 
+  def call_hubspot
+     Hubspot::Contact.create!(self.email, { firstname: self.name })
+  end 
 
   def iugu_user
     if self.iugu == nil
