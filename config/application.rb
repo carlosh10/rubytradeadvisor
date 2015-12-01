@@ -23,10 +23,10 @@ module Rubytradeadvisor
     config.i18n.default_locale = :'pt-BR'
 
     # iugu api setting
-    Iugu.api_key = "4892f579301011ef9168a53d8ec3f566"
+    Iugu.api_key = "0a5ecb4cc3611b327f8bf757551c5ab4"
 
     # hubspot api settings
-    Hubspot.configure(hapikey: "d4439698-c202-4dae-b520-0d3a379dae4b")
+    Hubspot.configure(hapikey: "ec235818-86ae-4eed-b113-a2814b2f2e71")
 
     # config.assets.prefix = ''
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
