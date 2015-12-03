@@ -74,8 +74,19 @@ class User < ActiveRecord::Base
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
 
+  ####
+
   def active_subscription
     self.subscriptions.all.bsearch{ |s| s.is_active? }
+  end
+
+  def in_trial?
+    remaining_trial_days > 0 && !active_subscription
+  end
+
+
+  def remaining_trial_days
+    Math.sqrt(((Date.current - self.created_at.to_date).to_i - 15)**2).to_i
   end
 
   private
