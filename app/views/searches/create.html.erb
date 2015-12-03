@@ -182,7 +182,7 @@
 										</table>
 									</div>
 								</div>
-								<% if @has_active_subscription || current_user.is_admin? || current_user.in_trial? %>
+								<% if @has_active_subscription ||  @user.is_admin? ||  @user.in_trial? %>
 									<div class="panel panel-default">
 									  <div class="panel-body" style="font-size: 12px;">
 										<table class="table" style="text-align: center;">
@@ -307,7 +307,7 @@
 												</span>
 											</div>
 											<div class="uk-text-right uk-width-small-4-5 uk-width-large-4-5">
-											<% if @has_active_subscription || current_user.is_admin? || current_user.in_trial?  %>
+											<% if @has_active_subscription ||  @user.is_admin? ||  @user.in_trial?  %>
 												<span data-uk-tooltip title="CUSTO UNITÁRIO ORIGEM"><%= number_to_currency(product["valor_fob_dolar_unitario"] || (product["valor_fob_dolar"] / product["quantidade_comercializada_produto"])  ) %>&nbsp;&nbsp;&nbsp;</span>
 
 												<span data-uk-tooltip title="CUSTO COLOCADO NO BRASIL"><%= number_to_currency((calc_sum_total_f(product)/product["quantidade_comercializada_produto"].to_i) + product["CIF_unitario"]) %></span>

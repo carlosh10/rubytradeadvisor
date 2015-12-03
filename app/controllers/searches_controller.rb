@@ -20,7 +20,8 @@ class SearchesController < ApplicationController
       query = query_builder.build(@search.query, selection_filters, range_filters, pagination, date_range_filters, sort_by) 
       raw_results = client.search(query)
       @result = Search::Result.new(raw_results, selection_filters, range_filters, query_builder.pagination, date_range_filters,sort_by)
-      @has_active_subscription = User.eager_load(:subscriptions).find_by_id(current_user.id).active_subscription
+      @user = User.eager_load(:subscriptions).find_by_id(current_user.id) #.includes(:subscriptions)
+      @has_active_subscription =  @user.active_subscription
     else
       # todo handle the case where it fails....
     end

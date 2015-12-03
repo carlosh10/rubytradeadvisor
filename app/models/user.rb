@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   end
 
   def in_trial?
-    remaining_trial_days > 0 && !active_subscription
+    remaining_trial_days > 0
   end
 
 
@@ -96,7 +96,10 @@ class User < ActiveRecord::Base
   end
 
   def call_hubspot
+    begin
      Hubspot::Contact.create!(self.email, { firstname: self.name })
+    rescue
+    end
   end 
 
   def iugu_user
