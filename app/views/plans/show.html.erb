@@ -22,9 +22,6 @@
 					                <div class="panel-body" >
 					                    <div class="the-price">
 					                        <h1>R<%= number_to_currency(plan.price) %><span class="subscript">/m</span></h1>
-					                       	<% if plan.free_days %>
-					                        	<small><%= plan.free_days %> dias grátis!</small>
-					                        <% end %>
 					                    </div>
 					                    <table class="table">
 					                    <% plan.features.each do |feature| %>

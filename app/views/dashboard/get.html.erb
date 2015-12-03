@@ -9,6 +9,8 @@
 					<p>Você não possui assinaturas</p>
 					<% if @user.in_trial? %>
 						<p>Seu periodo de testes expira em <%= @user.remaining_trial_days %> dias</p>
+					<% else %>
+						<p>Seu periodo de testes expirou. <a href="/planos">Clique aqui para contratar um plano</a></p>
 					<% end %>
 				<% end %>
 				<div class="uk-text-center">
