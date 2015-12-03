@@ -12,9 +12,9 @@ class Subscription < ActiveRecord::Base
 	end
 
 
-	def in_trial?
-		iugu_subscription.in_trial
-	end
+	# def in_trial?
+	#	iugu_subscription.in_trial
+	# end
 
 	def expires_at
 		self.due_date
@@ -35,9 +35,9 @@ class Subscription < ActiveRecord::Base
 	end
 
 
-	def remaining_trial_days
-		if in_trial? then (self.due_date - Date.today).to_i else 0 end
-	end
+	# def remaining_trial_days
+	# 	if in_trial? then (self.due_date - Date.today).to_i else 0 end
+	# end
 
 	def suspend
 	end

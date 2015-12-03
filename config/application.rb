@@ -24,6 +24,8 @@ module Rubytradeadvisor
 
     # iugu api setting
     Iugu.api_key = "0a5ecb4cc3611b327f8bf757551c5ab4"
+    # tests
+    # Iugu.api_key = "4892f579301011ef9168a53d8ec3f566"
 
     # hubspot api settings
     Hubspot.configure(hapikey: "ec235818-86ae-4eed-b113-a2814b2f2e71")
