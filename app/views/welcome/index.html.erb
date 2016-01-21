@@ -1,13 +1,15 @@
-<section style="background-image: url(<%= image_path("hires-bg.jpg") %>);height: 100%; background-size: 50%;background-repeat-y: no-repeat;background-color: #0091B0;background-position: bottom;background-size: cover;">
+
+<section style="height: 100%; background-size: 50%;background-repeat-y: no-repeat;background-color: #0091B0;background-position: bottom;background-size: cover;">
     <div>
         <div class="uk-container uk-container-center">
 
-            <div class="mensagem_banner uk-width-medium-3-5 uk-container-center">
-                <a class="uk-display-block uk-width-4-5 uk-container-center uk-visible-small" href="/">
+            <div class="mensagem_banner uk-width-medium-4-5
+             uk-container-center" style="margin-bottom: 10%;">
+                <a class="uk-display-block uk-width-3-4 uk-container-center uk-visible-small" href="/" style="margin-bottom: 50px !important;">
                     <%= image_tag "logo.svg", class: "uk-margin-remove" %>
                 </a>
 
-                <h2 class="titulo_banner" style="text-align: center">
+                <h2 class="titulo_banner" style="text-align: center;">
                     O que você pensa em importar?
                 </h2>
 
@@ -15,10 +17,10 @@
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                     <div class="uk-grid uk-grid-collapse">
                         <div class="uk-width-5-6 uk-width-medium-9-10">
-                            <input class="input_busca uk-width-1-1" style="border-radius: 3px 0px 0px 3px !important;" type="text" placeholder="Pesquisa" name="search[query]" />
+                            <input class="input_busca uk-width-1-1" style="border-radius: 3px 0px 0px 3px !important;" type="text" placeholder="e.g. Ferramentas, Roupas, Acessórios..." name="search[query]" />
                         </div>
                         <div class="uk-width-1-6 uk-width-medium-1-10">
-                            <button id="search-button" class="button_busca uk-width-1-1"><i class="uk-icon-search"></i></button>
+                            <button id="search-button" class="button_busca uk-width-1-1" style=""><i class="uk-icon-search"></i></button>
                         </div>
                     </div>
                 </form>
